@@ -299,83 +299,113 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+    // Navbar items:
+    [
+        'type' => 'navbar-search',
+        'text' => 'search',
+        'topnav_right' => true,
+    ],
+    [
+        'type' => 'fullscreen-widget',
+        'topnav_right' => true,
+    ],
 
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        ['header' => 'Menu Utama'],
-        [
-            'text' => 'Dashboard',
-            'url' => 'admin/dashboard',
-            'icon' => 'far fa-fw fa-file',
-        ],
-        
-
-        [
-            'text' => 'Pengumuman',
-            'url' => 'admin/settings',
-            'icon' =>'fas fa-bullhorn' ,
-        ],
-        [
-            'text' => 'Data Master',
-            'icon' => 'far fa-newspaper',
-            'submenu' => [
-                [
-                    'text' => 'Profil sekolah',
-                    'url' => 'admin/sekolah',
-                    'icon' => 'fas fa-school',
-                    // 'can' => 'admin',
-                ],
-                [
-                    'text' => 'Peserta Didik',
-                    'url' => 'admin/peserta',
-                    'icon' => 'fas fa-school',
-                    // 'can' => 'admin',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
+    // Sidebar items:
+    [
+        'type' => 'sidebar-menu-search',
+        'text' => 'search',
+    ],
+    [
+        'text' => 'blog',
+        'url' => 'admin/blog',
+        'can' => 'manage-blog',
+    ],
+    ['header' => 'MENU UTAMA'],
+    [
+        'text' => 'Dashboard', 
+        'url' => 'admin/dashboard',
+        'icon' => 'fas fa-tachometer-alt',
+    ],
+    [
+        'text' => 'Pengumuman', 
+        'url' => 'admin/pengumuman',
+        'icon' => 'fas fa-bullhorn',
+    ],
+    [
+        'text' => 'Data Master',
+        'icon' => 'fas fa-server',
+        'submenu' => [
+            [
+                'text' => 'Informasi Sekolah',
+                'url' => 'admin/sekolah',
+                'icon' => 'fas fa-school',
+            ],
+            [
+                'text' => 'Tahun Ajaran',
+                'url' => '#',
+                'icon' => 'fas fa-calendar-alt',
+            ],
+            [
+                'text' => 'Guru',
+                'url' => '#',
+                'icon' => 'fas fa-chalkboard-teacher',
+            ],
+            [
+                'text' => 'Kelas & Wali',
+                'url' => '#',
+                'icon' => 'fas fa-layer-group',
+            ],
+            [
+                'text' => 'Peserta Didik',
+                'url' => '#',
+                'icon' => 'fas fa-user-graduate',
+            ],
+            [
+                'text' => 'Anggota Kelas',
+                'url' => '#',
+                'icon' => 'fas fa-users',
+            ],
+            [
+                'text' => 'Data Siswa Perkelas',
+                'url' => '#',
+                'icon' => 'fas fa-address-book',
             ],
         ],
     ],
+    [
+        'text' => 'Penilaian',
+        'icon' => 'fas fa-clipboard-check',
+        'submenu' => [
+            [
+                'text' => 'Kriteria Penilaian',
+                'icon' => 'fas fa-list-ul',
+                'url' => 'admin/kriteria',
+            ],
+            [
+                'text' => 'Karakter',
+                'icon' => 'fas fa-star',
+                'url' => 'admin/karakter',
+            ],
+            [
+                'text' => 'Capaian Perkembangan',
+                'icon' => 'fas fa-chart-line',
+                'url' => 'admin/capaian-perkembangan',
+            ],
+            [
+                'text' => 'Indikator',
+                'icon' => 'fas fa-clipboard-list',
+                'url' => 'admin/indikator',
+            ],
+        ],
+    ],
+    ['header' => 'PENGATURAN'],
+    [
+        'text' => 'Logout',
+        'url' => 'logout',
+        'icon' => 'fas fa-sign-out-alt',
+        'method' => 'post',
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
