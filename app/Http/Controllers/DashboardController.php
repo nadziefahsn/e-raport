@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function index()
     {
         $sekolah = Sekolah::first();
-
+        
         return view('dashboard.index', compact('sekolah'));
     }
 }
