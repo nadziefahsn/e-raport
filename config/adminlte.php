@@ -344,12 +344,6 @@ return [
                     // 'can' => 'admin',
                 ],
                 [
-                    'text' => 'Peserta Didik',
-                    'url' => 'admin/peserta',
-                    'icon' => 'fas fa-school',
-                    // 'can' => 'admin',
-                ],
-                [
                     'text' => 'level_one',
                     'url' => '#',
                     'submenu' => [

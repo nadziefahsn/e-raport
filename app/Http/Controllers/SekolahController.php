@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sekolah;
 use App\Http\Requests\SekolahUpdateRequest;
+use App\Http\Requests\SekolahStoreRequest;
 
 class SekolahController extends Controller
 {
@@ -13,7 +14,10 @@ class SekolahController extends Controller
     public function index()
     {
         $sekolah = Sekolah::first();
+
         return view('sekolahs.index', compact('sekolah'));
+    
+    
     }
 
     /**
@@ -27,9 +31,16 @@ class SekolahController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SekolahStoreRequest $request)
     {
-        //
+        $data = $request-> validated();
+
+        Sekolah::create($data);
+
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Profil sekolah berhasil disimpan');
+
     }
 
     /**
@@ -51,16 +62,15 @@ class SekolahController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SekolahUpdateRequest $request, Sekolah $sekolah)
-    {
+    public function update (SekolahUpdateRequest $request, Sekolah $sekolah) {
     $data = $request->validated();
 
     $sekolah->update($data);
 
     return redirect()
         ->route('sekolah.index')
-        ->with('success', 'Profil sekolah berhasil disimpan');
-    }
+        ->with('success', 'Profil sekolah berhasil diperbarui');
+}
 
     /**
      * Remove the specified resource from storage.

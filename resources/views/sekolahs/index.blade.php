@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Informasi Sekolah')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
@@ -17,9 +17,14 @@
 @stop
 
 @section('content')
-<form action="{{ route('sekolah.update',$sekolah->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+    @if ($sekolah)
+        <form action="{{ route('sekolah.update', $sekolah->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+    @else
+        <form action="{{ route('sekolah.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+    @endif
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">
@@ -140,14 +145,15 @@
 @stop
 
 @section('footer')
-    <div class="row">
-        <div class="col-12 col-md-6">
-            Copyright © {{ date('Y') }} |
-            Yayasan Prima Insani.
+    <div class="row align-items-center">
+        <div class="col-12 col-md-6 text-center text-md-left mb-2 mb-md-0">
+            <strong>
+                Copyright &copy; {{ date('Y') }} |
+                <a href="#">Yayasan Prima Insani</a>.
+            </strong>
         </div>
-
         <div class="col-12 col-md-6 text-center text-md-right">
-            <b>E-Raport</b>
+            <b>E-Raport</b> 
         </div>
     </div>
 @stop
