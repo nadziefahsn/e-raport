@@ -24,6 +24,6 @@ class SekolahSeeder extends Seeder
             'kabupaten' => 'Garut',
             'provinsi' => 'Jawa Barat',
             'logo' => null,
-        ]);
+            ]);
     }
 }
