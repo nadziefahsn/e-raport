@@ -37,7 +37,7 @@ class KriteriaPenilaianController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        kriteriapenilaian::create([
+        KriteriaPenilaian::create([
             'kriteria'  => $request->kriteria,
             'deskripsi' => $request->deskripsi,
         ]);
@@ -82,7 +82,7 @@ class KriteriaPenilaianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KriteriaPenilaian $kriteriapenilaian, $id)
+    public function destroy(KriteriaPenilaian $kriteriapenilaian)
     {
         $kriteriapenilaian->delete();
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil dihapus!');
