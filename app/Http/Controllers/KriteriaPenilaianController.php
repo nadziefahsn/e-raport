@@ -87,8 +87,7 @@ class KriteriaPenilaianController extends Controller
      */
     public function destroy(KriteriaPenilaian $kriteriapenilaian, $id)
     {
-        $kriteria = KriteriaPenilaian::findOrFail($id);
-        $kriteria->delete();
+        $kriteriapenilaian->delete();
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil dihapus!');
     }
 }
