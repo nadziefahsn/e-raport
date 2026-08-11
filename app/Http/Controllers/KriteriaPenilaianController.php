@@ -14,9 +14,6 @@ class KriteriaPenilaianController extends Controller
      */
     public function index()
     {
-        // $kriterias = KriteriaPenilaian::latest()->get();
-        // return view('kriterias.index', compact('kriterias'))
-        // ->with( (request()->input('page', 1) - 2) * 5);
         $kriterias = KriteriaPenilaian::all();
 
         return view('kriterias.index', compact('kriterias'));
