@@ -187,9 +187,18 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">NIP</label>
-                        <input type="text" name="nip" class="form-control rounded-3" value="{{ $item->nip }}" 
-                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
-                            placeholder="Masukkan NIP (angka saja)...">
+                            <input type="text" 
+                                name="nip" 
+                                class="form-control rounded-3 @error('nip') is-invalid @enderror" 
+                                value="{{ old('nip', $item->nip ?? '') }}" 
+                                inputmode="numeric" 
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                                placeholder="Masukkan NIP...">
+                            @error('nip')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Tempat Lahir</label>
@@ -252,4 +261,10 @@
 @stop
 
 @section('js')
+@section('js')
+<script>
+    @if ($errors->any() && !old('_method'))
+        $('#modalTambahGuru').modal('show');
+    @endif
+</script>
 @stop

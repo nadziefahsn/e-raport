@@ -26,7 +26,7 @@
     @php
     $heads = [
         ['label' => 'No', 'width' => 5],
-        'Rombel / Kelas',
+        'Rombel',
         'Wali Kelas',
         'Pendamping',
         'Tahun Ajaran',

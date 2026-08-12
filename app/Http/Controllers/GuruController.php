@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\GuruStoreRequest;
 use App\Http\Requests\GuruUpdateRequest;
 use App\Models\User;                    
@@ -34,29 +35,26 @@ class GuruController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(GuruStoreRequest $request)
+{
+    DB::transaction(function () use ($request) {
         $autoEmail = 'guru.' . Str::slug($request->nip) . '@sekolah.id';
 
         $user = User::create([
-        'name'     => $request->nama_guru,
-        'email'    => $autoEmail,
-        'password' => Hash::make('password123'),
-        'role'     => 'guru',
-    ]);
+            'name'     => $request->nama_guru,
+            'email'    => $autoEmail,
+            'password' => Hash::make('password123'),
+            'role'     => 'guru',
+        ]);
 
-        Guru::create([
-        'user_id'       => $user->id,
-        'nama_guru'     => $request->nama_guru,
-        'jabatan'       => $request->jabatan,
-        'nip'           => $request->nip,
-        'tempat_lahir'  => $request->tempat_lahir,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'jenis_kelamin' => $request->jenis_kelamin,
-    ]);
+        Guru::create(array_merge(
+            $request->validated(), 
+            ['user_id' => $user->id]
+        ));
+    });
 
     return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
-    }
+}
 
     /**
      * Display the specified resource.

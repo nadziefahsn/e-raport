@@ -27,14 +27,17 @@ class GuruUpdateRequest extends FormRequest
         return [
             'nama_guru'     => 'required|string|max:255',
             'jabatan'       => 'required|string|max:255',
-            'nip'           => [
-                'required',
-                'string',
-                'max:255',
-            ],
+            'nip'           => 'required|numeric|unique:gurus,id,' . $guruId, 
             'tempat_lahir'  => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+        ];
+    }
+
+        public function messages(): array
+    {
+        return [
+            'nip.unique' => 'NIP ini sudah digunakan oleh guru lain!',
         ];
     }
 }
