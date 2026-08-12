@@ -36,7 +36,6 @@ class SiswaStoreRequest extends FormRequest
             'alamat'=> 'required',
             'telepon'=> 'required|string',
             'kelas_id'=> 'required|exists:kelas,id',
-            'semester'=> 'required|exists:tahun_ajarans,id',
         ];
     }
 }

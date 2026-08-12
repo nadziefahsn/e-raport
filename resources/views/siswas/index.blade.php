@@ -254,7 +254,7 @@
                             <select name="kelas_id" class="form-control rounded-3" required>
                                 <option value="" selected disabled>-- Pilih Kelas --</option>
                                 @foreach($kelas as $k)
-                                    <option value="{{ $k->id }}" {{ $item->kelas_id == $k->id ? 'selected' : '' }}>
+                                    <option value="{{ $k->id }}">
                                         {{ $k->rombel }}
                                     </option>
                                 @endforeach
