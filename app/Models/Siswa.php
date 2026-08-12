@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TahunAjaran;
+use App\Models\Kelas;
 
 class Siswa extends Model
 {
@@ -26,4 +28,14 @@ class Siswa extends Model
         'kelas_id',
         'semester',
     ];
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
+    
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajarans_id');
+    }
 }

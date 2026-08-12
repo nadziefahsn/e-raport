@@ -35,8 +35,8 @@ class SiswaStoreRequest extends FormRequest
             'pekerjaan_ibu'=> 'required',
             'alamat'=> 'required',
             'telepon'=> 'required|string',
-            'kelas_id'=> 'required',
-            'semester'=> 'required',
+            'kelas_id'=> 'required|exists:kelas,id',
+            'semester'=> 'required|exists:tahun_ajarans,id',
         ];
     }
 }

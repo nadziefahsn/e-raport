@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SiswaStoreRequest;
 use App\Http\Requests\SiswaUpdateRequest;
 use App\Models\Siswa;
+use App\Models\Kelas;
+use App\Models\TahunAjaran;
 
 class SiswaController extends Controller
 {
     public function index()
     {
-        $siswas = Siswa::all();
+        $siswas = Siswa::all()
+        ;
+        $kelas = Kelas::all();
+        $tahunAjarans = TahunAjaran::all();
 
-        return view('siswas.index', compact('siswas'));
+        return view('siswas.index', compact('siswas','kelas','tahunAjarans'));
     }
 
     public function create()

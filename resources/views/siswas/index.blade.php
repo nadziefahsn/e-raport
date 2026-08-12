@@ -156,13 +156,6 @@
                             <label class="form-label fw-bold">Kelas</label>
                             <input type="text" name="kelas_id" class="form-control rounded-3" value="{{ $item->kelas_id }}">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Semester</label>
-                            <select name="semester" class="form-control rounded-3" required>
-                                <option value="1" {{ $item->semester == '1' ? 'selected' : '' }}>Semester 1</option>
-                                <option value="2" {{ $item->semester == '2' ? 'selected' : '' }}>Semester 2</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
@@ -175,6 +168,7 @@
     </div>
 </div>
 @endforeach
+
 <div class="modal fade" id="modalTambahSiswa" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
@@ -257,14 +251,13 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Kelas</label>
-                            <input type="text" name="kelas_id" class="form-control rounded-3" placeholder=" Kelas">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Semester</label>
-                            <select name="semester" class="form-control rounded-3" required>
-                                <option value="">-- Pilih Semester --</option>
-                                <option value="1">Semester 1</option>
-                                <option value="2">Semester 2</option>
+                            <select name="kelas_id" class="form-control rounded-3" required>
+                                <option value="" selected disabled>-- Pilih Kelas --</option>
+                                @foreach($kelas as $k)
+                                    <option value="{{ $k->id }}" {{ $item->kelas_id == $k->id ? 'selected' : '' }}>
+                                        {{ $k->rombel }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
