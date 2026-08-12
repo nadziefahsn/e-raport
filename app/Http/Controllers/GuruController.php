@@ -77,18 +77,10 @@ class GuruController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Guru $guru)
+    public function update(GuruUpdateRequest $request, Guru $guru)
     {
-        $guru->update([
-        'nama_guru'     => $request->nama_guru,
-        'jabatan'       => $request->jabatan,
-        'nip'           => $request->nip,
-        'tempat_lahir'  => $request->tempat_lahir,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'jenis_kelamin' => $request->jenis_kelamin,
-    ]);
-
-    return redirect()->back()->with('success', 'Data berhasil diubah!');
+       $guru->update($request->validated());
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui!');
     }
 
     /**

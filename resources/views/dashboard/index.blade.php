@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="m-0">Dashboard</h1>
+        <h1 class="m-0 font-weight-bold">Dashboard</h1>
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
