@@ -114,9 +114,11 @@
                             <input type="text" name="jabatan" class="form-control rounded-3" value="{{ $item->jabatan }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">NIP</label>
-                            <input type="text" name="nip" class="form-control rounded-3" value="{{ $item->nip }}">
-                        </div>
+                        <label class="form-label fw-bold">NIP</label>
+                        <input type="text" name="nip" class="form-control rounded-3" value="{{ $item->nip }}" 
+                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                            placeholder="Masukkan NIP (angka saja)...">
+                    </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Tempat Lahir</label>
                             <input type="text" name="tempat_lahir" class="form-control rounded-3" value="{{ $item->tempat_lahir }}" required>
@@ -185,7 +187,9 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">NIP</label>
-                            <input type="text" name="nip" class="form-control rounded-3" placeholder="Masukkan NIP...">
+                        <input type="text" name="nip" class="form-control rounded-3" value="{{ $item->nip }}" 
+                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                            placeholder="Masukkan NIP (angka saja)...">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Tempat Lahir</label>

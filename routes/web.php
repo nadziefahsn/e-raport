@@ -7,6 +7,7 @@ use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\KriteriaPenilaianController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\KelasController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
@@ -21,4 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('kriteria', KriteriaPenilaianController::class);
     Route::resource('tahun_ajaran', TahunAjaranController::class);
     Route::resource('guru', GuruController::class);
+    Route::resource('kelas', KelasController::class)->parameters([
+        'kelas'=>'kelas'
+    ]);
 });
