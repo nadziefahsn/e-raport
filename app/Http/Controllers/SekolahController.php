@@ -62,14 +62,15 @@ class SekolahController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update (SekolahUpdateRequest $request, Sekolah $sekolah) {
-    $data = $request->validated();
+    public function update (SekolahUpdateRequest $request, Sekolah $sekolah) 
+    {
+        $data = $request->validated();
 
-    $sekolah->update($data);
+        $sekolah->update($data);
 
-    return redirect()
-        ->route('sekolah.index')
-        ->with('success', 'Profil sekolah berhasil diperbarui');
+        return redirect()
+            ->route('sekolah.index')
+            ->with('success', 'Profil sekolah berhasil diperbarui');
 }
 
     /**

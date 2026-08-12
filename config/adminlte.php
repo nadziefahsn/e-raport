@@ -357,7 +357,7 @@ return [
             ],
             [
                 'text' => 'Peserta Didik',
-                'url' => '#',
+                'url' => 'admin/siswa',
                 'icon' => 'fas fa-user-graduate',
             ],
             [

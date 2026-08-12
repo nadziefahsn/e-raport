@@ -57,10 +57,8 @@ class TahunAjaranController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(
-        TahunAjaranUpdateRequest $request,
-        TahunAjaran $tahunAjaran
-    ) {
+    public function update(TahunAjaranUpdateRequest $request, TahunAjaran $tahunAjaran) 
+    {
         $tahunAjaran->update($request->validated());
 
         return redirect()

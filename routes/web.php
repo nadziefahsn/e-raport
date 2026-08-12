@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\KriteriaPenilaianController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
@@ -22,4 +24,5 @@ Route::prefix('admin')->group(function () {
     ]);
     Route::resource('tahun_ajaran', TahunAjaranController::class);
     Route::resource('guru', GuruController::class);
+    Route::resource('siswa', SiswaController::class);
 });
