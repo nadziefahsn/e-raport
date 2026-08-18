@@ -46,7 +46,7 @@
                     <td>{{ $item->nama_siswa }}</td>
                     <td>{{ $item->tanggal_lahir }}</td>
                     <td>{{ $item->jenis_kelamin }}</td>
-                    <td>{{ $item->kelas_id ?? '-' }}</td>
+                    <td>{{ $item->kelas?->rombel ?? '-' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" data-toggle="modal" data-target="#editModal{{ $item->nis }}">
@@ -69,6 +69,7 @@
     </div>
 </div>
 
+{{-- edit --}}
 @foreach($siswas as $item)
 <div class="modal fade" id="editModal{{ $item->nis }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -154,7 +155,15 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Kelas</label>
-                            <input type="text" name="kelas_id" class="form-control rounded-3" value="{{ $item->kelas_id }}">
+                            <select name="kelas_id" class="form-control rounded-3" required>
+                                <option value="" disable>-- Pilih Kelas --</option>
+                                    @foreach ($kelas as $k )
+                                    <option value="{{ $k->id }}" 
+                                        {{ $item->kelas_id == $k->id ? 'selected' : '' }}>
+                                        {{ $k->rombel }}
+                                    </option>
+                                    @endforeach>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -169,6 +178,7 @@
 </div>
 @endforeach
 
+{{-- tambah data --}}
 <div class="modal fade" id="modalTambahSiswa" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
