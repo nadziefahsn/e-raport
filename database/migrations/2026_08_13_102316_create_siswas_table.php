@@ -25,8 +25,7 @@ return new class extends Migration
             $table->string('pekerjaan_ibu');
             $table->text('alamat');
             $table->string('telepon');
-            $table->unsignedBigInteger('kelas_id')->nullable();            
-            $table->enum('semester', ['1','2']);
+            $table->foreignId('kelas_id')->nullable()->constrained('kelas')->nullOnDelete();            
             $table->timestamps();
         });
     }
