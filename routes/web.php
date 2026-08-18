@@ -12,6 +12,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CapaianPerkembanganController;
+use App\Http\Controllers\PengumumanController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -33,4 +34,5 @@ Route::prefix('admin')->group(function () {
         'kelas'=>'kelas'
     ]);
     Route::resource('karakter', KarakterController::class);
+    Route::resource('pengumuman', PengumumanController::class);
 });
