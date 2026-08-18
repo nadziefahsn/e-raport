@@ -11,6 +11,7 @@ use App\Http\Controllers\KarakterController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CapaianPerkembanganController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -25,6 +26,7 @@ Route::prefix('admin')->group(function () {
         'kriteria' => 'kriteriapenilaian',
     ]);
     Route::resource('tahun_ajaran', TahunAjaranController::class);
+    Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
     Route::resource('guru', GuruController::class);
     Route::resource('siswa', SiswaController::class);
     Route::resource('kelas', KelasController::class)->parameters([
