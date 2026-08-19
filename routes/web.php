@@ -36,5 +36,5 @@ Route::prefix('admin')->group(function () {
     ]);
     Route::resource('karakter', KarakterController::class);
     Route::resource('pengumuman', PengumumanController::class);
-Route::resource('indikator', IndikatorController::class);
+    Route::resource('indikator', IndikatorController::class);
 });

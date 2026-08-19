@@ -30,14 +30,14 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{ $jumlahKelas }}</h3>
 
-                <p>New Orders</p>
+                <p>Rombel</p>
               </div>
               <div class="icon">
                 <i class="fas fa-layer-group"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('kelas.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -45,14 +45,14 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{ $jumlahSiswa }}<sup style="font-size: 20px"></sup></h3>
 
-                <p>Bounce Rate</p>
+                <p>Peserta Didik</p>
               </div>
               <div class="icon">
                 <i class="fas fa-users"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('siswa.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -60,14 +60,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{ $jumlahGuru }}</h3>
 
-                <p>User Registrations</p>
+                <p>Guru dan Tendik</p>
               </div>
               <div class="icon">
                 <i class="fas fa-user-tie"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('guru.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -75,18 +75,18 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>{{ $jumlahKelas}}</h3>
 
-                <p>Unique Visitors</p>
+                <p>Ruang Kelas</p>
               </div>
               <div class="icon">
                 <i class="fas fa-building"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('kelas.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
-        </div>
+  <!-- ./col -->
+    </div>
 
         <div class="row">
 
@@ -100,11 +100,49 @@
             </div>
 
             <div class="card-body">
-                
+            <div class="timeline">
+                <div class="time-label">
+                    <span class="bg-success">
+                        Pengumuman Terakhir
+                    </span>
+                </div>
+            @forelse ($pengumumans as $item)
+            <div>
+                <i class="fas fa-envelope bg-primary"></i>
+                    <div class="timeline-item">
+                        <span class="time text-muted">
+                            <i class="fas fa-clock mr-1"></i>
+                            {{ $item->created_at }}
+                        </span>
+                        <h3 class="timeline-header">
+                            <a href="#" class="font-weight-bold text-primary">
+                                {{ $item->user->name }}
+                            </a> 
+                            <span class="text-secondary">{{ $item->judul }}</span>
+                        </h3>
+                        <div class="timeline-body">
+                            {!! $item->isi !!}
+                        </div>
+                        </div>
+                    </div> 
+                @empty
+                    <div>
+                        <i class="fas fa-info bg-secondary"></i>
+                        <div class="timeline-item">
+                            <div class="timeline-body text-muted text-center">
+                                Belum ada pengumuman.
+                            </div>
+                        </div>
+                    </div>
+                @endforelse
+                    <div>
+                        <i class="fas fa-clock bg-gray"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
+    
 
     <div class="col-md-6">
         <div class="card shadow-sm">
