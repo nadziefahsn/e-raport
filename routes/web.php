@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CapaianPerkembanganController;
 use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\AnggotaKelasController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -37,4 +38,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('karakter', KarakterController::class);
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('indikator', IndikatorController::class);
+    Route::resource('anggota-kelas', AnggotaKelasController::class);
 });
