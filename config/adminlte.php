@@ -361,13 +361,8 @@ return [
             ],
             [
                 'text' => 'Anggota Kelas',
-                'url' => '#',
+                'url' => 'admin/anggota-kelas',
                 'icon' => 'fas fa-users',
-            ],
-            [
-                'text' => 'Data Siswa Perkelas',
-                'url' => '#',
-                'icon' => 'fas fa-address-book',
             ],
         ],
     ],
