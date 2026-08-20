@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Siswa;
 use App\Models\Kelas;
-
+use App\Models\Kehadiran;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,6 +19,11 @@ class AnggotaKelas extends Model
         'kelas_id',
     ];
 
+    public function kehadiran()
+    {
+        return $this->hasOne(Kehadiran::class, 'anggota_kelas_id');
+    }
+
     public function siswa()
     {
         return $this->belongsTo(Siswa::class, 'nis_id', 'nis');
@@ -25,6 +31,11 @@ class AnggotaKelas extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
     }
 }

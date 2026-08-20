@@ -392,6 +392,11 @@ return [
             ],
         ],
     ],
+    [
+        'text' => 'Kehadiran', 
+        'url' => 'admin/kehadiran',
+        'icon' => 'fas fa-bullhorn',
+    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',
