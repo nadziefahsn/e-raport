@@ -390,6 +390,11 @@ return [
                 'icon' => 'fas fa-clipboard-list',
                 'url' => 'admin/indikator',
             ],
+            [
+                'text' => 'Kondisi Tubuh',
+                'icon' => 'fas fa-clipboard-list',
+                'url' => 'admin/kondisi-tubuh',
+            ],
         ],
     ],
     ['header' => 'PENGATURAN'],
