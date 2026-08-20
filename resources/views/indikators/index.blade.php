@@ -29,6 +29,8 @@
         ['label' => 'Kode', 'width' => 10],
         'Capaian Perkembangan',
         'Nama Indikator',
+        'Jenjang',
+        'Tahun Ajaran',
         ['label' => 'Aksi', 'no-export' => true, 'width' => 15, 'className' => 'text-center'],
     ];
 
@@ -37,8 +39,13 @@
         'searching' => true,    
         'lengthChange' => true, 
         'columns' => [
-            null, null, null, null,
-            ['orderable' => false] 
+            null, 
+            null, 
+            null,
+            null,
+            null,
+            null,
+            ['orderable' => false]
         ],
     ];
     @endphp
@@ -52,6 +59,8 @@
                     <td><span class="badge badge-info">{{ $item->kode }}</span></td>
                     <td>{{ $item->capaianPerkembangan->capaian_perkembangan ?? '-' }}</td>
                     <td>{{ $item->nama_indikator }}</td>
+                    <td>{{ $item->jenjang ?? '-' }}</td>
+                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" 

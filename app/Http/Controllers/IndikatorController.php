@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Indikator;
 use App\Models\CapaianPerkembangan;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Http\Requests\IndikatorStoreRequest;
 use App\Http\Requests\IndikatorUpdateRequest;
@@ -17,8 +18,9 @@ class IndikatorController extends Controller
     {
         $capaians = CapaianPerkembangan::all();
         $indikators = Indikator::all();
+        $tahunAjarans = TahunAjaran::all();
 
-        return view('indikators.index', compact('capaians','indikators',));
+        return view('indikators.index', compact('capaians','indikators','tahunAjarans'));
     }
 
     /**
