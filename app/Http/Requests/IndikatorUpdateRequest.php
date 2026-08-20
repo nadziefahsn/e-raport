@@ -26,6 +26,8 @@ class IndikatorUpdateRequest extends FormRequest
             'capaian_perkembangan_id' => 'required|exists:capaians,id',
             'kode' => 'required|string|max:255',
             'nama_indikator' => 'required|string|max:255',
+            'jenjang' => 'required|string|max:255',
+            'tahun_ajaran_id' => 'required|exists:tahun_ajarans,id',
         ];
     }
 }

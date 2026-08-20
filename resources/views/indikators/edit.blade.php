@@ -34,6 +34,26 @@
                         <label class="form-label fw-bold">Nama Indikator</label>
                         <textarea name="nama_indikator" class="form-control rounded-3" rows="3" required>{{ $item->nama_indikator }}</textarea>
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="jenjang" class="form-label fw-bold">Jenjang</label>
+                        <select name="jenjang" id="jenjang" class="form-control rounded-3" required>
+                            <option value="" disabled selected>-- Pilih Jenjang --</option>
+                            <option value="TK A">TK A</option>
+                            <option value="TK B">TK B</option>
+                            <option value="PG">PG</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Tahun Ajaran</label>
+                            <select name="tahun_ajaran_id" class="form-control rounded-3" required>
+                                <option value="" disabled selected>-- Pilih Tahun Ajaran --</option>
+                                @foreach($tahunAjarans as $ta)
+                                    <option value="{{ $ta->id }}">
+                                        {{ $ta->tahun_ajaran }} - {{ $ta->semester == '1' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                 </div>
                 <div class="modal-footer border-0 pb-4 px-4">
                     <button type="button" class="btn btn-light py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Kembali</button>
