@@ -16,6 +16,7 @@ use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AnggotaKelasController;
 use App\Http\Controllers\KehadiranController;
+use App\Http\Controllers\KesehatanGigiController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -41,6 +42,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('indikator', IndikatorController::class);
     Route::resource('anggota-kelas', AnggotaKelasController::class);
     Route::resource('kehadiran', KehadiranController::class);
+    Route::resource('gigi', KesehatanGigiController::class);
 });
 
 

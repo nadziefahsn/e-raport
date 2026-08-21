@@ -397,6 +397,11 @@ return [
         'url' => 'admin/kehadiran',
         'icon' => 'fas fa-bullhorn',
     ],
+    [
+        'text' => 'Kesehatan Gigi', 
+        'url' => 'admin/gigi',
+        'icon' => 'fas fa-tooth',
+    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',

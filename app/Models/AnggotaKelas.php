@@ -24,6 +24,11 @@ class AnggotaKelas extends Model
         return $this->hasOne(Kehadiran::class, 'anggota_kelas_id');
     }
 
+    public function kesehatanGigi()
+    {
+        return $this->hasOne(KesehatanGigi::class, 'anggota_kelas_id');
+    }
+
     public function siswa()
     {
         return $this->belongsTo(Siswa::class, 'nis_id', 'nis');
