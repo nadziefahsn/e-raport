@@ -408,15 +408,19 @@ return [
         'icon' => 'fas fa-tooth',
     ],
     [
-<<<<<<< HEAD
         'text' => 'Kesehatan Mulut', 
         'url' => 'admin/mulut',
         'icon' => 'fas fa-smile-beam',
-=======
+    ],
+    [
         'text' => 'Kebersihan Siswa', 
         'url' => 'admin/kebersihan-siswa',
         'icon' => 'fas fa-solid fa-user-shield',
->>>>>>> fitur-kebersihan
+    ],
+    [
+        'text' => 'Kesehatan Telinga', 
+        'url' => 'admin/kesehatan-telinga',
+        'icon' => 'fas fa-solid fa-user-shield',
     ],
     ['header' => 'PENGATURAN'],
     [
