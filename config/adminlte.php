@@ -422,6 +422,11 @@ return [
         'url' => 'admin/kebersihan-siswa',
         'icon' => 'fas fa-solid fa-user-shield',
     ],
+    [
+        'text' => 'Kesehatan Telinga', 
+        'url' => 'admin/kesehatan-telinga',
+        'icon' => 'fas fa-solid fa-user-shield',
+    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',

@@ -21,6 +21,8 @@ use App\Http\Controllers\KondisiTubuhController;
 use App\Http\Controllers\KesehatanMulutController;
 use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
+use App\Http\Controllers\KesehatanTelingaController;
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -50,4 +52,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('mata', KesehatanMataController::class);
     Route::resource('kondisi-tubuh', KondisiTubuhController::class);
     Route::resource('kebersihan-siswa', KebersihanSiswaController::class);
+    Route::resource('kesehatan-telinga', KesehatanTelingaController::class)->parameters([
+    'kesehatan-telinga' => 'telinga'
+    ]);
 });

@@ -8,7 +8,7 @@ use App\Models\Kehadiran;
 use App\Models\KondisiTubuh;
 use App\Models\KesehatanMulut;
 use App\Models\KebersihanSiswa;
-
+use App\Models\KesehatanTelinga;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -39,7 +39,6 @@ class AnggotaKelas extends Model
         return $this->hasOne(KesehatanGigi::class, 'anggota_kelas_id');
     }
 
-
     public function kesehatanMulut()
     {
         return $this->hasOne(KesehatanMulut::class, 'anggota_kelas_id');
@@ -68,5 +67,10 @@ class AnggotaKelas extends Model
     public function kondisiTubuh()
     {
         return $this->hasOne(KondisiTubuh::class, 'anggota_kelas_id');
+    }
+
+    public function kesehatanTelinga()
+    {
+        return $this->hasOne(KesehatanTelinga::class, 'anggota_kelas_id');
     }
 }
