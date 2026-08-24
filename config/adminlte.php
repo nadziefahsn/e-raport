@@ -407,6 +407,11 @@ return [
         'url' => 'admin/gigi',
         'icon' => 'fas fa-tooth',
     ],
+    [
+        'text' => 'Kebersihan Siswa', 
+        'url' => 'admin/kebersihan-siswa',
+        'icon' => 'fas fa-solid fa-user-shield',
+    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',
