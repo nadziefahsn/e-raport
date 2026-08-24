@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class KondisiTubuh extends Model
 {
+    protected $table = 'kondisi_tubuhs';
+    
     protected $fillable = [
         'anggota_kelas_id',
         'tahun_ajaran_id',

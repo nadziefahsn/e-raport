@@ -407,6 +407,11 @@ return [
         'url' => 'admin/gigi',
         'icon' => 'fas fa-tooth',
     ],
+    [
+        'text' => 'Kesehatan Mulut', 
+        'url' => 'admin/mulut',
+        'icon' => 'fas fa-smile-beam',
+    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',

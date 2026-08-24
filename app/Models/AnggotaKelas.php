@@ -6,6 +6,7 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\Kehadiran;
 use App\Models\KondisiTubuh;
+use App\Models\KesehatanMulut;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,6 +29,11 @@ class AnggotaKelas extends Model
     public function kesehatanGigi()
     {
         return $this->hasOne(KesehatanGigi::class, 'anggota_kelas_id');
+    }
+
+    public function kesehatanMulut()
+    {
+        return $this->hasOne(KesehatanMulut::class, 'anggota_kelas_id');
     }
 
     public function siswa()

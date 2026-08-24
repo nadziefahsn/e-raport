@@ -18,6 +18,8 @@ use App\Http\Controllers\AnggotaKelasController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\KesehatanGigiController;
 use App\Http\Controllers\KondisiTubuhController;
+use App\Http\Controllers\KesehatanMulutController;
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -43,5 +45,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('anggota-kelas', AnggotaKelasController::class);
     Route::resource('kehadiran', KehadiranController::class);
     Route::resource('gigi', KesehatanGigiController::class);
+    Route::resource('mulut', KesehatanMulutController::class);
     Route::resource('kondisi-tubuh', KondisiTubuhController::class);
 });
