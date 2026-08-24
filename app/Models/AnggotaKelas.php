@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\Kehadiran;
+use App\Models\KondisiTubuh;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -42,5 +43,10 @@ class AnggotaKelas extends Model
     public function tahunAjaran()
     {
         return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
+    }
+
+    public function kondisiTubuh()
+    {
+        return $this->hasOne(KondisiTubuh::class, 'anggota_kelas_id');
     }
 }

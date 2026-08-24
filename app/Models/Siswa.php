@@ -8,7 +8,7 @@ use App\Models\Kelas;
 class Siswa extends Model
 {
     protected $table = 'siswas';
-    public $incrementing = 'false';
+    public $incrementing = false;
     protected $primaryKey = 'nis';
     protected $keyType = 'string';
 
