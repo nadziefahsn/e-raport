@@ -2,44 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\KondisiTubuhStoreRequest;
+use App\Models\KondisiTubuh;
 use App\Models\AnggotaKelas;
 use App\Models\Kelas;
-use App\Models\KondisiTubuh;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
-use App\Http\Requests\KondisiTubuhStoreRequest;
 
 class KondisiTubuhController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kelas = Kelas::first();
-
-        if (!$kelas) {
-            return redirect()->back()->with('error', 'Data kelas masih kosong. Silakan isi data kelas terlebih dahulu.');
-        }
-
-        // 2. Ambil Tahun Ajaran Aktif/Terbaru
+        $guruId = $request->input('guru_id');
+        $kelas = null;
+        $kondisiTubuhs = collect();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-        // 3. Ambil Anggota Kelas beserta relasi Siswa, Kelas, dan Kondisi Tubuh
-        $anggotaKelas = AnggotaKelas::with([
-            'siswa',
-            'kelas',
-            'kondisiTubuh' => function ($query) use ($tahunAjaranAktif) {
-                if ($tahunAjaranAktif) {
-                    $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
-                }
-            }
-        ])
-        ->where('kelas_id', $kelas->id)
-        ->get();
+        if ($guruId) {
+            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
 
-        // 4. Kirim data ke View
-        return view('kondisi_tubuhs.index', compact('anggotaKelas', 'kelas', 'tahunAjaranAktif'));
+            if ($kelas) {
+                $kondisiTubuhs = AnggotaKelas::where('kelas_id', $kelas->id)
+                    ->with(['siswa', 'kelas', 'kondisiTubuh' => function($query) use ($tahunAjaranAktif) {
+                        if ($tahunAjaranAktif) {
+                            $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+                        }
+                    }])
+                    ->get();
+            }
+        }
+
+        return view('kondisi_tubuhs.index', compact('kondisiTubuhs', 'kelas', 'guruId', 'tahunAjaranAktif'));
     }
 
     /**
@@ -61,7 +57,7 @@ class KondisiTubuhController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(KondisiTubuh $kondisiTubuh)
     {
         //
     }
@@ -69,23 +65,49 @@ class KondisiTubuhController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(KondisiTubuh $kondisiTubuh)
     {
         //
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update/Store the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $guruId = $request->input('guru_id');
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
+
+        if (!$tahunAjaranAktif) {
+            return redirect()->back()->with('error', 'Tahun ajaran aktif belum ditentukan.');
+        }
+
+        $anggotaIds = $request->input('anggota_kelas_id', []);
+        $beratBadan = $request->input('berat_badan', []);
+        $tinggiBadan = $request->input('tinggi_badan', []);
+
+        foreach ($anggotaIds as $index => $anggotaId) {
+            KondisiTubuh::updateOrCreate(
+                [
+                    'anggota_kelas_id' => $anggotaId,
+                    'tahun_ajaran_id'  => $tahunAjaranAktif->id,
+                ],
+                [
+                    'berat_badan'  => $beratBadan[$index] ?? null,
+                    'tinggi_badan' => $tinggiBadan[$index] ?? null,
+                ]
+            );
+        }
+
+        return redirect()
+            ->route('kondisi-tubuh.index', ['guru_id' => $guruId])
+            ->with('success', 'Data kondisi tubuh berhasil disimpan');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(KondisiTubuh $kondisiTubuh)
     {
         //
     }

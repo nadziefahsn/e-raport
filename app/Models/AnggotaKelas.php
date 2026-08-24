@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Siswa;
 use App\Models\Kelas;
+use App\Models\KondisiTubuh;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,5 +27,10 @@ class AnggotaKelas extends Model
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+    }
+
+    public function kondisiTubuh()
+    {
+        return $this->hasOne(KondisiTubuh::class, 'anggota_kelas_id');
     }
 }

@@ -31,13 +31,17 @@
     </div>
 @endif
 
-<form action="{{ route('kondisi-tubuh.store') }}" method="POST">
+<form action="{{ route('kondisi-tubuh.update', 0) }}" method="POST">
     @csrf
+    @method('PUT')
     
+    <!-- Send Guru ID Back -->
+    <input type="hidden" name="guru_id" value="{{ $guruId }}">
+
     <div class="card">
         <div class="card-header d-flex align-items-center">
             <h3 class="card-title mb-0">
-                <i class="fas fa-person mr-2"></i>Data Kondisi Tubuh Kelas
+                <i class="fas fa-heartbeat mr-2"></i>Data Kondisi Tubuh Kelas {{ $kelas->nama_kelas ?? '' }}
             </h3>
         </div>
 
@@ -57,7 +61,7 @@
             'order' => [[0, 'asc']],
             'searching' => true,    
             'lengthChange' => true, 
-            'paging' => false, // Dibuat false agar semua siswa tampil saat disimpan sekaligus
+            'paging' => false, 
             'columns' => [
                 null, 
                 null, 
@@ -73,50 +77,48 @@
 
         <div class="card-body p-3">
             <x-adminlte-datatable id="tableKondisiTubuh" :heads="$heads" :config="$config" stripe hoverable buffered text-sm>
-                @forelse($anggotaKelas as $index => $item)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td><span class="badge badge-secondary">{{ $item->siswa->nisn ?? $item->siswa->nis ?? '-' }}</span></td>
-                        <td>{{ $item->siswa->nama ?? '-' }}</td>
-                        <td class="text-center">{{ $item->siswa->jenis_kelamin ?? '-' }}</td>
-                        <td class="text-center">{{ $kelas->nama_kelas ?? $item->kelas->nama_kelas ?? '-' }}</td>
-                        <td class="text-center">{{ $tahunAjaranAktif->semester ?? '-' }}</td>
-                        
-                        <!-- Input Berat Badan -->
-                        <td>
-                            <div class="input-group input-group-sm">
-                                <input type="number" 
-                                       step="0.1" 
-                                       name="kondisi[{{ $index }}][berat_badan]" 
-                                       value="{{ old('kondisi.'.$index.'.berat_badan', $item->kondisiTubuh->berat_badan ?? '') }}" 
-                                       class="form-control text-center" 
-                                       placeholder="...">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">kg</span>
-                                </div>
+                @forelse($kondisiTubuhs as $index => $item)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>
+                        <span class="badge badge-secondary">
+                            {{ $item->siswa->nis ?? '-' }}
+                        </span>
+                    </td>
+                    <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
+                    <td class="text-center">{{ $item->siswa->jenis_kelamin ?? '-' }}</td>
+                    <td class="text-center">{{ $item->kelas->rombel ?? $kelas->rombel ?? '-' }}</td>
+                    <td class="text-center">{{ $tahunAjaranAktif->semester ?? '-' }}</td>
+                    <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <input type="number" 
+                                step="0.1" 
+                                name="berat_badan[]" 
+                                value="{{ old('berat_badan.'.$index, $item->kondisiTubuh->berat_badan ?? '') }}" 
+                                class="form-control text-center" 
+                                placeholder="...">
+                            <div class="input-group-append">
+                                <span class="input-group-text">kg</span>
                             </div>
-                        </td>
-
-                        <!-- Input Tinggi Badan -->
-                        <td>
-                            <div class="input-group input-group-sm">
-                                <input type="number" 
-                                       step="0.1" 
-                                       name="kondisi[{{ $index }}][tinggi_badan]" 
-                                       value="{{ old('kondisi.'.$index.'.tinggi_badan', $item->kondisiTubuh->tinggi_badan ?? '') }}" 
-                                       class="form-control text-center" 
-                                       placeholder="...">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">cm</span>
-                                </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group input-group-sm">
+                            <input type="number" 
+                                step="0.1" 
+                                name="tinggi_badan[]" 
+                                value="{{ old('tinggi_badan.'.$index, $item->kondisiTubuh->tinggi_badan ?? '') }}" 
+                                class="form-control text-center" 
+                                placeholder="...">
+                            <div class="input-group-append">
+                                <span class="input-group-text">cm</span>
                             </div>
-                        </td>
-
-                        <!-- Hidden Input ID Anggota Kelas -->
-                        <input type="hidden" name="kondisi[{{ $index }}][anggota_kelas_id]" value="{{ $item->id }}">
-                    </tr>
-                @empty
-                @endforelse
+                        </div>
+                    </td>
+                </tr>
+            @empty
+            @endforelse
             </x-adminlte-datatable>
         </div>
 
@@ -154,7 +156,7 @@
     .table thead th {
         font-weight: 600 !important;
         text-align: center;
-        background-color: #17a2b8 !important; /* Biru Toska khas AdminLTE (bg-info) */
+        background-color: #17a2b8 !important;
         color: white !important;
     }
 </style>
