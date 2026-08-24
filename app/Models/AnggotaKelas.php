@@ -6,11 +6,9 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\Kehadiran;
 use App\Models\KondisiTubuh;
-<<<<<<< HEAD
 use App\Models\KesehatanMulut;
-=======
 use App\Models\KebersihanSiswa;
->>>>>>> fitur-kebersihan
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -30,20 +28,26 @@ class AnggotaKelas extends Model
         return $this->hasOne(Kehadiran::class, 'anggota_kelas_id');
     }
 
+    public function kesehatanMata()
+    {
+        return $this->hasOne(KesehatanMata::class, 'anggota_kelas_id');
+    }
+
+
     public function kesehatanGigi()
     {
         return $this->hasOne(KesehatanGigi::class, 'anggota_kelas_id');
     }
 
-<<<<<<< HEAD
+
     public function kesehatanMulut()
     {
         return $this->hasOne(KesehatanMulut::class, 'anggota_kelas_id');
-=======
+    }
+
     public function kebersihanSiswa()
     {
         return $this->hasOne(KebersihanSiswa::class, 'anggota_kelas_id');
->>>>>>> fitur-kebersihan
     }
 
     public function siswa()

@@ -4,21 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KebersihanSiswa extends Model
+class KesehatanMata extends Model
 {
-    protected $table = 'kebersihans';
-    
+    protected $table = 'matas';
+
     protected $fillable = [
         'anggota_kelas_id',
-        'hasil_pakaian',
-        'hasil_kuku',
-        'hasil_rambut',
-        'hasil_kulit',
-        'keterangan',
+        'ketajaman_kanan',
+        'ketajaman_kiri',
+        'buta_warna',
+        'radang_kanan',
+        'radangkiri',
+        'juling_kanan',
+        'juling_kiri',
     ];
 
     public function anggota_kelas_id()
     {
         return $this->belongsTo(AnggotaKelas::class, 'anggota_kelas_id');
     }
+
 }
