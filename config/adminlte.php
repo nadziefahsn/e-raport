@@ -427,6 +427,11 @@ return [
         'url' => 'admin/kesehatan-telinga',
         'icon' => 'fas fa-solid fa-user-shield',
     ],
+    [
+        'text' => 'Nilai Karakter', 
+        'url' => 'admin/nilai-karakter',
+        'icon' => 'fas fa-solid fa-user-shield',
+    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',
