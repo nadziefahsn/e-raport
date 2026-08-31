@@ -427,6 +427,52 @@ return [
         'url' => 'admin/kesehatan-telinga',
         'icon' => 'fas fa-solid fa-user-shield',
     ],
+    [
+    'text' => 'Indikator Capaian',
+    'icon' => 'fas fa-clipboard-check',
+    'submenu' => [
+        [
+            'text' => 'Aqidah',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-aqidah', 
+        ],
+        [
+            'text' => 'Ibadah',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-ibadah', 
+        ],
+        [
+            'text' => 'Akhlaq',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-akhlaq', 
+        ],
+        [
+            'text' => 'Disiplin dan Kendali diri',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-disiplin', 
+        ],
+        [
+            'text' => 'Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-al-quran', 
+        ],
+        [
+            'text' => 'Wawasan Keagamaan',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-wawasan-luas', 
+        ],
+        [
+            'text' => 'Kesehatan Kebugaran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-kesehatan-kebugaran', 
+        ],
+        [
+            'text' => 'Life Skill dan Wirausaha',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/indikator-life-skill', 
+        ],
+    ],
+],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',
