@@ -473,12 +473,12 @@ return [
         ],
     ],
 ],
-=======
+    [
         'text' => 'Nilai Karakter', 
         'url' => 'admin/nilai-karakter',
         'icon' => 'fas fa-solid fa-user-shield',
     ],
->>>>>>> fitur-nilai-karakter
+
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',
