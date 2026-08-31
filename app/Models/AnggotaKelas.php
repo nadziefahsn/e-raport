@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Siswa;
-use App\Models\Kelas;
-use App\Models\Kehadiran;
-use App\Models\KondisiTubuh;
-use App\Models\KesehatanMulut;
-use App\Models\KebersihanSiswa;
-use App\Models\KesehatanTelinga;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Siswa;
+use App\Models\Kelas; 
+use App\Models\NilaiKarakter;
 
 class AnggotaKelas extends Model
 {
@@ -72,5 +68,9 @@ class AnggotaKelas extends Model
     public function kesehatanTelinga()
     {
         return $this->hasOne(KesehatanTelinga::class, 'anggota_kelas_id');
+    }
+    public function nilaiKarakter()
+    {
+        return $this->hasMany(NilaiKarakter::class, 'anggota_kelas_id');
     }
 }

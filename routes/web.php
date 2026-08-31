@@ -22,6 +22,7 @@ use App\Http\Controllers\KondisiTubuhController;
 use App\Http\Controllers\KesehatanMulutController;
 use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
+use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 
 Route::get('/', function () {
@@ -41,7 +42,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('guru', GuruController::class);
     Route::resource('siswa', SiswaController::class);
     Route::resource('kelas', KelasController::class)->parameters([
-        'kelas'=>'kelas'
+        'kelas' => 'kelas'
     ]);
     Route::resource('karakter', KarakterController::class);
     Route::resource('pengumuman', PengumumanController::class);
@@ -55,7 +56,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('kebersihan-siswa', KebersihanSiswaController::class);
     Route::resource('indikator-capaian', IndikatorCapaianController::class);
     Route::get('/indikator-{kategori}', [IndikatorCapaianController::class, 'index'])->name('indikator-capaian.index');
+    Route::resource('nilai-karakter', NilaiKarakterController::class);
     Route::resource('kesehatan-telinga', KesehatanTelingaController::class)->parameters([
-    'kesehatan-telinga' => 'telinga'
+        'kesehatan-telinga' => 'telinga'
     ]);
 });
