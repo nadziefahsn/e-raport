@@ -20,17 +20,22 @@ class NilaiKarakterController extends Controller
         $kelas = null;
         $anggotaKelas = collect();
         $karakters = Karakter::all(); 
+        $nilaiExisting = [];
+
         if ($guruId) {
             $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
 
             if ($kelas) {
                 $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
-                    ->with(['siswa', 'kelas', 'nilaiKarakter'])
+                    ->with(['siswa', 'kelas'])
                     ->get();
+
+                // Buat matriks data nilai berdasarkan anggota_kelas_id dan karakter_id
+                
             }
         }
 
-        return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'guruId', 'karakters'));
+        return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'guruId', 'karakters', 'nilaiExisting'));
     }
 
     /**
@@ -46,7 +51,31 @@ class NilaiKarakterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $guruId = $request->input('guru_id');
+        $nilaiData = $request->input('nilai');
+
+        if ($nilaiData) {
+        foreach ($nilaiData as $anggotaKelasId => $karakterArray) {
+            foreach ($karakterArray as $karakterId => $nilaiValue) {
+                if (empty($nilaiValue)) {
+                    continue;
+                }
+                NilaiKarakter::updateOrCreate(
+                    [
+                        'anggota_kelas_id' => $anggotaKelasId,
+                        'karakter_id'      => $karakterId,
+                    ],
+                    [
+                        'nilai'            => $nilaiValue,
+                    ]
+                );
+            }
+        }
+    }
+
+    return redirect()
+        ->route('nilai-karakter.index', ['guru_id' => $guruId])
+        ->with('success', 'Data nilai karakter berhasil disimpan');
     }
 
     /**

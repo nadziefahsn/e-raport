@@ -14,7 +14,6 @@
 
 @section('content')
 <div class="container-fluid">
-    {{-- Notifikasi Sukses --}}
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -24,11 +23,9 @@
         </div>
     @endif
 
-    <form action="{{ route('nilai-karakter.update', 1) }}" method="POST">
-        @csrf
-        @method('PUT')
-        
-        <input type="hidden" name="guru_id" value="{{ $guruId }}">
+    <form action="{{ route('nilai-karakter.store') }}" method="POST">
+    @csrf
+    <input type="hidden" name="guru_id" value="{{ $guruId }}">
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header bg-white py-3 px-4">
@@ -65,8 +62,10 @@
 
                                 @foreach($karakters as $karakter)
                                     @php
-                                        $nilaiSiswa = $item->nilaiKarakter ? $item->nilaiKarakter->firstWhere('karakter_id', $karakter->id) : null;
-                                        $selectedValue = old('nilai.' . $item->id . '.' . $karakter->id, $nilaiSiswa->nilai ?? '');
+                                        $nilaiSiswa = $item->nilaiKarakter->first(function ($itemNilai) use ($karakter) {
+                                            return $itemNilai->karakter_id == $karakter->id;
+                                        });
+                                        $selectedValue = old('nilai.' . $item->id . '.' . $karakter->id, $nilaiSiswa ? $nilaiSiswa->nilai : '');
                                     @endphp
                                     <td>
                                         <select name="nilai[{{ $item->id }}][{{ $karakter->id }}]" class="form-control text-center">

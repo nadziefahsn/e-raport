@@ -429,7 +429,7 @@ return [
     ],
     [
     'text' => 'Indikator Capaian',
-    'icon' => 'fas fa-clipboard-check',
+    'icon' => 'fas fa-check-circle',
     'submenu' => [
         [
             'text' => 'Aqidah',
