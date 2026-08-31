@@ -2,37 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\AnggotaKelas;
-use App\Models\NilaiKarakter;
+use App\Http\Requests\KarakterStoreRequest;
+use App\Http\Requests\KarakterUpdateRequest;
 use App\Models\Karakter;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class KarakterController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $user = Auth::user();
-
         $karakters = Karakter::all();
-        // Memanggil data tanpa relasi 'with' agar tidak bentrok dengan database
-        $anggotaKelas = AnggotaKelas::all();
 
-      return view('karakters.index', compact('karakters', 'anggotaKelas'));
+        return view('karakters.index', compact('karakters'));
     }
 
-    public function store(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        if ($request->has('nilai')) {
-            foreach ($request->nilai as $item) {
-                NilaiKarakter::updateOrCreate(
-                    ['anggota_kelas_id' => $item['anggota_kelas_id']],
-                    ['skor' => $item['skor']]
-                );
-            }
-            return redirect()->back()->with('success', 'Nilai karakter berhasil disimpan!');
-        }
+        return view('karakters.index');
+    }
 
-        return redirect()->back()->with('error', 'Tidak ada data nilai yang dikirim.');
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(KarakterStoreRequest $request)
+    {
+        $data = $request-> validated();
+
+        Karakter::create($data);
+
+        return redirect()
+            ->route('karakter.index')
+            ->with('success', 'Data karakter berhasil disimpan');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Karakter $karakter)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Karakter $karakter)
+    {
+        return view('karakter.index', compact('karakters'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(KarakterUpdateRequest $request, Karakter $karakter)
+    {
+        $data = $request->validated();
+
+        $karakter->update($data);
+
+        return redirect()
+            ->route('karakter.index')
+            ->with('success', 'Data karakter berhasil diperbarui.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Karakter $karakter)
+    {
+        $karakter->delete();
+
+        return redirect()
+            ->route('karakter.index')
+            ->with('success', 'Data karakter berhasil dihapus.');
     }
 }

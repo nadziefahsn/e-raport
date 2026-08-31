@@ -2,63 +2,107 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use DB;
+use App\Http\Requests\NilaiKarakterUpdateRequest; // Sesuaikan dengan nama Request kamu
 use App\Models\NilaiKarakter;
+use Illuminate\Http\Request;
+use App\Models\AnggotaKelas;
+use App\Models\Kelas;
+use App\Models\Karakter;
 
 class NilaiKarakterController extends Controller
 {
-    // Fungsi untuk menampilkan tabel siswa
-    public function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
     {
-        $id_kelas = auth()->user()->id_kelas; 
-        $id_guru  = auth()->user()->id_guru;
+        $guruId = $request->query('guru_id');
+        $kelas = null;
+        $anggotaKelas = collect();
+        $karakters = Karakter::all(); 
+        if ($guruId) {
+            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
 
-        $siswaList = DB::table('anggota_kelas')
-            ->join('siswas', 'anggota_kelas.id_siswa', '=', 'siswas.id_siswa')
-            ->join('kelas', 'anggota_kelas.id_kelas', '=', 'kelas.id_kelas')
-            ->leftJoin('nilai_karakters', function($join) use ($id_guru) {
-                $join->on('siswa.id_siswa', '=', 'nilai_karakter.id_siswa')
-                     ->where('nilai_karakter.id_guru', '=', $id_guru);
-            })
-            ->where('anggota_kelas.id_kelas', $id_kelas)
-            ->select(
-                'siswa.id_siswa',
-                'siswa.nomor_induk',
-                'siswa.nama_siswa',
-                'kelas.nama_kelas',
-                // Disesuaikan mengambil 4 karakter
-                'nilai_karakter.karakter_1',
-                'nilai_karakter.karakter_2',
-                'nilai_karakter.karakter_3',
-                'nilai_karakter.karakter_4'
-            )
-            ->get();
-
-        return view('nilai_karakter.index', compact('siswaList'));
-    }
-
-    // Fungsi untuk menyimpan nilai saat tombol Simpan diklik
-    public function store(Request $request)
-    {
-        $id_guru = auth()->user()->id_guru;
-
-        foreach ($request->nilai as $data) {
-            // Menyimpan/update 4 kolom karakter sekaligus
-            NilaiKarakter::updateOrCreate(
-                [
-                    'id_siswa' => $data['id_siswa'],
-                    'id_guru'  => $id_guru,
-                ],
-                [
-                    'karakter_1' => $data['karakter_1'] ?? null,
-                    'karakter_2' => $data['karakter_2'] ?? null,
-                    'karakter_3' => $data['karakter_3'] ?? null,
-                    'karakter_4' => $data['karakter_4'] ?? null,
-                ]
-            );
+            if ($kelas) {
+                $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
+                    ->with(['siswa', 'kelas', 'nilaiKarakter'])
+                    ->get();
+            }
         }
 
-        return redirect()->back()->with('success', 'Nilai berhasil disimpan!');
+        return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'guruId', 'karakters'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(NilaiKarakter $nilaiKarakter)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(NilaiKarakter $nilaiKarakter)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(NilaiKarakterUpdateRequest $request, $id = null)
+    {
+        $validated = $request->validated();
+        $guruId = $request->input('guru_id');
+
+        if (isset($validated['nilai'])) {
+            foreach ($validated['nilai'] as $anggotaKelasId => $karakterArray) {
+                foreach ($karakterArray as $karakterId => $nilaiValue) {
+                    if (empty($nilaiValue)) {
+                        continue;
+                    }
+
+                    NilaiKarakter::updateOrCreate(
+                        [
+                            'anggota_kelas_id' => $anggotaKelasId,
+                            'karakter_id'      => $karakterId,
+                        ],
+                        [
+                            'nilai'            => $nilaiValue,
+                        ]
+                    );
+                }
+            }
+        }
+
+        return redirect()
+            ->route('nilai_karakters.index', ['guru_id' => $guruId])
+            ->with('success', 'Data nilai karakter berhasil disimpan');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(NilaiKarakter $nilaiKarakter)
+    {
+        //
     }
 }

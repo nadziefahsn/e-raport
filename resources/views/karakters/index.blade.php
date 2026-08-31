@@ -3,18 +3,16 @@
 @section('title', 'Karakter')
 
 @section('content_header')
-    <h1>Karakter & Penilaian</h1>
+    <h1>Karakter</h1>
 @stop
 
 @section('content')
-
-<!-- CARD 1: MASTER DATA KARAKTER (KODINGAN LAMA KAMU - AMAN) -->
-<div class="card mb-4">
+<div class="card">
     <div class="card-header d-flex align-items-center">
-        <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Data Karakter</h3>
+        <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Data Kelas</h3>
         <div class="card-tools ml-auto">
             <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKarakter">
-                <i class="fas fa-plus"></i> Tambah Jenis Karakter
+                <i class="fas fa-plus"></i>
             </button>
         </div>
     </div>
@@ -61,51 +59,6 @@
             @empty
             @endforelse
         </x-adminlte-datatable>
-    </div>
-</div>
-
-<!-- CARD 2: FORM PENILAIAN KARAKTER SISWA (DITAMBAHKAN DI SINI) -->
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title mb-0"><i class="fas fa-users-cog mr-2"></i>Input Nilai Karakter Peserta Didik</h3>
-    </div>
-    <div class="card-body">
-        @if(isset($anggotaKelas) && count($anggotaKelas) > 0)
-        <form action="{{ route('karakter.store') }}" method="POST">
-            @csrf
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th style="width: 50px;">No</th>
-                        <th>Nama Peserta Didik</th>
-                        <th>Nilai / Capaian Karakter</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($anggotaKelas as $index => $item)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td><strong>{{ $item->siswa->nama_lengkap ?? ($item->siswa->nama ?? 'Nama Siswa') }}</strong></td>
-                        <td>
-                            <input type="hidden" name="nilai[{{ $index }}][anggota_kelas_id]" value="{{ $item->id }}">
-                            <select name="nilai[{{ $index }}][skor]" class="form-control">
-                                <option value="Sangat Baik">Sangat Baik (SB)</option>
-                                <option value="Baik" selected>Baik (B)</option>
-                                <option value="Cukup">Cukup (C)</option>
-                                <option value="Perlu Bimbingan">Perlu Bimbingan (PB)</option>
-                            </select>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save mr-1"></i> Simpan Nilai Karakter</button>
-        </form>
-        @else
-        <div class="alert alert-info mb-0">
-            <i class="fas fa-info-circle mr-1"></i> Data anggota kelas / peserta didik belum tersedia.
-        </div>
-        @endif
     </div>
 </div>
 
@@ -195,6 +148,6 @@
 
 @section('js')
 <script>
-    console.log("Halaman Karakter & Penilaian berhasil dimuat.");
+    console.log("Halaman Peserta Didik berhasil dimuat.");
 </script>
 @stop

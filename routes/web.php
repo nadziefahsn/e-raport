@@ -53,11 +53,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('mata', KesehatanMataController::class);
     Route::resource('kondisi-tubuh', KondisiTubuhController::class);
     Route::resource('kebersihan-siswa', KebersihanSiswaController::class);
-    
-    // Resource nilai-karakter & route simpan
     Route::resource('nilai-karakter', NilaiKarakterController::class);
-    Route::post('/nilai-karakter/simpan', [NilaiKarakterController::class, 'store'])->name('nilai-karakter.store');
-
     Route::resource('kesehatan-telinga', KesehatanTelingaController::class)->parameters([
         'kesehatan-telinga' => 'telinga'
     ]);
