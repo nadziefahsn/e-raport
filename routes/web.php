@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\KriteriaPenilaianController;
@@ -38,6 +40,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('kriteria', KriteriaPenilaianController::class)->parameters([
         'kriteria' => 'kriteriapenilaian',
     ]);
+
     Route::resource('tahun_ajaran', TahunAjaranController::class);
     Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
     Route::resource('guru', GuruController::class);
