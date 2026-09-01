@@ -425,11 +425,11 @@ return [
     [
         'text' => 'Kesehatan Telinga', 
         'url' => 'admin/kesehatan-telinga',
-        'icon' => 'fas fa-solid fa-user-shield',
+        'icon' => 'fas fa-deaf',
     ],
     [,
     'text' => 'Indikator Capaian',
-    'icon' => 'fas fa-clipboard-check',
+    'icon' => 'fas fa-check-circle',
     'submenu' => [
         [
             'text' => 'Aqidah',
@@ -476,7 +476,7 @@ return [
     [
         'text' => 'Nilai Karakter', 
         'url' => 'admin/nilai-karakter',
-        'icon' => 'fas fa-solid fa-user-shield',
+        'icon' => 'fas fa-star',
     ],
 
     ['header' => 'PENGATURAN'],
