@@ -474,11 +474,56 @@ return [
     ],
 ],
     [
+    'text' => 'Input Nilai Capaian',
+    'icon' => 'fas fa-check-circle',
+    'submenu' => [
+        [
+            'text' => 'Aqidah',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/aqidah', 
+        ],
+        [
+            'text' => 'Ibadah',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/ibadah', 
+        ],
+        [
+            'text' => 'Akhlaq',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/akhlaq', 
+        ],
+        [
+            'text' => 'Disiplin',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/disiplin', 
+        ],
+        [
+            'text' => 'Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/al-quran', 
+        ],
+        [
+            'text' => 'Keagamaan',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/keagamaan', 
+        ],
+        [
+            'text' => 'Kesehatan & Kebugaran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/kesehatan-kebugaran', 
+        ],
+        [
+            'text' => 'Life Skill',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/life-skill', 
+        ],
+    ],
+],
+    [
         'text' => 'Nilai Karakter', 
         'url' => 'admin/nilai-karakter',
         'icon' => 'fas fa-star',
     ],
-
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',

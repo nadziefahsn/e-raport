@@ -29,8 +29,6 @@ class NilaiKarakterController extends Controller
                 $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
                     ->with(['siswa', 'kelas'])
                     ->get();
-
-                // Buat matriks data nilai berdasarkan anggota_kelas_id dan karakter_id
                 
             }
         }
