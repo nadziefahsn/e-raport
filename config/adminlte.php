@@ -427,7 +427,7 @@ return [
         'url' => 'admin/kesehatan-telinga',
         'icon' => 'fas fa-solid fa-user-shield',
     ],
-    [
+    [,
     'text' => 'Indikator Capaian',
     'icon' => 'fas fa-clipboard-check',
     'submenu' => [
