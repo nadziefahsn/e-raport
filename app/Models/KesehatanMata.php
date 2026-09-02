@@ -14,7 +14,7 @@ class KesehatanMata extends Model
         'ketajaman_kiri',
         'buta_warna',
         'radang_kanan',
-        'radangkiri',
+        'radang_kiri',
         'juling_kanan',
         'juling_kiri',
     ];

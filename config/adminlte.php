@@ -475,7 +475,7 @@ return [
 ],
     [
     'text' => 'Input Nilai Capaian',
-    'icon' => 'fas fa-check-circle',
+    'icon' => 'fas fa-chart-line',
     'submenu' => [
         [
             'text' => 'Aqidah',
