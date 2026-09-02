@@ -368,7 +368,7 @@ return [
     ],
     [
         'text' => 'Penilaian',
-        'icon' => 'fas fa-clipboard-check',
+        'icon' => 'fas fa-clipboard-list',
         'submenu' => [
             [
                 'text' => 'Kriteria Penilaian',
@@ -392,15 +392,15 @@ return [
             ],
             [
                 'text' => 'Kondisi Tubuh',
-                'icon' => 'fas fa-clipboard-list',
+                'icon' => "fas fa-user",
                 'url' => 'admin/kondisi-tubuh',
             ],
         ],
     ],
     [
-        'text' => 'Kehadiran', 
+        'text' => 'Rekap Kehadiran', 
         'url' => 'admin/kehadiran',
-        'icon' => 'fas fa-bullhorn',
+        'icon' => 'fas fa-calendar-check',
     ],
     [
         'text' => 'Kesehatan Gigi', 
@@ -415,7 +415,7 @@ return [
     [
         'text' => 'Kesehatan Mata', 
         'url' => 'admin/mata',
-        'icon' => 'fas fa-eye mr-2',
+        'icon' => 'fas fa-eye',
     ],
     [
         'text' => 'Kebersihan Siswa', 
@@ -425,7 +425,12 @@ return [
     [
         'text' => 'Kesehatan Telinga', 
         'url' => 'admin/kesehatan-telinga',
-        'icon' => 'fas fa-deaf',
+        'icon' => 'fas fa-assistive-listening-systems',
+    ],
+    [
+        'text' => 'Data Karakter', 
+        'url' => 'admin/data-karakter',
+        'icon' => 'fas fa-check-circle',
     ],
     [
     'text' => 'Indikator Capaian',
@@ -474,6 +479,11 @@ return [
     ],
 ],
     [
+        'text' => 'Nilai Karakter', 
+        'url' => 'admin/nilai-karakter',
+        'icon' => 'fas fa-star',
+    ],
+    [
     'text' => 'Input Nilai Capaian',
     'icon' => 'fas fa-chart-line',
     'submenu' => [
@@ -519,11 +529,6 @@ return [
         ],
     ],
 ],
-    [
-        'text' => 'Nilai Karakter', 
-        'url' => 'admin/nilai-karakter',
-        'icon' => 'fas fa-star',
-    ],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',

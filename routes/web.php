@@ -17,6 +17,7 @@ use App\Http\Controllers\CapaianPerkembanganController;
 use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AnggotaKelasController;
+use App\Http\Controllers\DataKarakterController;
 use App\Http\Controllers\HasilCapaianController;
 use App\Http\Controllers\IndikatorCapaianController;
 use App\Http\Controllers\KehadiranController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -66,4 +68,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('kesehatan-telinga', KesehatanTelingaController::class)->parameters([
         'kesehatan-telinga' => 'telinga'
     ]);
+    Route::resource('data-karakter', DataKarakterController::class);
 });
