@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Data Kelas')
+@section('title', 'Kelas')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Data Kelas</h1>
+    <h1 class="m-0">Data Kelas Dan Pembimbing</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        <li class="breadcrumb-item active">Kelas</li>
+        <li class="breadcrumb-item active">Data Kelas Dan Pembimbing</li>
     </ol>
 </div>
 @stop
@@ -15,7 +15,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex align-items-center">
-        <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Data Kelas</h3>
+        <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Data Kelas Dan Pembimbing</h3>
         <div class="card-tools ml-auto">
             <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKelas">
                 <i class="fas fa-plus"></i>

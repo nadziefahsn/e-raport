@@ -340,7 +340,7 @@ return [
                 'icon' => 'fas fa-school',
             ],
             [
-                'text' => 'Tahun Ajaran',
+                'text' => 'Tahun Pelajaran',
                 'url' => 'admin/tahun_ajaran',
                 'icon' => 'fas fa-calendar-alt',
             ],

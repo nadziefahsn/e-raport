@@ -3,7 +3,17 @@
 @section('title', 'Peserta Didik')
 
 @section('content_header')
-    <h1>Peserta Didik</h1>
+<div class="d-flex justify-content-between align-items-center">
+    <h1 class="m-0">Peserta Didik</h1>
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">
+            Peserta Didik
+        </li>
+    </ol>
+</div>
 @stop
 
 @section('content')

@@ -3,13 +3,18 @@
 @section('title', 'Karakter')
 
 @section('content_header')
-    <h1>Karakter</h1>
-@stop
+<div class="d-flex justify-content-between align-items-center">
+    <h1 class="m-0">Karakter</h1>
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active">Karakter</li>
+    </ol>
+</div>@stop
 
 @section('content')
 <div class="card">
     <div class="card-header d-flex align-items-center">
-        <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Data Kelas</h3>
+        <h3 class="card-title mb-0"><i class="fas fa-star mr-2"></i>Data Karakter</h3>
         <div class="card-tools ml-auto">
             <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKarakter">
                 <i class="fas fa-plus"></i>

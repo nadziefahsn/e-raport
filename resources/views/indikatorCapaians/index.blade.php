@@ -4,10 +4,10 @@
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Rencana Penilaian</h1>
+    <h1 class="m-0">Rencana {{ $namaKategori ?? '' }}</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        <li class="breadcrumb-item active">Indikator Capaian</li>
+        <li class="breadcrumb-item active">Rencana {{ $namaKategori ?? '' }}</li>
     </ol>
 </div>
 @stop

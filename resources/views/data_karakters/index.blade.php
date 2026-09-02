@@ -19,7 +19,7 @@
             <div class="card shadow-sm border-0 mb-5">
                 <div class="card-header bg-white py-3 px-4">
                     <h3 class="card-title fw-bold mb-1">
-                        <i class="fas fa-list-alt mr-2 text-info"></i> Karakter
+                        <i class="fas fa-star mr-2 text-info"></i> Karakter
                     </h3>
                 </div>
                 <div class="card-body p-4">
