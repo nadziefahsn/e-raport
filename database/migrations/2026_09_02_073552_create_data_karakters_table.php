@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('data_karakters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('karakter_id')->constrained('karakters')->cascadeOnDelete();
+            $table->string('karakter_id', 10);
+            $table->foreign('karakter_id')->references('id')->on('karakters')->cascadeOnDelete();
             $table->timestamps();
         });
     }

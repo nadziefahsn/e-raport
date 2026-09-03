@@ -28,6 +28,7 @@
                             <thead class="text-white text-center" style="background-color:#17a2b8;">
                                 <tr>
                                     <th style="width: 5%;">No</th>
+                                    <th style="width: 15%;">Kode</th>
                                     <th class="align-center">Nama Karakter</th>
                                 </tr>
                             </thead>
@@ -35,6 +36,7 @@
                                 @forelse($karakters as $index => $item)
                                     <tr>
                                         <td class="text-center align-middle">{{ $index + 1 }}</td>
+                                        <td class="align-middle">{{ $item->id ?? '-' }}</td>
                                         <td class="align-middle">{{ $item->karakter ?? '-' }}</td>
                                     </tr>
                                 @empty
