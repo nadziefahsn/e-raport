@@ -427,7 +427,7 @@ return [
         'url' => 'admin/kesehatan-telinga',
         'icon' => 'fas fa-deaf',
     ],
-    [,
+    [
     'text' => 'Indikator Capaian',
     'icon' => 'fas fa-check-circle',
     'submenu' => [

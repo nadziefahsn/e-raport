@@ -60,4 +60,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('kesehatan-telinga', KesehatanTelingaController::class)->parameters([
         'kesehatan-telinga' => 'telinga'
     ]);
+
+    Route::put('/guru/{id}/update-user', [GuruController::class, 'updateUser'])->name('guru.update-user');
+
+    // Route Tambahan untuk Reset Password Guru
+    Route::get('/guru/{id}/edit-password', [GuruController::class, 'editPassword'])->name('guru.edit-password');
+    Route::put('/guru/{id}/update-password', [GuruController::class, 'updatePassword'])->name('guru.update-password');
 });
