@@ -69,6 +69,12 @@ class AnggotaKelas extends Model
     {
         return $this->hasOne(KesehatanTelinga::class, 'anggota_kelas_id');
     }
+
+    public function hasilCapaian()
+    {
+        return $this->hasMany(HasilCapaian::class, 'anggota_kelas_id');
+    }
+
     public function nilaiKarakter()
     {
         return $this->hasMany(NilaiKarakter::class, 'anggota_kelas_id');

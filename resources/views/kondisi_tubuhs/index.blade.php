@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Kondisi Tubuh Siswa</h1>
+    <h1 class="m-0">Kondisi Tubuh</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item active">Kondisi Tubuh</li>
@@ -41,7 +41,7 @@
     <div class="card">
         <div class="card-header d-flex align-items-center">
             <h3 class="card-title mb-0">
-                <i class="fas fa-heartbeat mr-2"></i>Data Kondisi Tubuh Kelas {{ $kelas->nama_kelas ?? '' }}
+                <i class="fas fa-heartbeat mr-2"></i>Input Kondisi Tubuh Kelas {{ $kelas->nama_kelas ?? '' }}
             </h3>
         </div>
 

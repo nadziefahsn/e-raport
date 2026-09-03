@@ -340,7 +340,7 @@ return [
                 'icon' => 'fas fa-school',
             ],
             [
-                'text' => 'Tahun Ajaran',
+                'text' => 'Tahun Pelajaran',
                 'url' => 'admin/tahun_ajaran',
                 'icon' => 'fas fa-calendar-alt',
             ],
@@ -368,7 +368,7 @@ return [
     ],
     [
         'text' => 'Penilaian',
-        'icon' => 'fas fa-clipboard-check',
+        'icon' => 'fas fa-clipboard-list',
         'submenu' => [
             [
                 'text' => 'Kriteria Penilaian',
@@ -390,42 +390,13 @@ return [
                 'icon' => 'fas fa-clipboard-list',
                 'url' => 'admin/indikator',
             ],
-            [
-                'text' => 'Kondisi Tubuh',
-                'icon' => 'fas fa-clipboard-list',
-                'url' => 'admin/kondisi-tubuh',
-            ],
         ],
     ],
+    ['header' => 'Rencana Penilaian'],
     [
-        'text' => 'Kehadiran', 
-        'url' => 'admin/kehadiran',
-        'icon' => 'fas fa-bullhorn',
-    ],
-    [
-        'text' => 'Kesehatan Gigi', 
-        'url' => 'admin/gigi',
-        'icon' => 'fas fa-tooth',
-    ],
-    [
-        'text' => 'Kesehatan Mulut', 
-        'url' => 'admin/mulut',
-        'icon' => 'fas fa-smile-beam',
-    ],
-    [
-        'text' => 'Kesehatan Mata', 
-        'url' => 'admin/mata',
-        'icon' => 'fas fa-eye mr-2',
-    ],
-    [
-        'text' => 'Kebersihan Siswa', 
-        'url' => 'admin/kebersihan-siswa',
-        'icon' => 'fas fa-solid fa-user-shield',
-    ],
-    [
-        'text' => 'Kesehatan Telinga', 
-        'url' => 'admin/kesehatan-telinga',
-        'icon' => 'fas fa-deaf',
+        'text' => 'Data Karakter', 
+        'url' => 'admin/data-karakter',
+        'icon' => 'fas fa-check-circle',
     ],
     [,
     'text' => 'Indikator Capaian',
@@ -473,12 +444,93 @@ return [
         ],
     ],
 ],
+    ['header' => 'Penilaian'],
+    [
+        'text' => 'Rekap Kehadiran', 
+        'url' => 'admin/kehadiran',
+        'icon' => 'fas fa-calendar-check',
+    ],
+    [
+        'text' => 'Kondisi Tubuh',
+        'icon' => "fas fa-user",
+        'url' => 'admin/kondisi-tubuh',
+    ],
+    [
+        'text' => 'Kebersihan Siswa', 
+        'url' => 'admin/kebersihan-siswa',
+        'icon' => 'fas fa-solid fa-user-shield',
+    ],
+    [
+        'text' => 'Kesehatan Mata', 
+        'url' => 'admin/mata',
+        'icon' => 'fas fa-eye',
+    ],
+    [
+        'text' => 'Kesehatan Telinga', 
+        'url' => 'admin/kesehatan-telinga',
+        'icon' => 'fas fa-assistive-listening-systems',
+    ],
+    [
+        'text' => 'Kesehatan Gigi', 
+        'url' => 'admin/gigi',
+        'icon' => 'fas fa-tooth',
+    ],
+    [
+        'text' => 'Kesehatan Mulut', 
+        'url' => 'admin/mulut',
+        'icon' => 'fas fa-smile-beam',
+    ],
     [
         'text' => 'Nilai Karakter', 
         'url' => 'admin/nilai-karakter',
         'icon' => 'fas fa-star',
     ],
-
+    [
+    'text' => 'Input Nilai Capaian',
+    'icon' => 'fas fa-chart-line',
+    'submenu' => [
+        [
+            'text' => 'Aqidah',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/aqidah', 
+        ],
+        [
+            'text' => 'Ibadah',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/ibadah', 
+        ],
+        [
+            'text' => 'Akhlaq',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/akhlaq', 
+        ],
+        [
+            'text' => 'Disiplin',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/disiplin', 
+        ],
+        [
+            'text' => 'Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/al-quran', 
+        ],
+        [
+            'text' => 'Keagamaan',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/keagamaan', 
+        ],
+        [
+            'text' => 'Kesehatan & Kebugaran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/kesehatan-kebugaran', 
+        ],
+        [
+            'text' => 'Life Skill',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'admin/hasil-capaian/life-skill', 
+        ],
+    ],
+],
     ['header' => 'PENGATURAN'],
     [
         'text' => 'Logout',

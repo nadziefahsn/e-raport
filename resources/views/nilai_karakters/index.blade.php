@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Input Nilai Karakter')
+@section('title', 'Nilai Karakter')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Input Nilai Karakter</h1>
+    <h1 class="m-0">Nilai Karakter</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item active">Nilai Karakter</li>
@@ -30,7 +30,7 @@
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header bg-white py-3 px-4">
                 <h5 class="card-title fw-bold mb-1">
-                    <i class="fas fa-star mr-2"></i> Input Nilai Karakter Siswa
+                    <i class="fas fa-star mr-2"></i> Input Nilai Karakter
                 </h5>
             </div>
 

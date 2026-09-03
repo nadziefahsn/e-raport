@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Data Guru')
+@section('title', 'Guru')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Data Guru</h1>
+    <h1 class="m-0">Data Guru</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        <li class="breadcrumb-item active">Guru</li>
+        <li class="breadcrumb-item active">Data Guru</li>
     </ol>
 </div>
 @stop

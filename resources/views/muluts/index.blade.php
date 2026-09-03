@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Kesehatan Mulut</h1>
+    <h1 class="m-0">Kesehatan Mulut</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item active">Kesehatan Mulut</li>
@@ -22,7 +22,7 @@
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header bg-white py-3 px-4">
                 <h5 class="card-title fw-bold mb-1">
-                    <i class="fas fa-smile-beam mr-2"></i> Input Kesehatan Mulut Siswa
+                    <i class="fas fa-smile-beam mr-2"></i> Input Kesehatan Mulut
                 </h5>
             </div>
 

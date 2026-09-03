@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Indikator Capaian')
+@section('title', 'Data Karakter')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0">Rencana {{ $namaKategori ?? '' }}</h1>
+    <h1 class="m-0">Data Karakter</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        <li class="breadcrumb-item active">Rencana {{ $namaKategori ?? '' }}</li>
+        <li class="breadcrumb-item active">Data Karakter</li>
     </ol>
 </div>
 @stop
@@ -19,7 +19,7 @@
             <div class="card shadow-sm border-0 mb-5">
                 <div class="card-header bg-white py-3 px-4">
                     <h3 class="card-title fw-bold mb-1">
-                        <i class="fas fa-list-alt mr-2 text-info"></i> Data Indikator Capaian - {{ $namaKategori ?? '' }}
+                        <i class="fas fa-star mr-2 text-info"></i> Karakter
                     </h3>
                 </div>
                 <div class="card-body p-4">
@@ -28,16 +28,14 @@
                             <thead class="text-white text-center" style="background-color:#17a2b8;">
                                 <tr>
                                     <th style="width: 5%;">No</th>
-                                    <th style="width: 15%;">Kode</th>
-                                    <th class="align-center">Nama Indikator</th>
+                                    <th class="align-center">Nama Karakter</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($rencanaIndikator as $index => $item)
+                                @forelse($karakters as $index => $item)
                                     <tr>
                                         <td class="text-center align-middle">{{ $index + 1 }}</td>
-                                        <td class="text-center align-middle">{{ $item->indikator->kode ?? '-' }}</td>
-                                        <td class="align-middle">{{ $item->indikator->nama_indikator ?? '-' }}</td>
+                                        <td class="align-middle">{{ $item->karakter ?? '-' }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -57,34 +55,22 @@
 @stop
 
 @section('footer')
-    <div class="row align-items-center">
-        <div class="col-12 col-md-6 text-center text-md-left mb-2 mb-md-0">
-            <strong>
-                Copyright &copy; {{ date('Y') }} |
-                <a href="#">Yayasan Prima Insani</a>.
-            </strong>
-        </div>
-
-        <div class="col-12 col-md-6 text-center text-md-right">
-            <b>E-Raport</b> 
-        </div>
+<div class="row align-items-center">
+    <div class="col-12 col-md-6 text-center text-md-left mb-2 mb-md-0">
+        <strong>Copyright &copy; {{ date('Y') }} | <a href="#">Yayasan Prima Insani</a>.</strong>
     </div>
+    <div class="col-12 col-md-6 text-center text-md-right">
+        <b>E-Raport</b>
+    </div>
+</div>
 @stop
 
 @section('css')
 <style>
-    .table-bordered th, .table-bordered td {
-        border: 1px solid #dee2e6 !important;
-    }
-    .card-header {
-        border-bottom: 1px solid #ebedf2;
-    }
-    .table tbody td {
-        font-weight: normal !important;
-    }
+    .table tbody td { font-weight: normal !important; }
+    .table thead th { font-weight: 600 !important; }
 </style>
 @stop
 
 @section('js')
-
 @stop

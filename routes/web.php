@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\KriteriaPenilaianController;
@@ -15,6 +17,8 @@ use App\Http\Controllers\CapaianPerkembanganController;
 use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AnggotaKelasController;
+use App\Http\Controllers\DataKarakterController;
+use App\Http\Controllers\HasilCapaianController;
 use App\Http\Controllers\IndikatorCapaianController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\KesehatanGigiController;
@@ -24,6 +28,7 @@ use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -37,6 +42,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('kriteria', KriteriaPenilaianController::class)->parameters([
         'kriteria' => 'kriteriapenilaian',
     ]);
+
     Route::resource('tahun_ajaran', TahunAjaranController::class);
     Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
     Route::resource('guru', GuruController::class);
@@ -57,7 +63,10 @@ Route::prefix('admin')->group(function () {
     Route::resource('indikator-capaian', IndikatorCapaianController::class);
     Route::get('/indikator-{kategori}', [IndikatorCapaianController::class, 'index'])->name('indikator-capaian.index');
     Route::resource('nilai-karakter', NilaiKarakterController::class);
+    Route::get('/hasil-capaian/{slug?}', [HasilCapaianController::class, 'index'])->name('hasil-capaian.kategori');
+    Route::resource('hasil-capaian', HasilCapaianController::class);
     Route::resource('kesehatan-telinga', KesehatanTelingaController::class)->parameters([
         'kesehatan-telinga' => 'telinga'
     ]);
+    Route::resource('data-karakter', DataKarakterController::class);
 });
