@@ -15,7 +15,6 @@ class KarakterController extends Controller
     public function index()
     {
         $karakters = Karakter::all();
-
         return view('karakters.index', compact('karakters'));
     }
 
@@ -24,7 +23,7 @@ class KarakterController extends Controller
      */
     public function create()
     {
-        return view('karakters.index');
+        return redirect()->route('karakter.index');
     }
 
     /**
@@ -32,13 +31,17 @@ class KarakterController extends Controller
      */
     public function store(KarakterStoreRequest $request)
     {
-        $data = $request-> validated();
+        $data = $request->validated();
+
+        if (Karakter::where('id', $data['id'])->exists()) {
+            return redirect()->back()->withInput()->with('error', 'Gagal! Kode karakter "' . $data['id'] . '" sudah tersedia.');
+        }
 
         Karakter::create($data);
 
         return redirect()
             ->route('karakter.index')
-            ->with('success', 'Data karakter berhasil disimpan');
+            ->with('success', 'Data karakter berhasil disimpan.');
     }
 
     /**
@@ -54,7 +57,7 @@ class KarakterController extends Controller
      */
     public function edit(Karakter $karakter)
     {
-        return view('karakter.index', compact('karakters'));
+        return redirect()->route('karakter.index');
     }
 
     /**
@@ -63,6 +66,10 @@ class KarakterController extends Controller
     public function update(KarakterUpdateRequest $request, Karakter $karakter)
     {
         $data = $request->validated();
+
+        if ($data['id'] !== $karakter->id && Karakter::where('id', $data['id'])->exists()) {
+            return redirect()->back()->withInput()->with('error', 'Gagal! Kode karakter "' . $data['id'] . '" sudah tersedia.');
+        }
 
         $karakter->update($data);
 

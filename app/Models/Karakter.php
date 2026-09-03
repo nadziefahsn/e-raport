@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Karakter extends Model
 {
+    public $incrementing = false;
+    protected $keyType = 'string';
+    
     protected $fillable = [
-        'karakter'
+        'id',
+        'karakter',
     ];
 }

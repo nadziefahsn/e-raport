@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\DashboardController;
@@ -28,7 +27,6 @@ use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
-
 
 Route::get('/', function () {
     return view('auth.login');
