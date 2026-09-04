@@ -48,7 +48,7 @@ class SekolahController extends Controller
      */
     public function show(Sekolah $sekolah)
     {
-        //asdas asd asd
+        //
     }
 
     /**

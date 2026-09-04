@@ -21,8 +21,20 @@ class KarakterUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('karakter');
+        
+        $karakterId = $id instanceof \App\Models\Karakter ? $id->id : $id;
+
         return [
-            'karakter'=>'required'
+            'id' => ['required', 'string', 'max:10', 'unique:karakters,id,' . $karakterId . ',id'],
+            'karakter' => ['required', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'id.unique' => 'Kode karakter sudah tersedia, gunakan kode lain.',
         ];
     }
 }

@@ -22,7 +22,17 @@ class KarakterStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'karakter'=>'required'
+            'id' => ['required', 'string', 'max:10', 'unique:karakters,id'],
+            'karakter' => ['required', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'id.unique' => 'Kode karakter sudah tersedia, gunakan kode lain.',
         ];
     }
 }
+
+
