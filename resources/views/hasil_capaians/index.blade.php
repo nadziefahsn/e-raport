@@ -123,11 +123,9 @@
 @stop
 
 @section('js')
-@push('js')
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
 </script>
-@endpush
 @stop

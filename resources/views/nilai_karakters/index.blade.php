@@ -43,12 +43,14 @@
                                 <th rowspan="2" class="align-middle" style="width: 12%;">NIS</th>
                                 <th rowspan="2" class="align-middle" style="min-width: 250px;">Nama Siswa</th>
                                 <th rowspan="2" class="align-middle" style="width: 10%;">Kelas</th>
-                                {{-- Kolom Karakter Dinamis --}}
                                 <th colspan="{{ $karakters->count() }}" class="align-middle">Karakter</th>
                             </tr>
                             <tr>
                                 @foreach($karakters as $karakter)
-                                    <th>{{ $karakter->karakter }}</th>
+                                    <th class="text-center" data-toggle="tooltip" data-placement="bottom"
+                                        title="{{ $karakter->karakter ?? 'Tidak ada deskripsi' }}">
+                                        {{ $karakter->id ?? '-' }}
+                                    </th>
                                 @endforeach
                             </tr>
                         </thead>
@@ -69,7 +71,7 @@
                                     @endphp
                                     <td>
                                         <select name="nilai[{{ $item->id }}][{{ $karakter->id }}]" class="form-control text-center">
-                                            <option value="" {{ $selectedValue == '' ? 'selected' : '' }}>-- Pilih Nilai --</option>
+                                            <option value="" {{ $selectedValue == '' ? 'selected' : '' }}></option>
                                             <option value="T" {{ $selectedValue == 'T' ? 'selected' : '' }}>T</option>
                                             <option value="TT" {{ $selectedValue == 'TT' ? 'selected' : '' }}>TT</option>
                                         </select>
@@ -121,4 +123,9 @@
 @stop
 
 @section('js')
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 @stop
