@@ -3,93 +3,110 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\GuruStoreRequest;
-use App\Http\Requests\GuruUpdateRequest;
-use App\Models\User;                    
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
 
 class GuruController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $gurus = Guru::all();
-
         return view('gurus.index', compact('gurus'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('gurus.index');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $autoEmail = 'guru.' . Str::slug($request->nip) . '@sekolah.id';
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'nama_guru' => 'required|string|max:255',
+            'jabatan' => 'required|string|max:255',
+            'nip' => 'nullable|numeric',
+        ]);
 
-        $user = User::create([
-        'name'     => $request->nama_guru,
-        'email'    => $autoEmail,
-        'password' => Hash::make('password123'),
-        'role'     => 'guru',
-    ]);
+        DB::transaction(function () use ($request) {
+            // 1. Buat Akun User Baru (Default Password: password123)
+            $user = User::create([
+                'name' => $request->nama_guru,
+                'email' => $request->email,
+                'password' => Hash::make('password123'),
+                'role' => 'guru',
+            ]);
 
-        Guru::create([
-        'user_id'       => $user->id,
-        'nama_guru'     => $request->nama_guru,
-        'jabatan'       => $request->jabatan,
-        'nip'           => $request->nip,
-        'tempat_lahir'  => $request->tempat_lahir,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'jenis_kelamin' => $request->jenis_kelamin,
-    ]);
+            // 2. Buat Data Guru
+            Guru::create([
+                'user_id' => $user->id,
+                'email' => $request->email,
+                'nama_guru' => $request->nama_guru,
+                'jabatan' => $request->jabatan,
+                'nip' => $request->nip,
+            ]);
+        });
 
-    return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
+        return redirect()->route('guru.index')->with('success', 'Data Guru berhasil ditambahkan! Password default: password123');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Guru $guru)
+    public function update(Request $request, $id)
     {
-        return view('gurus.index');
+        $guru = Guru::findOrFail($id);
+
+        $request->validate([
+            'email' => 'required|email|unique:users,email,' . $guru->user_id,
+            'nama_guru' => 'required|string|max:255',
+            'jabatan' => 'required|string|max:255',
+            'nip' => 'nullable|numeric',
+        ]);
+
+        DB::transaction(function () use ($request, $guru) {
+            // Update Data Guru
+            $guru->update([
+                'email' => $request->email,
+                'nama_guru' => $request->nama_guru,
+                'jabatan' => $request->jabatan,
+                'nip' => $request->nip,
+            ]);
+
+            // Update Data User Terkait
+            if ($guru->user) {
+                $guru->user->update([
+                    'name' => $request->nama_guru,
+                    'email' => $request->email,
+                ]);
+            }
+        });
+
+        return redirect()->route('guru.index')->with('success', 'Data Guru berhasil diperbarui!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Guru $guru)
+    public function destroy($id)
     {
-        return view('gurus.index', compact('Guru'));
+        $guru = Guru::findOrFail($id);
+
+        DB::transaction(function () use ($guru) {
+            if ($guru->user) {
+                $guru->user->delete();
+            }
+            $guru->delete();
+        });
+
+        return redirect()->route('guru.index')->with('success', 'Data Guru berhasil dihapus!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(GuruUpdateRequest $request, Guru $guru)
+    public function updatePassword(Request $request, $id)
     {
-       $guru->update($request->validated());
-        return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui!');
-    }
+        $request->validate([
+            'password' => 'required|string|min:6|max:8|confirmed',
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Guru $guru)
-    {
-        $guru->delete();
-        return redirect()->route('guru.index')
-        ->with('success', 'Peminjam deleted successfully');
+        $guru = Guru::findOrFail($id);
+
+        if ($guru->user) {
+            $guru->user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
+
+        return redirect()->route('guru.index')->with('success', 'Password Guru berhasil diubah!');
     }
 }

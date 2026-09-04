@@ -17,8 +17,8 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-chalkboard-teacher mr-2"></i>Data Guru</h3>
         <div class="card-tools ml-auto">
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
-                <i class="fas fa-plus"></i>
+            <button class="btn btn-primary px-4 py-2 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
+                <i class="fas fa-plus"></i> Tambah Guru
             </button>
         </div>
     </div>
@@ -26,14 +26,11 @@
     @php
     $heads = [
         ['label' => 'No', 'width' => 5],
-        'User ID',
+        'Email',
         'Nama Guru',
         'Jabatan',
         'NIP',
-        'Tempat Lahir',
-        'Tanggal Lahir',
-        'Jenis Kelamin',
-        ['label' => 'Aksi', 'no-export' => true, 'width' => 10, 'className' => 'text-center'],
+        ['label' => 'Aksi', 'no-export' => true, 'width' => 12, 'className' => 'text-center'],
     ];
 
     $config = [
@@ -41,26 +38,42 @@
         'searching' => true,    
         'lengthChange' => true, 
         'columns' => [
-            null, null, null, null, null, null, null, null,
+            null, null, null, null, null,
             ['orderable' => false] 
         ],
     ];
     @endphp
 
     <div class="card-body p-3">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <x-adminlte-datatable id="tableGuru" :heads="$heads" :config="$config" stripe hoverable buffered text-sm>
             @forelse($gurus as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->user_id ?? '-' }}</td>
+                    <td>{{ $item->email ?? '-' }}</td>
                     <td>{{ $item->nama_guru }}</td>
                     <td>{{ $item->jabatan }}</td>
                     <td>{{ $item->nip ?? '-' }}</td>
-                    <td>{{ $item->tempat_lahir }}</td>
-                    <td>{{ $item->tanggal_lahir }}</td>
-                    <td>{{ $item->jenis_kelamin }}</td>
                     <td class="text-center">
                         <nobr>
+                            {{-- Tombol Reset Password --}}
+                            <button type="button" 
+                                    class="btn btn-xs btn-default text-warning mx-1 shadow" 
+                                    title="Reset Password"
+                                    data-toggle="modal" 
+                                    data-target="#resetPasswordModal{{ $item->id }}">
+                                <i class="fa fa-lg fa-fw fa-key"></i>
+                            </button>
+
+                            {{-- Tombol Edit --}}
                             <button type="button" 
                                     class="btn btn-xs btn-default text-primary mx-1 shadow" 
                                     title="Edit"
@@ -68,6 +81,8 @@
                                     data-target="#editModal{{ $item->id }}">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </button>
+
+                            {{-- Tombol Hapus --}}
                             <form action="{{ route('guru.destroy', $item->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -86,6 +101,43 @@
         </x-adminlte-datatable>
     </div>
 </div>
+
+<!-- Modal Reset Password Guru -->
+@foreach($gurus as $item)
+<div class="modal fade" id="resetPasswordModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 pt-4 px-4">
+                <h5 class="modal-title fw-bold"><i class="fas fa-key text-warning mr-2"></i>Reset Password - {{ $item->nama_guru }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <form action="{{ route('guru.update-password', $item->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="modal-body p-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label fw-bold">Password Baru</label>
+                        <input type="password" name="password" class="form-control rounded-3" placeholder="Masukkan 6-8 karakter" required minlength="6" maxlength="8">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label fw-bold">Konfirmasi Password Baru</label>
+                        <input type="password" name="password_confirmation" class="form-control rounded-3" placeholder="Ulangi password baru" required minlength="6" maxlength="8">
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pb-4 px-4">
+                    <button type="button" class="btn btn-light py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Batal</button>
+                    <button type="submit" class="btn btn-warning py-2 px-4 fw-bold text-white" style="border-radius: 12px;">Simpan Password Baru</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 <!-- Modal Edit Guru -->
 @foreach($gurus as $item)
@@ -106,39 +158,22 @@
                 <div class="modal-body p-4">
                     <div class="row">
                         <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Email</label>
+                            <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $item->email) }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Nama Guru</label>
-                            <input type="text" name="nama_guru" class="form-control rounded-3" value="{{ $item->nama_guru }}" required>
+                            <input type="text" name="nama_guru" class="form-control rounded-3" value="{{ old('nama_guru', $item->nama_guru) }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Jabatan</label>
-                            <input type="text" name="jabatan" class="form-control rounded-3" value="{{ $item->jabatan }}" required>
+                            <input type="text" name="jabatan" class="form-control rounded-3" value="{{ old('jabatan', $item->jabatan) }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">NIP</label>
-                        <input type="text" name="nip" class="form-control rounded-3" value="{{ $item->nip }}" 
-                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
-                            placeholder="Masukkan NIP (angka saja)...">
-                    </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Tempat Lahir</label>
-                            <input type="text" name="tempat_lahir" class="form-control rounded-3" value="{{ $item->tempat_lahir }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" class="form-control rounded-3" value="{{ $item->tanggal_lahir }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold d-block mb-2">Jenis Kelamin</label>
-                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki{{ $item->id }}" value="Laki-Laki" {{ $item->jenis_kelamin == 'Laki-Laki' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="laki{{ $item->id }}">Laki-Laki</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan{{ $item->id }}" value="Perempuan" {{ $item->jenis_kelamin == 'Perempuan' ? 'checked' : '' }}>
-                                <label class="form-check-label" for="perempuan{{ $item->id }}">Perempuan</label>
-                            </div>
+                            <label class="form-label fw-bold">NIP</label>
+                            <input type="text" name="nip" class="form-control rounded-3" value="{{ old('nip', $item->nip) }}" 
+                                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                                placeholder="Masukkan NIP (angka saja)...">
                         </div>
                     </div>
                 </div>
@@ -163,60 +198,33 @@
                 </button>
             </div>
             
-            @if ($errors->any())
-                <div class="alert alert-danger mx-4">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form action="{{ route('guru.store') }}" method="post">
+            <form action="{{ route('guru.store') }}" method="POST">
                 @csrf
                 <div class="modal-body p-4">
                     <div class="row">
                         <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Email</label>
+                            <input type="email" name="email" class="form-control rounded-3" value="{{ old('email') }}" placeholder="Masukkan email guru..." required>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Nama Guru</label>
-                            <input type="text" name="nama_guru" class="form-control rounded-3" placeholder="Masukkan nama guru..." required>
+                            <input type="text" name="nama_guru" class="form-control rounded-3" value="{{ old('nama_guru') }}" placeholder="Masukkan nama guru..." required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Jabatan</label>
-                            <input type="text" name="jabatan" class="form-control rounded-3" placeholder="Masukkan jabatan..." required>
+                            <input type="text" name="jabatan" class="form-control rounded-3" value="{{ old('jabatan') }}" placeholder="Masukkan jabatan..." required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">NIP</label>
-                        <input type="text" name="nip" class="form-control rounded-3" value="" 
-                            inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
-                            placeholder="Masukkan NIP (angka saja)...">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Tempat Lahir</label>
-                            <input type="text" name="tempat_lahir" class="form-control rounded-3" placeholder="Masukkan tempat lahir..." required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" class="form-control rounded-3" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold d-block mb-2">Jenis Kelamin</label>
-                            
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="lakiTambah" value="Laki-Laki" required>
-                                <label class="form-check-label" for="lakiTambah">Laki-Laki</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuanTambah" value="Perempuan" required>
-                                <label class="form-check-label" for="perempuanTambah">Perempuan</label>
-                            </div>
+                            <input type="text" name="nip" class="form-control rounded-3" value="{{ old('nip') }}" 
+                                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                                placeholder="Masukkan NIP (angka saja)...">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pb-4 px-4">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Kembali</button>
+                    <button type="submit" class="btn btn-primary py-2 px-4 fw-bold" style="border-radius: 12px;">Simpan</button>
                 </div>
             </form>
         </div>
@@ -252,4 +260,11 @@
 @stop
 
 @section('js')
+<script>
+    @if ($errors->any())
+        $(document).ready(function() {
+            $('#modalTambahGuru').modal('show');
+        });
+    @endif
+</script>
 @stop

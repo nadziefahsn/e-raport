@@ -398,7 +398,7 @@ return [
         'url' => 'admin/data-karakter',
         'icon' => 'fas fa-check-circle',
     ],
-    [,
+    [
     'text' => 'Indikator Capaian',
     'icon' => 'fas fa-check-circle',
     'submenu' => [

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\DashboardController;
@@ -29,14 +28,13 @@ use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 
-
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Auth::routes();
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('sekolah', SekolahController::class);
     Route::resource('kriteria', KriteriaPenilaianController::class)->parameters([
@@ -45,7 +43,11 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('tahun_ajaran', TahunAjaranController::class);
     Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
+    
+    // Route Guru & Update Password
     Route::resource('guru', GuruController::class);
+    Route::put('/guru/{id}/update-password', [GuruController::class, 'updatePassword'])->name('guru.update-password');
+
     Route::resource('siswa', SiswaController::class);
     Route::resource('kelas', KelasController::class)->parameters([
         'kelas' => 'kelas'
