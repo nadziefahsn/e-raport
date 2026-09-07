@@ -10,21 +10,17 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-@var list<string>
      
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
- @var list<string>
     
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
- @return array<string, string>
     
     protected function casts(): array
     {

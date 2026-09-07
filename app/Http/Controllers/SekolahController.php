@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Sekolah;
 use App\Http\Requests\SekolahUpdateRequest;
-use App\Http\Requests\SekolahStoreRequest;
 
 class SekolahController extends Controller
 {
@@ -24,7 +23,7 @@ class SekolahController extends Controller
     }
 
 
-    public function store(SekolahStoreRequest $request)
+    public function store(SekolahUpdateRequest $request)
     {
         $data = $request-> validated();
 

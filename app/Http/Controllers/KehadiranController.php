@@ -39,7 +39,7 @@ class KehadiranController extends Controller
     }
 
    
-    public function store(KehadiranStoreRequest $request)
+    public function store(Request $request)
     {
       
     }

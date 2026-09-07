@@ -11,8 +11,6 @@ class SiswaStoreRequest extends FormRequest
     {
         return true;
     }
-
-@return array<string=> 'required', \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      
     public function rules(): array
     {
