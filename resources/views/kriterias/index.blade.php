@@ -79,98 +79,13 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalTambahKriteria" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
-            <div class="modal-header border-0 pt-4 px-4">
-                <h5 class="modal-title fw-bold">Tambah Kriteria</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            
-            @if ($errors->any())
-                <div class="alert alert-danger mx-4">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+@include('kriterias.create')
+@include('kriterias.edit')
 
-            <form action="{{ route('kriteria.store') }}" method="post">
-                @csrf
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Kriteria</label>
-                        <input type="text" name="kriteria" class="form-control rounded-3" placeholder="Masukkan kriteria..." required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Deskripsi</label>
-                        <textarea name="deskripsi" class="form-control rounded-3" placeholder="Masukkan deskripsi kriteria..." rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer border-0 pb-4 px-4">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-@foreach($kriterias as $item)
-<div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
-            <div class="modal-header border-0 pt-4 px-4">
-                <h5 class="modal-title fw-bold">Edit Kriteria Penilaian</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            
-            <form action="{{ route('kriteria.update', $item->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Kriteria</label>
-                        <input type="text" name="kriteria" class="form-control rounded-3" value="{{ $item->kriteria }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Deskripsi</label>
-                        <textarea name="deskripsi" class="form-control rounded-3" rows="3" required>{{ $item->deskripsi }}</textarea>
-                    </div>
-                </div>
-                <div class="modal-footer border-0 pb-4 px-4">
-                    <button type="button" class="btn btn-light py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Kembali</button>
-                    <button type="submit" class="btn btn-dark flex-grow-1 py-2 fw-bold" style="border-radius: 12px;">Simpan Perubahan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
 
 @stop
 
-@section('footer')
-    <div class="row align-items-center">
-        <div class="col-12 col-md-6 text-center text-md-left mb-2 mb-md-0">
-            <strong>
-                Copyright &copy; {{ date('Y') }} |
-                <a href="#">Yayasan Prima Insani</a>.
-            </strong>
-        </div>
-
-        <div class="col-12 col-md-6 text-center text-md-right">
-            <b>E-Raport</b> 
-        </div>
-    </div>
-@stop
+@include('layouts.footer')
 
 @section('css')
 <style>

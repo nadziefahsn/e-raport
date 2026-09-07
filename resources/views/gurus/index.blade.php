@@ -215,6 +215,8 @@
 </div>
 @stop
 
+@include('layouts.footer')
+
 @section('js')
 <script>
     $(document).ready(function() {
