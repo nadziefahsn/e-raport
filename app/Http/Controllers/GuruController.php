@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-=======
 use App\Models\Guru; 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +18,6 @@ class GuruController extends Controller
     {
         $gurus = Guru::all();
         return view('gurus.index', compact('gurus'));
-=======
         $gurus = Guru::with('user')->get();
         $users = User::all();
 
@@ -37,7 +35,6 @@ class GuruController extends Controller
         $guru->save();
 
         return redirect()->back()->with('success', 'User ID berhasil diperbarui.');
->>>>>>> fitur-user
     }
 
     public function store(Request $request)
@@ -70,7 +67,7 @@ class GuruController extends Controller
         });
 
         return redirect()->route('guru.index')->with('success', 'Data Guru berhasil ditambahkan! Password default: password123');
-=======
+
         // 1. Validasi input dari form
         $request->validate([
             'email'     => 'required|email|unique:users,email',
@@ -104,7 +101,6 @@ class GuruController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
->>>>>>> fitur-user
     }
 
     public function update(Request $request, $id)
@@ -170,7 +166,6 @@ class GuruController extends Controller
 
         return redirect()->route('guru.index')->with('success', 'Password Guru berhasil diubah!');
     }
-=======
         return view('gurus.index', compact('guru'));
     }
 
@@ -261,5 +256,3 @@ class GuruController extends Controller
 
         return redirect()->route('guru.index')->with('success', 'Password berhasil diperbarui!');
     }
->>>>>>> fitur-user
-}

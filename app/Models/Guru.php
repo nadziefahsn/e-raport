@@ -19,13 +19,11 @@ class Guru extends Model
         'jabatan',
         'nip',
     ];
-=======
 
     protected $table = 'gurus'; // Sesuaikan dengan nama tabel di database
     
     // Mengizinkan semua field diisi agar tidak error saat menyimpan
     protected $guarded = [];
->>>>>>> fitur-user
 
     /**
      * Relasi ke model User (Guru terhubung ke 1 User)

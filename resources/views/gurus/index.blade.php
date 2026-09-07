@@ -37,7 +37,6 @@
         <h3 class="card-title mb-0"><i class="fas fa-chalkboard-teacher mr-2"></i>Data Guru</h3>
         <div class="card-tools ml-auto">
             <button class="btn btn-primary px-4 py-2 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
-=======
             <button class="btn btn-primary px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
 
                 <i class="fas fa-plus"></i> Tambah Guru
@@ -118,7 +117,6 @@
                             </form>
                         </nobr>
                     </td>
-=======
     <div class="card-body p-3">
         <table class="table table-bordered table-striped hover">
             <thead>
@@ -247,7 +245,6 @@
                             <label class="form-label fw-bold">Email</label>
 
                             <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $item->email) }}" required>
-=======
                             <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $item->user->email ?? '') }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -287,7 +284,6 @@
                 </button>
             </div>
             
-=======
 
             <form action="{{ route('guru.store') }}" method="POST">
                 @csrf
@@ -315,7 +311,6 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Jabatan</label>
-=======
                             <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control rounded-3" value="{{ old('email') }}" placeholder="Contoh: guru@sekolah.id" required>
                         </div>
@@ -352,7 +347,6 @@
             $('#modalTambahGuru').modal('show');
         });
     @endif
-=======
     $(document).ready(function() {
         // Otomatis buka kembali modal jika ada error validasi saat submit
         @if ($errors->any())
