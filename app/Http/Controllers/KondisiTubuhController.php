@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
 
 class KondisiTubuhController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $guruId = $request->input('guru_id');
@@ -38,41 +36,29 @@ class KondisiTubuhController extends Controller
         return view('kondisi_tubuhs.index', compact('kondisiTubuhs', 'kelas', 'guruId', 'tahunAjaranAktif'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(KondisiTubuh $kondisiTubuh)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(KondisiTubuh $kondisiTubuh)
     {
-        //
+
     }
 
-    /**
-     * Update/Store the specified resource in storage.
-     */
     public function update(Request $request)
     {
         $guruId = $request->input('guru_id');
@@ -104,11 +90,8 @@ class KondisiTubuhController extends Controller
             ->with('success', 'Data kondisi tubuh berhasil disimpan');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(KondisiTubuh $kondisiTubuh)
     {
-        //
+
     }
 }

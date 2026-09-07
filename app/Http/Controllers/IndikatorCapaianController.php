@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class IndikatorCapaianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     private function getCategoryDetails()
     {
         $segment = request()->segment(2); 
@@ -92,12 +90,10 @@ class IndikatorCapaianController extends Controller
 
         return view('indikatorCapaians.index', compact('rencanaIndikator', 'kelas', 'namaKategori'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
-        //
+        
     }
     public function store(Request $request)
     {
@@ -121,38 +117,25 @@ class IndikatorCapaianController extends Controller
 
         return redirect()->back()->with('success', 'Indikator Aqidah berhasil diperbarui');
     }
-    /**
-     * Store a newly created resource in storage.
-     */
-    
-
-    /**
-     * Display the specified resource.
-     */
+  
     public function show(IndikatorCapaian $indikatorCapaian)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(IndikatorCapaian $indikatorCapaian)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, IndikatorCapaian $indikatorCapaian)
     {
-        //
+        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy($id)
     {
         $rencana = IndikatorCapaian::findOrFail($id);

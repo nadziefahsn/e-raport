@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 
 class KesehatanMataController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index(Request $request)
     {
         $guruId = $request->query('guru_id');
@@ -33,41 +31,31 @@ class KesehatanMataController extends Controller
         return view('matas.index', compact('kesehatanMata', 'kelas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(KesehatanMata $kesehatanMata)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(KesehatanMata $kesehatanMata)
     {
-        //
+       
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+  
     public function update(KesehatanMataUpdateRequest $request)
     {
         $validated = $request->validated();
@@ -95,11 +83,9 @@ class KesehatanMataController extends Controller
             ->with('success', 'Data kesehatan mata berhasil disimpan!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(KesehatanMata $kesehatanMata)
     {
-        //
+       
     }
 }

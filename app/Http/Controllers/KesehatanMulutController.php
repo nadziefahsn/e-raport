@@ -10,9 +10,7 @@ use App\Models\Kelas;
 
 class KesehatanMulutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index(Request $request)
     {
         $guruId = $request->input('guru_id');
@@ -32,41 +30,30 @@ class KesehatanMulutController extends Controller
         return view('muluts.index', compact('kesehatanMuluts', 'kelas', 'guruId'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(KesehatanMulut $kesehatanMulut)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(KesehatanMulut $kesehatanMulut)
     {
-        //
+       
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(KesehatanMulutUpdateRequest $request, KesehatanMulut $kesehatanMulut)
     {
         $validated = $request->validated();
@@ -87,11 +74,8 @@ class KesehatanMulutController extends Controller
             ->with('success', 'Data kesehatan mulut berhasil disimpan');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(KesehatanMulut $kesehatanMulut)
     {
-        //
+       
     }
 }
