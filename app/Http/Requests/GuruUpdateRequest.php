@@ -26,9 +26,7 @@ class GuruUpdateRequest extends FormRequest
                 'string',
                 'max:255',
             ],
-            'tempat_lahir'  => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+        
         ];
     }
 }

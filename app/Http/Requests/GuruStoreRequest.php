@@ -21,9 +21,6 @@ class GuruStoreRequest extends FormRequest
             'nama_guru' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
             'nip' => 'required|string|max:255|unique:gurus,nip',
-            'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ];
     }
 }

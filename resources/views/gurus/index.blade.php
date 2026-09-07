@@ -173,7 +173,7 @@
                 @csrf
                 <div class="modal-body p-4">
                     
-                    @if ($errors->any() && !session('edit_id'))
+                    @if ($errors->any() & !session('edit_id'))
                         <div class="alert alert-danger mb-3">
                             <ul class="mb-0 pl-3">
                                 @foreach ($errors->all() as $error)
