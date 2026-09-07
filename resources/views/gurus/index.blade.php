@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Guru')
+@section('title', 'Data Guru')
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0">Data Guru</h1>
+    <h1 class="m-0 font-weight-bold">Data Guru</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        <li class="breadcrumb-item active">Data Guru</li>
+        <li class="breadcrumb-item active">Guru</li>
     </ol>
 </div>
 @stop
@@ -36,89 +36,12 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-chalkboard-teacher mr-2"></i>Data Guru</h3>
         <div class="card-tools ml-auto">
-            <button class="btn btn-primary px-4 py-2 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
-=======
             <button class="btn btn-primary px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
-
                 <i class="fas fa-plus"></i> Tambah Guru
             </button>
         </div>
     </div>
     
-
-    @php
-    $heads = [
-        ['label' => 'No', 'width' => 5],
-        'Email',
-        'Nama Guru',
-        'Jabatan',
-        'NIP',
-        ['label' => 'Aksi', 'no-export' => true, 'width' => 12, 'className' => 'text-center'],
-    ];
-
-    $config = [
-        'order' => [[0, 'asc']],
-        'searching' => true,    
-        'lengthChange' => true, 
-        'columns' => [
-            null, null, null, null, null,
-            ['orderable' => false] 
-        ],
-    ];
-    @endphp
-
-    <div class="card-body p-3">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-                <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        <x-adminlte-datatable id="tableGuru" :heads="$heads" :config="$config" stripe hoverable buffered text-sm>
-            @forelse($gurus as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->email ?? '-' }}</td>
-                    <td>{{ $item->nama_guru }}</td>
-                    <td>{{ $item->jabatan }}</td>
-                    <td>{{ $item->nip ?? '-' }}</td>
-                    <td class="text-center">
-                        <nobr>
-                            {{-- Tombol Reset Password --}}
-                            <button type="button" 
-                                    class="btn btn-xs btn-default text-warning mx-1 shadow" 
-                                    title="Reset Password"
-                                    data-toggle="modal" 
-                                    data-target="#resetPasswordModal{{ $item->id }}">
-                                <i class="fa fa-lg fa-fw fa-key"></i>
-                            </button>
-
-                            {{-- Tombol Edit --}}
-                            <button type="button" 
-                                    class="btn btn-xs btn-default text-primary mx-1 shadow" 
-                                    title="Edit"
-                                    data-toggle="modal" 
-                                    data-target="#editModal{{ $item->id }}">
-                                <i class="fa fa-lg fa-fw fa-pen"></i>
-                            </button>
-
-                            {{-- Tombol Hapus --}}
-                            <form action="{{ route('guru.destroy', $item->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="btn btn-xs btn-default text-danger mx-1 shadow" 
-                                        title="Delete"
-                                        onclick="return confirm('Hapus data guru ini?')">
-                                    <i class="fa fa-lg fa-fw fa-trash"></i>
-                                </button>
-                            </form>
-                        </nobr>
-                    </td>
-=======
     <div class="card-body p-3">
         <table class="table table-bordered table-striped hover">
             <thead>
@@ -178,43 +101,6 @@
     </div>
 </div>
 
-<!-- Modal Reset Password Guru -->
-@foreach($gurus as $item)
-<div class="modal fade" id="resetPasswordModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
-            <div class="modal-header border-0 pt-4 px-4">
-                <h5 class="modal-title fw-bold"><i class="fas fa-key text-warning mr-2"></i>Reset Password - {{ $item->nama_guru }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            
-            <form action="{{ route('guru.update-password', $item->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="modal-body p-4">
-                    <div class="form-group mb-3">
-                        <label class="form-label fw-bold">Password Baru</label>
-                        <input type="password" name="password" class="form-control rounded-3" placeholder="Masukkan 6-8 karakter" required minlength="6" maxlength="8">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label fw-bold">Konfirmasi Password Baru</label>
-                        <input type="password" name="password_confirmation" class="form-control rounded-3" placeholder="Ulangi password baru" required minlength="6" maxlength="8">
-                    </div>
-                </div>
-
-                <div class="modal-footer border-0 pb-4 px-4">
-                    <button type="button" class="btn btn-light py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Batal</button>
-                    <button type="submit" class="btn btn-warning py-2 px-4 fw-bold text-white" style="border-radius: 12px;">Simpan Password Baru</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
-
 <!-- Modal Edit Guru -->
 @foreach($gurus as $item)
 <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
@@ -245,9 +131,6 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Email</label>
-
-                            <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $item->email) }}" required>
-=======
                             <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $item->user->email ?? '') }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -286,8 +169,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
-=======
 
             <form action="{{ route('guru.store') }}" method="POST">
                 @csrf
@@ -305,17 +186,6 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-
-                            <label class="form-label fw-bold">Email</label>
-                            <input type="email" name="email" class="form-control rounded-3" value="{{ old('email') }}" placeholder="Masukkan email guru..." required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Nama Guru</label>
-                            <input type="text" name="nama_guru" class="form-control rounded-3" value="{{ old('nama_guru') }}" placeholder="Masukkan nama guru..." required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Jabatan</label>
-=======
                             <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control rounded-3" value="{{ old('email') }}" placeholder="Contoh: guru@sekolah.id" required>
                         </div>
@@ -347,12 +217,6 @@
 
 @section('js')
 <script>
-    @if ($errors->any())
-        $(document).ready(function() {
-            $('#modalTambahGuru').modal('show');
-        });
-    @endif
-=======
     $(document).ready(function() {
         // Otomatis buka kembali modal jika ada error validasi saat submit
         @if ($errors->any())
