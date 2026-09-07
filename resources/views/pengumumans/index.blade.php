@@ -80,6 +80,7 @@
                 </div>
             </div>
         </div>
+        
 @include('pengumumans.create')
 @include('pengumumans.edit')
 

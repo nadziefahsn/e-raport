@@ -79,7 +79,6 @@
     </div>
 </div>
 
-{{-- Modal Create & Edit --}}
 @include('anggotaKelas.create')
 @include('anggotaKelas.edit')
 
