@@ -6,7 +6,6 @@ use App\Models\Indikator;
 use App\Models\CapaianPerkembangan;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
-use App\Http\Requests\IndikatorStoreRequest;
 use App\Http\Requests\IndikatorUpdateRequest;
 
 class IndikatorController extends Controller
@@ -27,7 +26,7 @@ class IndikatorController extends Controller
         return view('indikators.index');
     }
 
-    public function store(IndikatorStoreRequest $request)
+    public function store(IndikatorUpdateRequest $request)
     {
         Indikator::create($request->validated());
 

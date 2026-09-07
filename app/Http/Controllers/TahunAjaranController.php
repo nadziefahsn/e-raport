@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\TahunAjaran;
-use App\Http\Requests\TahunAjaranStoreRequest;
 use App\Http\Requests\TahunAjaranUpdateRequest;
 
 class TahunAjaranController extends Controller
@@ -23,7 +22,7 @@ class TahunAjaranController extends Controller
     }
 
 
-    public function store(TahunAjaranStoreRequest $request)
+    public function store(TahunAjaranUpdateRequest $request)
     {
         TahunAjaran::create($request->validated());
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengumuman;
 use App\Models\User;
-use App\Http\Requests\PengumumanStoreRequest;
 use App\Http\Requests\PengumumanUpdateRequest;
 use Illuminate\Http\Request;
 
@@ -25,7 +24,7 @@ class PengumumanController extends Controller
     }
 
 
-    public function store(PengumumanStoreRequest $request)
+    public function store(PengumumanUpdateRequest $request)
     {
         Pengumuman::create([
             'user_id' => auth()->id(),

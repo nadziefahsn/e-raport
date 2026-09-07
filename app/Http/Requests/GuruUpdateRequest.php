@@ -12,7 +12,6 @@ class GuruUpdateRequest extends FormRequest
     {
         return true;
     }
- @return array<string, ValidationRule|array<mixed>|string>
     
     public function rules(): array
     {

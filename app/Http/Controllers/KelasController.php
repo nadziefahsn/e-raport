@@ -6,7 +6,6 @@ use App\Models\Kelas;
 use App\Models\Guru;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
-use App\Http\Requests\KelasStoreRequest;
 use App\Http\Requests\KelasUpdateRequest;
 
 class KelasController extends Controller
@@ -27,7 +26,7 @@ class KelasController extends Controller
         return view('kelas.index');
     }
 
-    public function store(KelasStoreRequest $request)
+    public function store(KelasUpdateRequest $request)
     {
         Kelas::create($request->validated());
 

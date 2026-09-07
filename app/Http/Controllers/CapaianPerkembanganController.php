@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CapaianPerkembangan;
 use Illuminate\Http\Request;
-use App\Http\Requests\CapaianPerkembanganStoreRequest;
 use App\Http\Requests\CapaianPerkembanganUpdateRequest;
 
 class CapaianPerkembanganController extends Controller
@@ -24,7 +23,7 @@ class CapaianPerkembanganController extends Controller
     }
 
     
-    public function store(CapaianPerkembanganStoreRequest $request)
+    public function store(CapaianPerkembanganUpdateRequest $request)
     {
         CapaianPerkembangan::create($request->validated());
 

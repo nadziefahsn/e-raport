@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\KriteriaPenilaian;
 use Illuminate\Http\Request;
-use App\Http\Requests\KriteriaPenilaianStoreRequest;
 use App\Http\Requests\KriteriaPenilaianUpdateRequest;
 
 class KriteriaPenilaianController extends Controller
@@ -24,7 +23,7 @@ class KriteriaPenilaianController extends Controller
     }
 
 
-    public function store(KriteriaPenilaianStoreRequest $request)
+    public function store(KriteriaPenilaianUpdateRequest $request)
     {
         $request->validate([
             'kriteria'  => 'required|string|max:255',
