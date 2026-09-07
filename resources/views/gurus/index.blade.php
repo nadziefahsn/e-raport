@@ -13,7 +13,6 @@
 @stop
 
 @section('content')
-<!-- Alert Notifikasi Sukses / Error Utama -->
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
@@ -64,14 +63,14 @@
                         <td>{{ $item->nip ?? '-' }}</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <!-- Tombol Reset Password -->
+                                
                                 <a href="{{ route('guru.edit-password', $item->id) }}" 
                                    class="btn btn-xs btn-default text-warning mx-1 shadow" 
                                    title="Reset Password">
                                     <i class="fa fa-lg fa-fw fa-user-cog"></i>
                                 </a>
 
-                                <!-- Tombol Edit -->
+                              
                                 <button type="button" 
                                         class="btn btn-xs btn-default text-primary mx-1 shadow" 
                                         title="Edit"
@@ -80,7 +79,7 @@
                                     <i class="fa fa-lg fa-fw fa-pen"></i>
                                 </button>
 
-                                <!-- Tombol Delete -->
+                                
                                 <form action="{{ route('guru.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                     @csrf
                                     @method('DELETE')
@@ -101,7 +100,7 @@
     </div>
 </div>
 
-<!-- Modal Edit Guru -->
+
 @foreach($gurus as $item)
 <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -159,7 +158,7 @@
 </div>
 @endforeach
 
-<!-- Modal Tambah Guru -->
+
 <div class="modal fade" id="modalTambahGuru" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
@@ -173,7 +172,7 @@
             <form action="{{ route('guru.store') }}" method="POST">
                 @csrf
                 <div class="modal-body p-4">
-                    <!-- Tampilan Pesan Error di Dalam Modal -->
+                    
                     @if ($errors->any() && !session('edit_id'))
                         <div class="alert alert-danger mb-3">
                             <ul class="mb-0 pl-3">
@@ -218,7 +217,7 @@
 @section('js')
 <script>
     $(document).ready(function() {
-        // Otomatis buka kembali modal jika ada error validasi saat submit
+        
         @if ($errors->any())
             @if(session('edit_id'))
                 $('#editModal{{ session('edit_id') }}').modal('show');

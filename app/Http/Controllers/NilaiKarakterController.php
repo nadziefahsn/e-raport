@@ -11,9 +11,7 @@ use App\Models\Karakter;
 
 class NilaiKarakterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $guruId = $request->query('guru_id');
@@ -36,17 +34,13 @@ class NilaiKarakterController extends Controller
         return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'guruId', 'karakters', 'nilaiExisting'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $guruId = $request->input('guru_id');
@@ -76,25 +70,18 @@ class NilaiKarakterController extends Controller
         ->with('success', 'Data nilai karakter berhasil disimpan');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(NilaiKarakter $nilaiKarakter)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(NilaiKarakter $nilaiKarakter)
     {
-        //
+       
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(NilaiKarakterUpdateRequest $request, $id = null)
     {
         $validated = $request->validated();
@@ -125,11 +112,8 @@ class NilaiKarakterController extends Controller
             ->with('success', 'Data nilai karakter berhasil disimpan');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(NilaiKarakter $nilaiKarakter)
     {
-        //
+       
     }
 }

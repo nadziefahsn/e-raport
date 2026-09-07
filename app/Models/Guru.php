@@ -21,9 +21,7 @@ class Guru extends Model
         'nip',
     ];
 
-    /**
-     * Relasi ke model User (Guru terhubung ke 1 User)
-     */
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

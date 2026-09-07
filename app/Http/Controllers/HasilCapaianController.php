@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class HasilCapaianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     private function getCategoryDetails($segment = null)
     { 
         if (!$segment) {
@@ -103,17 +101,13 @@ class HasilCapaianController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
         $guruId = $request->input('guru_id');
@@ -143,25 +137,19 @@ class HasilCapaianController extends Controller
             ->with('success', 'Data hasil capaian berhasil disimpan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(HasilCapaian $hasilCapaian)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(HasilCapaian $hasilCapaian)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(Request $request, $id = null)
     {
         $guruId = $request->input('guru_id');
@@ -193,11 +181,9 @@ class HasilCapaianController extends Controller
             ->with('success', 'Data hasil capaian berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(HasilCapaian $hasilCapaian)
     {
-        //
+
     }
 }

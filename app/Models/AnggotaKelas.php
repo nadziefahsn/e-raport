@@ -73,7 +73,7 @@ class AnggotaKelas extends Model
     public function hasilCapaian()
     {
         return $this->hasMany(HasilCapaian::class, 'anggota_kelas_id');
-    }
+   }
 
     public function nilaiKarakter()
     {

@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class GuruController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+  
     public function index()
     {
         $gurus = Guru::with('user')->get();
@@ -33,20 +31,15 @@ class GuruController extends Controller
         return redirect()->back()->with('success', 'User ID berhasil diperbarui.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('gurus.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
-        // 1. Validasi input dari form
+        
         $request->validate([
             'email'     => 'required|email|unique:users,email',
             'nama_guru' => 'required',
@@ -59,7 +52,7 @@ class GuruController extends Controller
             'nip.unique'     => 'NIP tersebut sudah digunakan oleh guru lain!',
         ]);
 
-        // 2. Simpan ke tabel User
+        
         $user = User::create([
             'name'     => $request->nama_guru,
             'email'    => $request->email,
@@ -67,7 +60,6 @@ class GuruController extends Controller
             'role'     => 'guru',
         ]);
 
-        // 3. Simpan ke tabel Guru (Diisi default dummy agar MySQL tidak menolak karena NOT NULL)
         Guru::create([
             'user_id'       => $user->id,
             'nama_guru'     => $request->nama_guru,
@@ -81,30 +73,24 @@ class GuruController extends Controller
         return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(Guru $guru)
     {
         return view('gurus.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(Guru $guru)
     {
         return view('gurus.index', compact('guru'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, $id)
     {
         $guru = Guru::findOrFail($id);
 
-        // 1. Validasi input
+      
         $request->validate([
             'email'     => 'required|email|unique:users,email,' . ($guru->user_id ?? 0),
             'nama_guru' => 'required',
@@ -117,7 +103,7 @@ class GuruController extends Controller
             'nip.unique'     => 'NIP tersebut sudah digunakan oleh guru lain!',
         ]);
 
-        // 2. Update Email dan Nama di tabel Users
+        
         if ($guru->user) {
             $guru->user->update([
                 'email' => $request->email,
@@ -125,7 +111,6 @@ class GuruController extends Controller
             ]);
         }
 
-        // 3. Update Data di tabel Guru
         $guru->update([
             'nama_guru' => $request->nama_guru,
             'jabatan'   => $request->jabatan,
@@ -135,12 +120,10 @@ class GuruController extends Controller
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Guru $guru)
     {
-        // Opsional: Hapus user terkait jika ada
+
         if ($guru->user) {
             $guru->user->delete();
         }
@@ -149,18 +132,13 @@ class GuruController extends Controller
         return redirect()->back()->with('success', 'Data guru berhasil dihapus!');
     }
 
-    /**
-     * Menampilkan form reset password guru
-     */
     public function editPassword($id)
     {
         $guru = Guru::findOrFail($id);
         return view('gurus.reset-password', compact('guru'));
     }
 
-    /**
-     * Memproses perbaruan password akun user milik guru
-     */
+
     public function updatePassword(Request $request, $id)
     {
         $request->validate([

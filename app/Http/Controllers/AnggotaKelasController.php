@@ -12,9 +12,7 @@ use App\Http\Requests\AnggotaKelasUpdateRequest;
 
 class AnggotaKelasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas'])->latest()->get();
@@ -24,17 +22,13 @@ class AnggotaKelasController extends Controller
         return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
         return view('anggotaKelas.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(AnggotaKelasStoreRequest $request)
     {
         AnggotaKelas::create($request->validated());
@@ -44,25 +38,19 @@ class AnggotaKelasController extends Controller
             ->with('success', 'Data siswa berhasil disimpan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(string $id)
     {
         return view('anggotaKelas.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(string $id)
     {
         return view('anggotaKelas.index', compact('AnggotaKelas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(AnggotaKelasUpdateRequest $request, $id)
     {
         $anggotaKelas = AnggotaKelas::findOrFail($id);
@@ -73,9 +61,7 @@ class AnggotaKelasController extends Controller
             ->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+   
     public function destroy($id)
     {
         $anggotaKelas = AnggotaKelas::findOrFail($id);

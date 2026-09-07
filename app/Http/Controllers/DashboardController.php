@@ -10,9 +10,7 @@ use App\Models\Kelas;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $sekolah = Sekolah::first();

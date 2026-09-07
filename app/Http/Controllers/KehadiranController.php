@@ -32,41 +32,31 @@ class KehadiranController extends Controller
     return view('kehadirans.index', compact('kehadirans', 'kelas'));
 }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+  
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(KehadiranStoreRequest $request)
     {
-       //
+      
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(Kehadiran $kehadiran)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(Kehadiran $kehadiran)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(KehadiranUpdateRequest $request)
     {
         $validated = $request->validated();
@@ -98,11 +88,9 @@ class KehadiranController extends Controller
             ->with('success', 'Data kehadiran berhasil disimpan!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Kehadiran $kehadiran)
     {
-        //
+        
     }
 }

@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 
 class KebersihanSiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index(Request $request)
     {
         $guruId = $request->query('guru_id');
@@ -33,41 +31,30 @@ class KebersihanSiswaController extends Controller
         return view('kebersihans.index', compact('kebersihanSiswa', 'kelas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(KebersihanSiswa $kebersihanSiswa)
     {
-        //
+       
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+ 
     public function edit(KebersihanSiswa $kebersihanSiswa)
     {
-        //
+       
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(KebersihanSiswaUpdateRequest $request)
     {
         $validated = $request->validated();
@@ -94,11 +81,9 @@ class KebersihanSiswaController extends Controller
             ->with('success', 'Data kebersihan siswa berhasil disimpan!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(KebersihanSiswa $kebersihanSiswa)
     {
-        //
+        
     }
 }
