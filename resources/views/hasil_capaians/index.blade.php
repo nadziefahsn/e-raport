@@ -17,7 +17,6 @@
     <form action="{{ route('hasil-capaian.store', ['kategori' => $kategori]) }}" method="POST">        
         @csrf
 
-        <input type="hidden" name="guru_id" value="{{ $guruId }}">
         <input type="hidden" name="kategori" value="{{ $kategori }}">
 
         <div class="card shadow-sm border-0 mb-5">
