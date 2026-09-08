@@ -77,9 +77,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>
-                        <span class="badge badge-secondary">
                             {{ $item->siswa->nis ?? '-' }}
-                        </span>
                     </td>
                     <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
                     <td class="text-center">{{ $item->siswa->jenis_kelamin ?? '-' }}</td>
