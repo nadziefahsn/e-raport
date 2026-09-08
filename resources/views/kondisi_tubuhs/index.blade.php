@@ -49,7 +49,6 @@
             'Nama Siswa',
             ['label' => 'L/P', 'width' => 5, 'className' => 'text-center'],
             ['label' => 'Kelas', 'width' => 10, 'className' => 'text-center'],
-            ['label' => 'Semester', 'width' => 10, 'className' => 'text-center'],
             ['label' => 'Berat Badan', 'width' => 20, 'className' => 'text-center'],
             ['label' => 'Tinggi Badan', 'width' => 20, 'className' => 'text-center'],
         ];
@@ -85,7 +84,6 @@
                     <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
                     <td class="text-center">{{ $item->siswa->jenis_kelamin ?? '-' }}</td>
                     <td class="text-center">{{ $item->kelas->rombel ?? $kelas->rombel ?? '-' }}</td>
-                    <td class="text-center">{{ $tahunAjaranAktif->semester ?? '-' }}</td>
                     <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
                     <td>
                         <div class="input-group input-group-sm">
