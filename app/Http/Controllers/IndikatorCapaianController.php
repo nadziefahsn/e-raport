@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IndikatorCapaian;
+use App\Http\Requests\IndikatorCapaianStoreRequest;
 use App\Models\Indikator;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
@@ -95,16 +96,12 @@ class IndikatorCapaianController extends Controller
     {
         
     }
-    public function store(Request $request)
+    public function store(IndikatorCapaianStoreRequest $request)
     {
-        $request->validate([
-            'kelas_id' => 'required|exists:kelas,id',
-            'indikator_ids' => 'nullable|array',
-            'indikator_ids.*' => 'exists:indikators,id',
-        ]);
+        $data = $request->validated();
 
-        $kelasId = $request->kelas_id;
-        $indikatorIds = $request->indikator_ids ?? [];
+        $kelasId        = $data['kelas_id'];
+        $indikatorIds   = $data['indikator_ids'] ?? [];
 
         if (!empty($indikatorIds)) {
             foreach ($indikatorIds as $indikatorId) {
@@ -115,7 +112,7 @@ class IndikatorCapaianController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Indikator Aqidah berhasil diperbarui');
+        return redirect()->back()->with('success', 'Indikator berhasil diperbarui');
     }
   
     public function show(IndikatorCapaian $indikatorCapaian)

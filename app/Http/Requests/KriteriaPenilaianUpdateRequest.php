@@ -16,8 +16,8 @@ class KriteriaPenilaianUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kriteria' => 'required',
-            'deskripsi' => 'required',
+            'kriteria'  => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\AnggotaKelas;
 use App\Models\IndikatorCapaian;
 use App\Models\Indikator;
+use App\Http\Requests\HasilCapaianUpdateRequest;
 use App\Models\CapaianPerkembangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -108,11 +109,13 @@ class HasilCapaianController extends Controller
     }
 
    
-    public function store(Request $request)
+    public function store(HasilCapaianUpdateRequest $request)
     {
-        $guruId = $request->input('guru_id');
-        $kategori = $request->input('kategori');
-        $nilaiData = $request->input('nilai');
+        $data = $request->validated();
+
+        $guruId = $data['guru_id'] ?? null;
+        $kategori = $data['kategori'] ?? null;
+        $nilaiData = $data['nilai'] ?? null;
 
         if ($nilaiData) {
             foreach ($nilaiData as $anggotaKelasId => $indikatorArray) {
@@ -150,11 +153,13 @@ class HasilCapaianController extends Controller
     }
 
    
-    public function update(Request $request, $id = null)
+    public function update(HasilCapaianUpdateRequest $request, $id = null)
     {
-        $guruId = $request->input('guru_id');
-        $kategori = $request->input('kategori');
-        $nilaiData = $request->input('nilai');
+        $data = $request->validated();
+
+        $guruId = $data['guru_id'] ?? null;
+        $kategori = $data['kategori'] ?? null;
+        $nilaiData = $data['nilai'] ?? null;
 
         if ($nilaiData) {
             foreach ($nilaiData as $anggotaKelasId => $indikatorArray) {
@@ -162,7 +167,6 @@ class HasilCapaianController extends Controller
                     if (empty($nilaiValue)) {
                         continue;
                     }
-
                     HasilCapaian::updateOrCreate(
                         [
                             'anggota_kelas_id' => $anggotaKelasId,
@@ -175,10 +179,9 @@ class HasilCapaianController extends Controller
                 }
             }
         }
-
         return redirect()
             ->route('hasil-capaian.kategori', ['slug' => $kategori, 'guru_id' => $guruId])
-            ->with('success', 'Data hasil capaian berhasil diperbarui');
+            ->with('success', 'Data hasil capaian berhasil disimpan.');
     }
 
     

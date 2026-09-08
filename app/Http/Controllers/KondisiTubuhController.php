@@ -42,7 +42,7 @@ class KondisiTubuhController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(KondisiTubuhStoreRequest $request)
     {
         
     }
@@ -59,18 +59,20 @@ class KondisiTubuhController extends Controller
 
     }
 
-    public function update(Request $request)
+    public function update(KondisiTubuhStoreRequest $request)
     {
-        $guruId = $request->input('guru_id');
+        $data = $request->validated();
+
+        $guruId = $data['guru_id'] ?? null;
         $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         if (!$tahunAjaranAktif) {
             return redirect()->back()->with('error', 'Tahun ajaran aktif belum ditentukan.');
         }
 
-        $anggotaIds = $request->input('anggota_kelas_id', []);
-        $beratBadan = $request->input('berat_badan', []);
-        $tinggiBadan = $request->input('tinggi_badan', []);
+        $anggotaIds  = $data['anggota_kelas_id'];
+        $beratBadan  = $data['berat_badan'];
+        $tinggiBadan = $data['tinggi_badan'];
 
         foreach ($anggotaIds as $index => $anggotaId) {
             KondisiTubuh::updateOrCreate(

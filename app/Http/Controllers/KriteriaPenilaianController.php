@@ -25,15 +25,7 @@ class KriteriaPenilaianController extends Controller
 
     public function store(KriteriaPenilaianUpdateRequest $request)
     {
-        $request->validate([
-            'kriteria'  => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-        ]);
-
-        KriteriaPenilaian::create([
-            'kriteria'  => $request->kriteria,
-            'deskripsi' => $request->deskripsi,
-        ]);
+        KriteriaPenilaian::create($request->validated());
 
         return redirect()->back()->with('success', 'Kriteria berhasil ditambahkan!');
         }
@@ -47,20 +39,15 @@ class KriteriaPenilaianController extends Controller
 
     public function edit(string $id)
     {
-        return view('kriterias.index', compact('kriteriaPenilaian'));
+        $kriteriapenilaian = KriteriaPenilaian::findOrFail($id);
+        $kriterias = KriteriaPenilaian::all(); 
+
+        return view('kriterias.index', compact('kriteriapenilaian', 'kriterias'));
     }
 
-    public function update(KriteriaPenilaianUpdateRequest $request, KriteriaPenilaian $kriteriaPenilaian, $id)
+    public function update(KriteriaPenilaianUpdateRequest $request, KriteriaPenilaian $kriteriapenilaian)
     {
-        $request->validate([
-        'kriteria'  => 'required|string|max:255',
-        'deskripsi' => 'nullable|string',
-        ]);
-
-        $data = KriteriaPenilaian::findOrFail($id);
-        $data->kriteria  = $request->kriteria;
-        $data->deskripsi = $request->deskripsi;
-        $data->save();
+        $kriteriapenilaian->update($request->validated());
 
         return redirect()->back()->with('success', 'Data kriteria berhasil diubah!');
     }

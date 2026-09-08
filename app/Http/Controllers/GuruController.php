@@ -65,9 +65,6 @@ class GuruController extends Controller
             'nama_guru'     => $request->nama_guru,
             'jabatan'       => $request->jabatan,
             'nip'           => $request->nip,
-            'tempat_lahir'  => '-',
-            'tanggal_lahir' => '2000-01-01',
-            'jenis_kelamin' => 'Laki-Laki',
         ]);
 
         return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
