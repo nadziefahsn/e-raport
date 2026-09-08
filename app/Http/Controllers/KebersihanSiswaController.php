@@ -10,26 +10,31 @@ use Illuminate\Http\Request;
 
 class KebersihanSiswaController extends Controller
 {
-    
-    public function index(Request $request)
-    {
-        $guruId = $request->query('guru_id');
-        
-        $kelas = null;
-        $kebersihanSiswa = collect();
+   public function index(Request $request)
+{
+    $user = auth()->user();
+    $kebersihanSiswa = collect();
+    $kelas = null;
 
-        if ($guruId) {
-        $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+    if ($user->hasRole('guru')) {
+        $guruId = $user->guru?->id;
 
-        if ($kelas) {
-            $kebersihanSiswa = AnggotaKelas::where('kelas_id', $kelas->id)
-                ->with(['siswa', 'kelas', 'kebersihanSiswa'])
-                ->get();
-        }
+        $kelas = Kelas::where('wali_kelas_id', $guruId)
+            ->orWhere('pendamping_id', $guruId)
+            ->get();
+
+        $kelasIds = $kelas->pluck('id');
+
+        $kebersihanSiswa = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+            ->with(['siswa', 'kelas', 'kebersihanSiswa'])
+            ->get();
+    } else {
+        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        $kebersihanSiswa = AnggotaKelas::with(['siswa', 'kelas', 'kebersihanSiswa'])->get();
     }
 
-        return view('kebersihans.index', compact('kebersihanSiswa', 'kelas'));
-    }
+    return view('kebersihans.index', compact('kebersihanSiswa', 'kelas'));
+}
 
     public function create()
     {

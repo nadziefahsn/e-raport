@@ -18,7 +18,6 @@
         @csrf
         @method('PUT')
 
-        <input type="hidden" name="guru_id" value="{{ request('guru_id') }}">
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header bg-white py-3 px-4">

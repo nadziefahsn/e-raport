@@ -35,13 +35,10 @@
     @csrf
     @method('PUT')
     
-    <!-- Send Guru ID Back -->
-    <input type="hidden" name="guru_id" value="{{ $guruId }}">
-
     <div class="card">
         <div class="card-header d-flex align-items-center">
             <h3 class="card-title mb-0">
-                <i class="fas fa-heartbeat mr-2"></i>Input Kondisi Tubuh Kelas {{ $kelas->nama_kelas ?? '' }}
+                <i class="fas fa-heartbeat mr-2"></i>Input Kondisi Tubuh Kelas
             </h3>
         </div>
 
