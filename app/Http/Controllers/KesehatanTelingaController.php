@@ -12,23 +12,34 @@ class KesehatanTelingaController extends Controller
 {
 
     public function index(Request $request)
-    {
-        $guruId = $request->input('guru_id');
-        $kelas = null;
-        $kesehatanTelingas = collect();
+{
+    $user = auth()->user();
+    $kesehatanTelingas = collect();
+    $kelas = null;
 
-        if ($guruId) {
-            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+    if ($user->hasRole('guru')) {
+        // Otomatis ambil ID dari relasi guru
+        $guruId = $user->guru?->id;
 
-            if ($kelas) {
-                $kesehatanTelingas = AnggotaKelas::where('kelas_id', $kelas->id)
-                    ->with(['siswa', 'kelas', 'kesehatanTelinga'])
-                    ->get();
-            }
-        }
+        // Ambil kelas yang diampu (wali kelas atau pendamping)
+        $kelas = Kelas::where('wali_kelas_id', $guruId)
+            ->orWhere('pendamping_id', $guruId)
+            ->get();
 
-        return view('telingas.index', compact('kesehatanTelingas', 'kelas', 'guruId'));
+        $kelasIds = $kelas->pluck('id');
+
+        // Ambil data anggota kelas beserta relasi kehadirannya
+        $kesehatanTelingas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+            ->with(['siswa', 'kelas', 'kesehatanTelinga'])
+            ->get();
+    } else {
+        // Jika Admin, tampilkan semua kelas dan anggota
+        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        $kesehatanTelingas = AnggotaKelas::with(['siswa', 'kelas', 'kesehatanTelinga'])->get();
     }
+
+    return view('telingas.index', compact('kesehatanTelingas', 'kelas'));
+}
 
 
     public function create()
