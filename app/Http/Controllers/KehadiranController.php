@@ -6,6 +6,7 @@ use App\Http\Requests\KehadiranUpdateRequest;
 use App\Http\Controllers\KelasController;
 use App\Models\AnggotaKelas;
 use App\Models\Kehadiran;
+use App\Models\User;
 use App\Models\TahunAjaran;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
@@ -14,19 +15,29 @@ class KehadiranController extends Controller
 {
     public function index(Request $request)
 {
-    $guruId = $request->query('guru_id');
-
-    $kelas = null;
+    $user = auth()->user();
     $kehadirans = collect();
+    $kelas = null;
 
-    if ($guruId) {
-        $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+    if ($user->hasRole('guru')) {
+        // Otomatis ambil ID dari relasi guru
+        $guruId = $user->guru?->id;
 
-        if ($kelas) {
-            $kehadirans = AnggotaKelas::where('kelas_id', $kelas->id)
-                ->with(['siswa', 'kelas', 'kehadiran'])
-                ->get();
-        }
+        // Ambil kelas yang diampu (wali kelas atau pendamping)
+        $kelas = Kelas::where('wali_kelas_id', $guruId)
+            ->orWhere('pendamping_id', $guruId)
+            ->get();
+
+        $kelasIds = $kelas->pluck('id');
+
+        // Ambil data anggota kelas beserta relasi kehadirannya
+        $kehadirans = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+            ->with(['siswa', 'kelas', 'kehadiran'])
+            ->get();
+    } else {
+        // Jika Admin, tampilkan semua kelas dan anggota
+        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        $kehadirans = AnggotaKelas::with(['siswa', 'kelas', 'kehadiran'])->get();
     }
 
     return view('kehadirans.index', compact('kehadirans', 'kelas'));

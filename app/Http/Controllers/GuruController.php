@@ -67,6 +67,8 @@ class GuruController extends Controller
             'nip'           => $request->nip,
         ]);
 
+        $user->assignRole('guru');
+
         return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
     }
 

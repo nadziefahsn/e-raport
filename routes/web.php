@@ -34,8 +34,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+    Route::middleware(['role:admin|guru'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('anggota-kelas', AnggotaKelasController::class);
+
+    });
     
+    Route::middleware(['role:admin'])->group(function () {
     Route::resource('sekolah', SekolahController::class)->except(['create','show','edit','destroy'])->whereNumber('sekolah');
     Route::resource('kriteria', KriteriaPenilaianController::class)->parameters([
         'kriteria' => 'kriteriapenilaian',
@@ -57,7 +63,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('karakter', KarakterController::class)->except(['show'])->whereNumber('karakter');
     Route::resource('pengumuman', PengumumanController::class)->except(['show'])->whereNumber('pengumuman');
     Route::resource('indikator', IndikatorController::class);
-    Route::resource('anggota-kelas', AnggotaKelasController::class);
+
+    });
+
+    Route::middleware(['role:guru'])->group(function () {
     Route::resource('kehadiran', KehadiranController::class)->only(['index','update'])->whereNumber('kehadiran');
     
     Route::resource('gigi', KesehatanGigiController::class)->only(['index','update'])->whereNumber('gigi');
@@ -82,4 +91,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     ->whereNumber('telinga');
 
     Route::resource('data-karakter', DataKarakterController::class)->only(['index']);
+
+    });
 });

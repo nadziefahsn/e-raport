@@ -31,6 +31,8 @@ class UserController extends Controller
             'role'     => $request->role,
         ]);
 
+        $user->assignRole('admin');
+
         return redirect()->back()->with('success', 'User berhasil ditambahkan!');
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\AnggotaKelas;
 use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnggotaKelasStoreRequest;
 use App\Http\Requests\AnggotaKelasUpdateRequest;
@@ -15,11 +16,26 @@ class AnggotaKelasController extends Controller
     
     public function index()
     {
-        $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas'])->latest()->get();
-        $siswas = Siswa::orderBy('nama_siswa', 'asc')->get();
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+    $user = auth()->user();
+    $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
 
-        return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
+    if ($user->hasRole('guru')) {
+        $guruId = $user->guru?->id;
+
+        $kelasIds = Kelas::where('wali_kelas_id', $guruId)
+            ->orWhere('pendamping_id', $guruId)
+            ->pluck('id');
+
+        $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
+        $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
+    } else {
+        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+    }
+
+    $anggotaKelas = $anggotaKelasQuery->get();
+    $siswas = Siswa::orderBy('nama_siswa', 'asc')->get();
+
+    return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
     }
 
    
