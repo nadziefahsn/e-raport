@@ -7,6 +7,7 @@ use App\Models\NilaiKarakter;
 use Illuminate\Http\Request;
 use App\Models\AnggotaKelas;
 use App\Models\Kelas;
+use App\Models\User;
 use App\Models\Karakter;
 
 class NilaiKarakterController extends Controller
@@ -14,24 +15,31 @@ class NilaiKarakterController extends Controller
 
     public function index(Request $request)
     {
-        $guruId = $request->query('guru_id');
+        $user = auth()->user();
         $kelas = null;
         $anggotaKelas = collect();
         $karakters = Karakter::all(); 
         $nilaiExisting = [];
 
-        if ($guruId) {
-            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
 
-            if ($kelas) {
-                $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
-                    ->with(['siswa', 'kelas'])
-                    ->get();
-                
-            }
+            $kelas = Kelas::where('wali_kelas_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)
+                ->get();
+
+            $kelasIds = $kelas->pluck('id');
+
+            $anggotaKelas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+                ->with(['siswa', 'kelas'])
+                ->get();
+        } else {
+            $kelas = Kelas::orderBy('romber', 'asc')->get();
+            $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas'])->get();
         }
+        
 
-        return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'guruId', 'karakters', 'nilaiExisting'));
+        return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'karakters', 'nilaiExisting'));
     }
 
 

@@ -6,6 +6,7 @@ use App\Http\Requests\KesehatanMulutUpdateRequest;
 use App\Models\KesehatanMulut;
 use Illuminate\Http\Request;
 use App\Models\AnggotaKelas;
+use App\Models\User;
 use App\Models\Kelas;
 
 class KesehatanMulutController extends Controller
@@ -13,21 +14,29 @@ class KesehatanMulutController extends Controller
    
     public function index(Request $request)
     {
-        $guruId = $request->input('guru_id');
+        $user = auth()->user();
         $kelas = null;
         $kesehatanMuluts = collect();
 
-        if ($guruId) {
-            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
 
-            if ($kelas) {
-                $kesehatanMuluts = AnggotaKelas::where('kelas_id', $kelas->id)
-                    ->with(['siswa', 'kelas', 'kesehatanMulut'])
-                    ->get();
-            }
+            $kelas = Kelas::where('wali_kelas_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)
+                ->get();
+
+            $kelasIds = $kelas->pluck('id');
+
+            $kesehatanMuluts = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+                ->with(['siswa', 'kelas', 'kesehatanMulut'])
+                ->get();
+        } else {
+            $kelas = Kelas::orderBy('rombel', 'asc')->get();
+            $kesehatanMuluts = AnggotaKelas::with(['siswa', 'kelas', 'kesehatanMulut' ])->get();
         }
+        
 
-        return view('muluts.index', compact('kesehatanMuluts', 'kelas', 'guruId'));
+        return view('muluts.index', compact('kesehatanMuluts', 'kelas'));
     }
 
 

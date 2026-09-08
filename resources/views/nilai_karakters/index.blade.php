@@ -25,7 +25,6 @@
 
     <form action="{{ route('nilai-karakter.store') }}" method="POST">
     @csrf
-    <input type="hidden" name="guru_id" value="{{ $guruId }}">
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header bg-white py-3 px-4">

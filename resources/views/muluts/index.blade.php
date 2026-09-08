@@ -17,7 +17,6 @@
     <form action="{{ route('mulut.update', 1) }}" method="POST">
         @csrf
         @method('PUT')
-        <input type="hidden" name="guru_id" value="{{ request('guru_id') }}">
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-header bg-white py-3 px-4">
@@ -51,7 +50,7 @@
 
                                 <td>
                                     <select name="kesehatan_mulut[]" class="form-control">
-                                        <option value="" {{ !$item->kesehatanMulut ? 'selected' : '' }}>-- Pilih Kondisi --</option>
+                                        <option value="" {{ !$item->kesehatanMulut ? 'selected' : '' }}></option>
                                         <option value="Baik" {{ ($item->kesehatanMulut->kesehatan_mulut ?? '') == 'Baik' ? 'selected' : '' }}>Baik</option>
                                         <option value="Kurang baik" {{ ($item->kesehatanMulut->kesehatan_mulut ?? '') == 'Kurang baik' ? 'selected' : '' }}>Kurang baik</option>
                                     </select>
