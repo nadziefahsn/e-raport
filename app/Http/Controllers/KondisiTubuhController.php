@@ -15,8 +15,8 @@ class KondisiTubuhController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-    $kondisiTubuhs = collect();
-    $kelas = null;
+        $kondisiTubuhs = collect();
+        $kelas = null;
 
     if ($user->hasRole('guru')) {
         $guruId = $user->guru?->id;

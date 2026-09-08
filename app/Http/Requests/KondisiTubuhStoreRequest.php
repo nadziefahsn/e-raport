@@ -18,7 +18,7 @@ class KondisiTubuhStoreRequest extends FormRequest
         return [
             'guru_id'            => 'nullable',
             'anggota_kelas_id'   => 'required|array',
-            'anggota_kelas_id.*' => 'required|exists:anggota_kelases,id',
+            'anggota_kelas_id.*' => 'required|exists:anggota_kelas,id',
             'berat_badan'        => 'required|array',
             'berat_badan.*'      => 'nullable|numeric|between:0,999.99',
             'tinggi_badan'       => 'required|array',
