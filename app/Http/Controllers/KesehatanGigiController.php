@@ -13,24 +13,34 @@ class KesehatanGigiController extends Controller
 {
     
     public function index(Request $request)
-    {
-        $guruId = $request->input('guru_id');
-        $kelas = null;
-        $kesehatanGigis = collect();
+{
+    $user = auth()->user();
+    $kesehatanGigis = collect();
+    $kelas = null;
 
-        if ($guruId) {
-            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+    if ($user->hasRole('guru')) {
+        // Otomatis ambil ID dari relasi guru
+        $guruId = $user->guru?->id;
 
-            if ($kelas) {
-                $kesehatanGigis = AnggotaKelas::where('kelas_id', $kelas->id)
-                    ->with(['siswa', 'kelas', 'kesehatanGigi'])
-                    ->get();
-            }
-        }
+        // Ambil kelas yang diampu (wali kelas atau pendamping)
+        $kelas = Kelas::where('wali_kelas_id', $guruId)
+            ->orWhere('pendamping_id', $guruId)
+            ->get();
 
-        return view('gigis.index', compact('kesehatanGigis', 'kelas', 'guruId'));
+        $kelasIds = $kelas->pluck('id');
+
+        // Ambil data anggota kelas beserta relasi kehadirannya
+        $kesehatanGigis = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+            ->with(['siswa', 'kelas', 'kesehatanGigi'])
+            ->get();
+    } else {
+        // Jika Admin, tampilkan semua kelas dan anggota
+        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        $kesehatanGigis= AnggotaKelas::with(['siswa', 'kelas', 'kesehatanGigis'])->get();
     }
 
+    return view('gigis.index', compact('kesehatanGigis', 'kelas'));
+}
     
     public function create()
     {
