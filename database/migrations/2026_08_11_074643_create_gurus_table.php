@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('nama_guru');
             $table->string('jabatan');
             $table->string('nip')->unique();
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->timestamps();
         });
     }

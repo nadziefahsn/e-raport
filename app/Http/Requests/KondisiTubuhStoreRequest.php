@@ -16,10 +16,13 @@ class KondisiTubuhStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kondisi'                    => 'required|array',
-            'kondisi.*.anggota_kelas_id' => 'required|exists:anggota_kelases,id',
-            'kondisi.*.berat_badan'      => 'nullable|numeric|between:0,999.99',
-            'kondisi.*.tinggi_badan'     => 'nullable|numeric|between:0,999.99',
+            'guru_id'            => 'nullable',
+            'anggota_kelas_id'   => 'required|array',
+            'anggota_kelas_id.*' => 'required|exists:anggota_kelases,id',
+            'berat_badan'        => 'required|array',
+            'berat_badan.*'      => 'nullable|numeric|between:0,999.99',
+            'tinggi_badan'       => 'required|array',
+            'tinggi_badan.*'     => 'nullable|numeric|between:0,999.99',
         ];
     }
 }
