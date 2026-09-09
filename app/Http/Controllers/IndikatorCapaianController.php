@@ -6,6 +6,7 @@ use App\Models\IndikatorCapaian;
 use App\Http\Requests\IndikatorCapaianStoreRequest;
 use App\Models\Indikator;
 use App\Models\Kelas;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,17 +47,32 @@ class IndikatorCapaianController extends Controller
         ];
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $slug = null)
     {
-        $catInfo = $this->getCategoryDetails();
-        $guruId = $request->query('guru_id', auth()->user()->guru->id ?? null);
-        $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
-        
+        $user = auth()->user();
+        $catInfo = $this->getCategoryDetails($slug);
+        $namaKategori = $catInfo['name'];
+        $kategori = $catInfo['slug'] ?? null;
+
+        $kelas = null;
+        $guruId = null;
+
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
+            $kelas = Kelas::where('wali_kelas_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)
+                ->first();
+        } else {
+            $kelas = Kelas::orderBy('rombel', 'asc')->first();
+        }
+
         if (!$kelas) {
             return view('indikatorCapaians.index', [
-                'kelas' => null,
-                'rencanaIndikator' => collect(),
-                'namaKategori' => $catInfo['name']
+                'kelas'             => null,
+                'guruId'            => $guruId,
+                'rencanaIndikator'  => collect(),
+                'namaKategori'      => $namaKategori,
+                'kategori'          => $kategori,
             ]);
         }
 
@@ -75,7 +91,7 @@ class IndikatorCapaianController extends Controller
 
         foreach ($masterIndikator as $master) {
             IndikatorCapaian::firstOrCreate([
-                'kelas_id' => $kelas->id,
+                'kelas_id'     => $kelas->id,
                 'indikator_id' => $master->id,
             ]);
         }
@@ -87,9 +103,7 @@ class IndikatorCapaianController extends Controller
             ->with('indikator')
             ->get();
 
-        $namaKategori = $catInfo['name'];
-
-        return view('indikatorCapaians.index', compact('rencanaIndikator', 'kelas', 'namaKategori'));
+        return view('indikatorCapaians.index', compact('rencanaIndikator', 'kelas', 'namaKategori', 'guruId', 'kategori'));
     }
     
     public function create()
