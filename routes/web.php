@@ -26,6 +26,8 @@ use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
+use App\Http\Controllers\PdfController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -48,6 +50,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     ]);
 
     Route::resource('tahun_ajaran', TahunAjaranController::class);
+    Route::resource('pdf', PdfController::class);
     Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
     
     // Rute Guru
