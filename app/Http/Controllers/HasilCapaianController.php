@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\AnggotaKelas;
 use App\Models\IndikatorCapaian;
 use App\Models\Indikator;
+use App\Models\User;
 use App\Models\CapaianPerkembangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,8 +52,8 @@ class HasilCapaianController extends Controller
 
     public function index(Request $request, $slug = null)
     {
-        $guruId = $request->query('guru_id')??auth()->user()->guru_id;
-
+        $user = auth()->user();
+        
         $catInfo = $this->getCategoryDetails($slug);
         $namaKategori = $catInfo['name'];
         $kategori = $catInfo['slug'];
@@ -60,37 +61,43 @@ class HasilCapaianController extends Controller
         $kelas = null;
         $anggotaKelas = collect();
         $rencanaIndikator = collect();
+        $guruId = null;
 
-        if ($guruId) {
-            $kelas = Kelas::where('wali_kelas_id', $guruId)->first();
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
+            $kelas = Kelas::where('wali_kelas_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)
+                ->first();
+        } else {
+            $kelas = Kelas::orderBy('rombel', 'asc')->first();
+        }
 
-            if ($kelas) {
-                $rombelUpper = strtoupper($kelas->rombel);
-                $jenjangTujuan = str_contains($rombelUpper, 'B') ? 'TK B' : 
-                                (str_contains($rombelUpper, 'A') ? 'TK A' : 'PG');
+        if ($kelas) {
+            $rombelUpper = strtoupper($kelas->rombel);
+            $jenjangTujuan = str_contains($rombelUpper, 'B') ? 'TK B' : 
+                            (str_contains($rombelUpper, 'A') ? 'TK A' : 'PG');
 
-                $masterIndikator = Indikator::where('jenjang', $jenjangTujuan)
-                    ->whereIn('capaian_perkembangan_id', $catInfo['ids'])
-                    ->get();
+            $masterIndikator = Indikator::where('jenjang', $jenjangTujuan)
+                ->whereIn('capaian_perkembangan_id', $catInfo['ids'])
+                ->get();
 
-                    foreach ($masterIndikator as $master){
-                        IndikatorCapaian::firstOrCreate([
-                            'kelas_id'      => $kelas->id,
-                            'indikator_id'  => $master->id,
-                        ]);
-                    }
-
-                    $rencanaIndikator = IndikatorCapaian::where('kelas_id', $kelas->id)
-                    ->whereHas('indikator', function($q) use ($catInfo) {
-                        $q->whereIn('capaian_perkembangan_id', $catInfo['ids']);
-                    })
-                    ->with('indikator')
-                    ->get();
-
-                    $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
-                        ->with(['siswa', 'kelas', 'hasilCapaian'])
-                        ->get();
+            foreach ($masterIndikator as $master) {
+                IndikatorCapaian::firstOrCreate([
+                    'kelas_id'     => $kelas->id,
+                    'indikator_id' => $master->id,
+                ]);
             }
+
+            $rencanaIndikator = IndikatorCapaian::where('kelas_id', $kelas->id)
+                ->whereHas('indikator', function($q) use ($catInfo) {
+                    $q->whereIn('capaian_perkembangan_id', $catInfo['ids']);
+                })
+                ->with('indikator')
+                ->get();
+
+            $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
+                ->with(['siswa', 'kelas', 'hasilCapaian'])
+                ->get();
         }
 
         return view('hasil_capaians.index', [
