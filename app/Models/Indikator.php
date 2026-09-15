@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\CapaianPerkembangan;
 use App\Models\TahunAjaran;
+use App\Models\IndikatorCapaian;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,5 +25,10 @@ class Indikator extends Model
     public function tahunAjaran()
     {
         return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
+    }
+
+    public function indikatorCapaian()
+    {
+        return $this->hasMany(IndikatorCapaian::class, 'indikator_id');
     }
 }

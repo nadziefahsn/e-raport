@@ -7,6 +7,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\KriteriaPenilaian;
 use App\Models\Sekolah;
 use App\Models\AnggotaKelas;
+use App\Models\CapaianPerkembangan;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class PdfController extends Controller
 {
@@ -44,19 +47,53 @@ class PdfController extends Controller
             'kondisiTubuh'
         ])->findOrFail($id);
 
-        $pdf = Pdf::loadView('pdf.rapot', compact(
-            'sekolah', 
-            'kriterias', 
-            'anggotaKelas'
-        ))->setOption([
-            'isRemoteEnabled' => true, 
-            'isHtml5ParserEnabled' => true
-        ])->setPaper('A4', 'portrait');
+        $namaKelas = $anggotaKelas->kelas->rombel ?? '';
+        $rombelUpper = strtoupper($namaKelas);
 
-        $namaKelas = $anggotaKelas->kelas->rombel ?? 'Kelas';
-        $namaSiswa = $anggotaKelas->siswa->nama_siswa ?? 'Siswa';
+        if (str_contains($rombelUpper, 'B')) {
+            $jenjangTujuan = 'TK B';
+        } elseif (str_contains($rombelUpper, 'A')) {
+            $jenjangTujuan = 'TK A';
+        } else {
+            $jenjangTujuan = 'PG';
+        }
+
+        $kelasId = $anggotaKelas->kelas_id;
+        $tahunAjaranId = $anggotaKelas->kelas->tahun_ajaran_id ?? null;
+
+        $capaianPerkembangan = CapaianPerkembangan::with(['indikators' => function ($query) use ($jenjangTujuan) {
+            $query->when($jenjangTujuan, function ($q) use ($jenjangTujuan) {
+                $q->where('jenjang', $jenjangTujuan);
+            })->with('indikatorCapaian');
+        }])->get();
+
+        $daftarCapaian = [];
+        $abjad = range('A', 'Z');
+
+        foreach ($capaianPerkembangan as $index => $kategori) {
+            $prefix = isset($abjad[$index]) ? $abjad[$index] . '. ' : '';
+            $namaJudul = $kategori->capaian_perkembangan ?? 'KATEGORI';
+            $keyJudul = $prefix . strtoupper($namaJudul);
+
+            $daftarCapaian[$keyJudul] = $kategori->indikators;
+        }
+
+        $pdf = Pdf::loadView('pdf.rapot', compact(
+            'sekolah',
+            'karakters',
+            'kehadirans',
+            'kriterias',
+            'anggotaKelas',
+            'siswa',
+            'jenjangTujuan',
+            'daftarCapaian'
+        ))->setPaper('A4', 'portrait')
+        ->setOption($pdfOptions);
+
+        $namaKelasClean = $namaKelas ?: 'Kelas';
+        $namaSiswa = $siswa->nama_siswa ?? $siswa->nama_siswa ?? 'Siswa';
         
-        $fileName = trim($namaKelas) . '_' . trim($namaSiswa) . '.pdf';
+        $fileName = 'Penilaian Karakter & Biodata (' . $jenjangTujuan . ') - ' . trim($namaKelasClean) . '_' . trim($namaSiswa) . '.pdf';
 
         return response($pdf->output(), 200, [
             'Content-Type' => 'application/pdf',
