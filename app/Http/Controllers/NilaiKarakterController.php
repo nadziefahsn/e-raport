@@ -34,7 +34,7 @@ class NilaiKarakterController extends Controller
                 ->with(['siswa', 'kelas'])
                 ->get();
         } else {
-            $kelas = Kelas::orderBy('romber', 'asc')->get();
+            $kelas = Kelas::orderBy('rombel', 'asc')->get();
             $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas'])->get();
         }
         
