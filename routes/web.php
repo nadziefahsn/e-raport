@@ -26,6 +26,8 @@ use App\Http\Controllers\KesehatanMataController;
 use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
+use App\Http\Controllers\PdfController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -35,9 +37,11 @@ Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
+
     Route::middleware(['role:admin|guru'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('anggota-kelas', AnggotaKelasController::class);
+    Route::resource('pdf', PdfController::class);
 
     });
     
@@ -60,7 +64,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('kelas', KelasController::class)->parameters([
         'kelas' => 'kelas'
     ]);
-    Route::resource('karakter', KarakterController::class)->except(['show'])->whereNumber('karakter');
+    Route::resource('karakter', KarakterController::class)->except(['show']);
     Route::resource('pengumuman', PengumumanController::class)->except(['show'])->whereNumber('pengumuman');
     Route::resource('indikator', IndikatorController::class);
 

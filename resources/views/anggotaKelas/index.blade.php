@@ -69,6 +69,9 @@
                                         onclick="return confirm('Hapus siswa ini dari anggota kelas?')">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </button>
+                                <a href="{{ route('pdf.show', Crypt::encrypt($item->id)) }}" target="_blank" class="btn btn-primary">
+                                    Cetak PDF
+                                </a>
                             </form>
                         </nobr>
                     </td>
