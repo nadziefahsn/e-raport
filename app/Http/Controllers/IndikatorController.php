@@ -10,7 +10,6 @@ use App\Http\Requests\IndikatorUpdateRequest;
 
 class IndikatorController extends Controller
 {
-   
     public function index()
     {
         $capaians = CapaianPerkembangan::all();
@@ -20,7 +19,6 @@ class IndikatorController extends Controller
         return view('indikators.index', compact('capaians','indikators','tahunAjarans'));
     }
 
-    
     public function create()
     {
         return view('indikators.index');
@@ -28,36 +26,44 @@ class IndikatorController extends Controller
 
     public function store(IndikatorUpdateRequest $request)
     {
-        Indikator::create($request->validated());
+        $data = $request->validated();
+
+        if (Indikator::where('kode', $data['kode'])->exists()) {
+            return redirect()->back()->withInput()->with('error', 'Gagal! Kode indikator "' . $data['kode'] . '" sudah tersedia.');
+        }
+
+        Indikator::create($data);
 
         return redirect()
-            ->route('indikator.index')
-            ->with('success', 'Indikator berhasil ditambahkan.');
+            ->route('karakter.index')
+            ->with('success', 'Indikator berhasil disimpan.');
     }
 
-    
     public function show(string $id)
     {
         return view('indikators.index');
     }
 
-   
     public function edit(string $id)
     {
         return view('indikators.index', compact('Indikator'));
     }
 
-    
     public function update(IndikatorUpdateRequest $request, Indikator $indikator)
     {
-        $indikator->update($request->validated());
+        $data = $request->validated();
+
+        if ($data['kode'] !== $indikator->id && Indikator::where('kode', $data['kode'])->exists()) {
+            return redirect()->back()->withInput()->with('error', 'Gagal! Kode indikator "' . $data['kode'] . '" sudah tersedia.');
+        }
+
+        $indikator->update($data);
 
         return redirect()
             ->route('indikator.index')
-            ->with('success', 'Indikator berhasil diupdate.');
+            ->with('success', 'Indikator berhasil diperbarui.');
     }
 
-   
     public function destroy(Indikator $indikator)
     {
         $indikator->delete();

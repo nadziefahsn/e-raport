@@ -109,4 +109,11 @@
 @stop
 
 @section('js')
+    @if ($errors->any())
+        @if(old('_method') == 'PUT' && old('old_id'))
+            $('#editModal{{ Str::slug(old('old_id')) }}').modal('show');
+        @else
+            $('#modalTambahKarakter').modal('show');
+        @endif
+    @endif
 @stop

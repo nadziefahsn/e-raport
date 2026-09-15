@@ -52,7 +52,7 @@
                             <label class="form-label fw-bold">Tahun Ajaran</label>
                             <select name="tahun_ajaran_id" class="form-control rounded-3" required>
                                 <option value="" disabled selected>-- Pilih Tahun Ajaran --</option>
-                                @foreach($tahunAjarans as $ta)
+                                @foreach($tahunAjarans as $ta)zzzzz
                                     <option value="{{ $ta->id }}">
                                         {{ $ta->tahun_ajaran }} - {{ $ta->semester == '1' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
                                     </option>
