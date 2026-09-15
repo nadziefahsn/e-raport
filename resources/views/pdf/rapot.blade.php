@@ -86,7 +86,7 @@
         <tr>
             <td width="4%" class="label-bold">1.</td>
             <td width="36%" class="label-bold">Nama Anak Didik</td>
-            <td width="60%">: {{ $anggotaKelas->siswa->nama_lengkap ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</td>
+            <td width="60%">: {{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</td>
         </tr>
         <tr>
             <td class="label-bold">2.</td>
@@ -230,7 +230,7 @@
         <tr>
             <td width="15%">Nama Siswa</td>
             <td width="2%">:</td>
-            <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_lengkap ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
+            <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
             <td width="15%">Kelompok Usia</td>
             <td width="2%">:</td>
             <td width="28%">{{ $anggotaKelas->kelas->kelompok_usia ?? '3-4 Tahun' }}</td>
@@ -253,56 +253,65 @@
         </tr>
     </table>
 
-    @php
-        $daftarCapaian = [
-            'A. AQIDAH' => [],
-            'B. IBADAH' => [],
-            'C. AKHLAQ' => [],
-            'D. DISIPLIN DAN KENDALI DIRI' => [],
-            'E. AL-QURAN' => [],
-            'F. WAWASAN KEAGAMAAN' => [],
-            'G. KESEHATAN KEBUGARAN' => [],
-            'H. LIFE SKILL DAN WIRAUSAHA' => [],
-        ];
-    @endphp
+@foreach($daftarCapaian as $judulKategori => $indikators)
+    <div class="kategori-title" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">
+        {{ $judulKategori }}
+    </div>
 
-    @foreach($daftarCapaian as $judulKategori => $indikators)
-        <div class="kategori-title">{{ $judulKategori }}</div>
-
-        <table class="table-rapor">
-            <thead>
+    <table class="table-rapor" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+        <thead>
+            <tr>
+                <th rowspan="2" width="5%">NO</th>
+                <th rowspan="2" width="55%">INDIKATOR</th>
+                <th colspan="4" width="40%">CAPAIAN PERKEMBANGAN</th>
+            </tr>
+            <tr>
+                <th width="10%">BB</th>
+                <th width="10%">MB</th>
+                <th width="10%">BSH</th>
+                <th width="10%">BSB</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($indikators as $no => $indikator)
+                @php
+                    $hasil = $indikator->indikatorCapaian?->first();
+                    $nilai = $hasil ? strtoupper($hasil->nilai) : null;
+                @endphp
                 <tr>
-                    <th rowspan="2" width="5%">NO</th>
-                    <th rowspan="2" width="55%">INDIKATOR</th>
-                    <th colspan="4" width="40%">CAPAIAN PERKEMBANGAN</th>
+                    <td style="text-align: center;">{{ $no + 1 }}</td>
+                    <td>{{ $indikator->nama_indikator }}</td>
+                    <td style="text-align: center;">
+                        @if($nilai == 'BB')
+                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                        @endif
+                    </td>
+                    <td style="text-align: center;">
+                        @if($nilai == 'MB')
+                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                        @endif
+                    </td>
+                    <td style="text-align: center;">
+                        @if($nilai == 'BSH')
+                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                        @endif
+                    </td>
+                    <td style="text-align: center;">
+                        @if($nilai == 'BSB')
+                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                        @endif
+                    </td>
                 </tr>
+            @empty
                 <tr>
-                    <th width="10%">BB</th>
-                    <th width="10%">MB</th>
-                    <th width="10%">BSH</th>
-                    <th width="10%">BSB</th>
+                    <td colspan="6" style="text-align: center; color: #777; font-style: italic;">
+                        Belum ada indikator
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @forelse($indikators as $no => $text)
-                    <tr>
-                        <td style="text-align: center;">{{ $no + 1 }}</td>
-                        <td>{{ $text }}</td>
-                        <td style="text-align: center;"></td>
-                        <td style="text-align: center;"></td>
-                        <td style="text-align: center;">v</td>
-                        <td style="text-align: center;"></td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" style="text-align: center; color: #777; font-style: italic;">
-                            Belum ada indikator
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    @endforeach
+            @endforelse
+        </tbody>
+    </table>
+@endforeach
 
     <div class="page-break"></div>
 
