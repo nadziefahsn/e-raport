@@ -73,6 +73,12 @@
                                     Cetak PDF
                                 </a>
                             </form>
+                            <a href="{{ route('pdf.show', $item->id) }}" 
+                                target="_blank" 
+                                class="btn btn-xs btn-default text-success mx-1 shadow" 
+                                title="Cetak Rapot">
+                                    <i class="fa fa-lg fa-fw fa-print"></i>
+                                </a>
                         </nobr>
                     </td>
                 </tr>
