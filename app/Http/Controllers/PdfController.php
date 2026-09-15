@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Siswa;
+use App\Models\Karakter;
+use App\Models\Kehadiran;
 use App\Models\KriteriaPenilaian;
 use App\Models\Sekolah;
 use App\Models\AnggotaKelas;
@@ -13,7 +16,6 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class PdfController extends Controller
 {
-
     public function index(Request $request)
     {
         $anggotaKelasId = $request->input('anggota_id');
@@ -28,24 +30,42 @@ class PdfController extends Controller
             $anggotaKelasId = $anggotaKelas->id;
         }
 
-        return $this->show($anggotaKelasId);
+        return $this->show($request, $anggotaKelasId);
     }
 
-    public function show($id)
+    public function show(Request $request, string $id)
     {
+        try {
+            $decryptedId = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+            $decryptedId = $id;
+        }
+
+        $pdfOptions = [
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'chroot' => public_path(),
+        ];
+
         $sekolah = Sekolah::first();
+        $karakters = Karakter::all();
+        $kehadirans = Kehadiran::all();
         $kriterias = KriteriaPenilaian::all();
-        
+
         $anggotaKelas = AnggotaKelas::with([
-            'siswa', 
+            'siswa',
             'kelas.tahunAjaran',
+            'nilaiKarakter',
+            'kehadiran',
             'kebersihanSiswa',
             'kesehatanMata',
             'kesehatanTelinga',
             'kesehatanGigi',
             'kesehatanMulut',
             'kondisiTubuh'
-        ])->findOrFail($id);
+        ])->findOrFail($decryptedId);
+
+        $siswa = $anggotaKelas->siswa;
 
         $namaKelas = $anggotaKelas->kelas->rombel ?? '';
         $rombelUpper = strtoupper($namaKelas);
@@ -99,5 +119,30 @@ class PdfController extends Controller
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $fileName . '"',
         ]);
+    }
+
+    public function create()
+    {
+        //
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function edit(string $id)
+    {
+        //
+    }
+
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    public function destroy(string $id)
+    {
+        //
     }
 }
