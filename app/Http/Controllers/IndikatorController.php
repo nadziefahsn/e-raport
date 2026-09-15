@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Indikator;
 use App\Models\CapaianPerkembangan;
 use App\Models\TahunAjaran;
-use Illuminate\Http\Request;
 use App\Http\Requests\IndikatorUpdateRequest;
 
 class IndikatorController extends Controller
@@ -16,7 +15,7 @@ class IndikatorController extends Controller
         $indikators = Indikator::all();
         $tahunAjarans = TahunAjaran::all();
 
-        return view('indikators.index', compact('capaians','indikators','tahunAjarans'));
+        return view('indikators.index', compact('capaians', 'indikators', 'tahunAjarans'));
     }
 
     public function create()
@@ -26,16 +25,10 @@ class IndikatorController extends Controller
 
     public function store(IndikatorUpdateRequest $request)
     {
-        $data = $request->validated();
-
-        if (Indikator::where('kode', $data['kode'])->exists()) {
-            return redirect()->back()->withInput()->with('error', 'Gagal! Kode indikator "' . $data['kode'] . '" sudah tersedia.');
-        }
-
-        Indikator::create($data);
+        Indikator::create($request->validated());
 
         return redirect()
-            ->route('karakter.index')
+            ->route('indikator.index')
             ->with('success', 'Indikator berhasil disimpan.');
     }
 
@@ -46,18 +39,13 @@ class IndikatorController extends Controller
 
     public function edit(string $id)
     {
-        return view('indikators.index', compact('Indikator'));
+        $indikator = Indikator::findOrFail($id);
+        return view('indikators.index', compact('indikator'));
     }
 
     public function update(IndikatorUpdateRequest $request, Indikator $indikator)
     {
-        $data = $request->validated();
-
-        if ($data['kode'] !== $indikator->id && Indikator::where('kode', $data['kode'])->exists()) {
-            return redirect()->back()->withInput()->with('error', 'Gagal! Kode indikator "' . $data['kode'] . '" sudah tersedia.');
-        }
-
-        $indikator->update($data);
+        $indikator->update($request->validated());
 
         return redirect()
             ->route('indikator.index')
@@ -67,7 +55,9 @@ class IndikatorController extends Controller
     public function destroy(Indikator $indikator)
     {
         $indikator->delete();
-        return redirect()->route('indikator.index')
-        ->with('success', 'Indikator Berhasil Dihapus!');
+
+        return redirect()
+            ->route('indikator.index')
+            ->with('success', 'Indikator Berhasil Dihapus!');
     }
 }

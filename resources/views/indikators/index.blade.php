@@ -18,7 +18,7 @@
         <h3 class="card-title mb-0"><i class="fas fa-clipboard-list mr-2"></i>Data Indikator</h3>
         <div class="card-tools ml-auto">
             <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
-                <i class="fas fa-plus mr-1"></i>
+                <i class="fas fa-plus mr-1"></i> 
             </button>
         </div>
     </div>
@@ -51,7 +51,6 @@
     @endphp
 
     <div class="card-body p-3">
-
         <x-adminlte-datatable id="tableIndikator" :heads="$heads" :config="$config" stripe hoverable buffered text-sm>
             @forelse($indikators as $item)
                 <tr>
@@ -109,11 +108,13 @@
 @stop
 
 @section('js')
+<script>
     @if ($errors->any())
         @if(old('_method') == 'PUT' && old('old_id'))
-            $('#editModal{{ Str::slug(old('old_id')) }}').modal('show');
+            $('#editModal{{ old('old_id') }}').modal('show');
         @else
-            $('#modalTambahKarakter').modal('show');
+            $('#modalTambahIndikator').modal('show');
         @endif
     @endif
+</script>
 @stop
