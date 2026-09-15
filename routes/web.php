@@ -40,7 +40,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::middleware(['role:admin|guru'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('anggota-kelas', AnggotaKelasController::class);
-
+    Route::resource('pdf', PdfController::class)->only(['show', 'index']);
     });
     
     Route::middleware(['role:admin'])->group(function () {
@@ -50,7 +50,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     ]);
 
     Route::resource('tahun_ajaran', TahunAjaranController::class);
-    Route::resource('pdf', PdfController::class);
     Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
     
     // Rute Guru
