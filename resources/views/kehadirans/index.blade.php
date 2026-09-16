@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($kehadirans as $item)
+                            @forelse ($data_anggota_kelas as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $item->siswa->nis ?? '-' }}</td>

@@ -18,22 +18,17 @@ class KesehatanTelingaController extends Controller
     $kelas = null;
 
     if ($user->hasRole('guru')) {
-        // Otomatis ambil ID dari relasi guru
         $guruId = $user->guru?->id;
-
-        // Ambil kelas yang diampu (wali kelas atau pendamping)
         $kelas = Kelas::where('wali_kelas_id', $guruId)
             ->orWhere('pendamping_id', $guruId)
             ->get();
 
         $kelasIds = $kelas->pluck('id');
 
-        // Ambil data anggota kelas beserta relasi kehadirannya
         $kesehatanTelingas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
             ->with(['siswa', 'kelas', 'kesehatanTelinga'])
             ->get();
     } else {
-        // Jika Admin, tampilkan semua kelas dan anggota
         $kelas = Kelas::orderBy('rombel', 'asc')->get();
         $kesehatanTelingas = AnggotaKelas::with(['siswa', 'kelas', 'kesehatanTelinga'])->get();
     }

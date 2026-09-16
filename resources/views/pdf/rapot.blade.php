@@ -228,7 +228,7 @@
 
     <table class="table-biodata" style="margin-bottom: 15px;">
         <tr>
-            <td width="15%">Nama Siswa</td>
+            <td width="15%"><strong>Nama Siswa</td>
             <td width="2%">:</td>
             <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
             <td width="15%">Kelompok Usia</td>
@@ -236,7 +236,7 @@
             <td width="28%">{{ $anggotaKelas->kelas->kelompok_usia ?? '3-4 Tahun' }}</td>
         </tr>
         <tr>
-            <td>NIS / NISN</td>
+            <td><strong>NIS / NISN</td>
             <td>:</td>
             <td>{{ $anggotaKelas->siswa->nis ?? '-' }} / {{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
             <td>Tahun Ajaran</td>
@@ -244,7 +244,7 @@
             <td>{{ $anggotaKelas->kelas->tahunAjaran->tahun_ajaran ?? '2023/2024' }}</td>
         </tr>
         <tr>
-            <td>Semester</td>
+            <td><strong>Semester</td>
             <td>:</td>
             <td>{{ $anggotaKelas->kelas->tahunAjaran->semester ?? 'Ganjil' }}</td>
             <td></td>
@@ -253,65 +253,65 @@
         </tr>
     </table>
 
-@foreach($daftarCapaian as $judulKategori => $indikators)
-    <div class="kategori-title" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">
-        {{ $judulKategori }}
-    </div>
+    @foreach($daftarCapaian as $judulKategori => $indikators)
+        <div class="kategori-title" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">
+            {{ $judulKategori }}
+        </div>
 
-    <table class="table-rapor" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-        <thead>
-            <tr>
-                <th rowspan="2" width="5%">NO</th>
-                <th rowspan="2" width="55%">INDIKATOR</th>
-                <th colspan="4" width="40%">CAPAIAN PERKEMBANGAN</th>
-            </tr>
-            <tr>
-                <th width="10%">BB</th>
-                <th width="10%">MB</th>
-                <th width="10%">BSH</th>
-                <th width="10%">BSB</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($indikators as $no => $indikator)
-                @php
-                    $hasil = $indikator->indikatorCapaian?->first();
-                    $nilai = $hasil ? strtoupper($hasil->nilai) : null;
-                @endphp
+        <table class="table-rapor" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+            <thead>
                 <tr>
-                    <td style="text-align: center;">{{ $no + 1 }}</td>
-                    <td>{{ $indikator->nama_indikator }}</td>
-                    <td style="text-align: center;">
-                        @if($nilai == 'BB')
-                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                        @endif
-                    </td>
-                    <td style="text-align: center;">
-                        @if($nilai == 'MB')
-                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                        @endif
-                    </td>
-                    <td style="text-align: center;">
-                        @if($nilai == 'BSH')
-                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                        @endif
-                    </td>
-                    <td style="text-align: center;">
-                        @if($nilai == 'BSB')
-                            <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                        @endif
-                    </td>
+                    <th rowspan="2" width="5%">NO</th>
+                    <th rowspan="2" width="55%">INDIKATOR</th>
+                    <th colspan="4" width="40%">CAPAIAN PERKEMBANGAN</th>
                 </tr>
-            @empty
                 <tr>
-                    <td colspan="6" style="text-align: center; color: #777; font-style: italic;">
-                        Belum ada indikator
-                    </td>
+                    <th width="10%">BB</th>
+                    <th width="10%">MB</th>
+                    <th width="10%">BSH</th>
+                    <th width="10%">BSB</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
-@endforeach
+            </thead>
+            <tbody>
+                @forelse($indikators as $no => $indikator)
+                    @php
+                        $hasil = $indikator->indikatorCapaian?->first();
+                        $nilai = $hasil ? strtoupper($hasil->nilai) : null;
+                    @endphp
+                    <tr>
+                        <td style="text-align: center;">{{ $no + 1 }}</td>
+                        <td>{{ $indikator->nama_indikator }}</td>
+                        <td style="text-align: center;">
+                            @if($nilai == 'BB')
+                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                            @endif
+                        </td>
+                        <td style="text-align: center;">
+                            @if($nilai == 'MB')
+                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                            @endif
+                        </td>
+                        <td style="text-align: center;">
+                            @if($nilai == 'BSH')
+                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                            @endif
+                        </td>
+                        <td style="text-align: center;">
+                            @if($nilai == 'BSB')
+                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #777; font-style: italic;">
+                            Belum ada indikator
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    @endforeach
 
     <div class="page-break"></div>
 
