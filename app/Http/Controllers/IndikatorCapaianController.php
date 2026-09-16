@@ -36,7 +36,7 @@ class IndikatorCapaianController extends Controller
         $keyword = $keywordMapping[$kategoriSlug] ?? 'aqidah';
 
         $capaianIds = DB::table('capaians')
-            ->whereRaw('LOWER(capaian_perkembangan) = ?', [strtolower($keyword)])
+            ->where('capaian_perkembangan', 'like', '%'. $keyword . '%')
             ->pluck('id')
             ->toArray();
 
