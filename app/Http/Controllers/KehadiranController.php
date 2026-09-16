@@ -9,35 +9,35 @@ use App\Models\Kehadiran;
 use App\Models\User;
 use App\Models\TahunAjaran;
 use App\Models\Kelas;
+use App\Models\Guru;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
 {
     public function index(Request $request)
-{
-    $user = auth()->user();
-    $kehadirans = collect();
-    $kelas = null;
+    {
+        $wali_kelas = Guru::where('user_id', Auth::user()->id)->first();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
+        $id_kelas_diampu = Kelas::whereTahunAjaranId( $tahunAjaranAktif->id)->whereWaliKelasId($wali_kelas->id)->get('id');
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
+        $kehadirans = Kehadiran::where('anggota_kelas_id', $anggota->id)->first();
 
-    if ($user->hasRole('guru')) {
-        $guruId = $user->guru?->id;
+        foreach ($data_anggota_kelas as $anggota) {
+            $kehadirans = Kehadiran::where('anggota_kelas_id', $anggota->id)->first();
+            if (is_null($kehadirans)) {
+                $anggota->sakit = 0;
+                $anggota->izin = 0;
+                $anggota->tanpa_keterangan = 0;
+                    } else {
+                        $anggota->sakit = $kehadirans->sakit;
+                        $anggota->izin = $kehadirans->izin;
+                        $anggota->tanpa_keterangan = $kehadirans->tanpa_keterangan;
+                    }
+                }                        
 
-        $kelas = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->get();
-
-        $kelasIds = $kelas->pluck('id');
-
-        $kehadirans = AnggotaKelas::whereIn('kelas_id', $kelasIds)
-            ->with(['siswa', 'kelas', 'kehadiran'])
-            ->get();
-    } else {
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
-        $kehadirans = AnggotaKelas::with(['siswa', 'kelas', 'kehadiran'])->get();
+        return view('kehadirans.index', compact('data_anggota_kelas'));
     }
-
-    return view('kehadirans.index', compact('kehadirans', 'kelas'));
-}
 
   
     public function create()

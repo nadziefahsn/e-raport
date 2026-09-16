@@ -457,7 +457,7 @@ return [
         [
             'text' => 'Wawasan Keagamaan',
             'icon' => 'far fa-fw fa-circle',
-            'url'  => 'admin/indikator-wawasan-luas',
+            'url'  => 'admin/indikator-keagamaan',
             'can'  => 'guru', 
         ],
         [
