@@ -226,91 +226,76 @@
         <h3>LAPORAN PENCAPAIAN PERKEMBANGAN ANAK DIDIK</h3>
     </div>
 
-    <table class="table-biodata" style="margin-bottom: 15px;">
+    <table class="table-biodata" style="margin-bottom: 15px;" align="center ">
         <tr>
             <td width="15%"><strong>Nama Siswa</td>
             <td width="2%">:</td>
             <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
-            <td width="15%">Kelompok Usia</td>
+            <td width="20%"><strong> Kelompok Usia</td>
             <td width="2%">:</td>
             <td width="28%">{{ $anggotaKelas->kelas->kelompok_usia ?? '3-4 Tahun' }}</td>
         </tr>
         <tr>
-            <td><strong>NIS / NISN</td>
+            <td><strong>NIS</td>
             <td>:</td>
             <td>{{ $anggotaKelas->siswa->nis ?? '-' }} / {{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
-            <td>Tahun Ajaran</td>
+            <td><strong> Tahun Ajaran</td>
             <td>:</td>
             <td>{{ $anggotaKelas->kelas->tahunAjaran->tahun_ajaran ?? '2023/2024' }}</td>
         </tr>
         <tr>
+            <td><strong>NISN</td>
+            <td>:</td>
+            <td>{{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
             <td><strong>Semester</td>
             <td>:</td>
             <td>{{ $anggotaKelas->kelas->tahunAjaran->semester ?? 'Ganjil' }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
     </table>
 
     @foreach($daftarCapaian as $judulKategori => $indikators)
-        <div class="kategori-title" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">
-            {{ $judulKategori }}
-        </div>
+    <div class="kategori-title" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">
+        {{ $judulKategori }}
+    </div>
 
-        <table class="table-rapor" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-            <thead>
-                <tr>
-                    <th rowspan="2" width="5%">NO</th>
-                    <th rowspan="2" width="55%">INDIKATOR</th>
-                    <th colspan="4" width="40%">CAPAIAN PERKEMBANGAN</th>
-                </tr>
-                <tr>
-                    <th width="10%">BB</th>
-                    <th width="10%">MB</th>
-                    <th width="10%">BSH</th>
-                    <th width="10%">BSB</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($indikators as $no => $indikator)
-                    @php
-                        $hasil = $indikator->indikatorCapaian?->first();
-                        $nilai = $hasil ? strtoupper($hasil->nilai) : null;
-                    @endphp
-                    <tr>
-                        <td style="text-align: center;">{{ $no + 1 }}</td>
-                        <td>{{ $indikator->nama_indikator }}</td>
-                        <td style="text-align: center;">
-                            @if($nilai == 'BB')
-                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                            @endif
-                        </td>
-                        <td style="text-align: center;">
-                            @if($nilai == 'MB')
-                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                            @endif
-                        </td>
-                        <td style="text-align: center;">
-                            @if($nilai == 'BSH')
-                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                            @endif
-                        </td>
-                        <td style="text-align: center;">
-                            @if($nilai == 'BSB')
-                                <span style="font-family: DejaVu Sans, sans-serif;">&#10004;</span>
-                            @endif
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" style="text-align: center; color: #777; font-style: italic;">
-                            Belum ada indikator
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center;">
+        <thead>
+            <tr style="font-weight: bold;">
+                <th style="width: 8%;">NO</th>
+                <th style="width: 64%;">INDIKATOR</th>
+                <th style="width: 14%;">TAMPAK</th>
+                <th style="width: 14%;">TIDAK TAMPAK</th>
+            </tr>
+        </thead>
+        <tbody>
+        @forelse($indikators as $indikator)
+            @php
+                $item = $anggotaKelas?->hasilCapaian?->firstWhere('indikator_id', $indikator->id);
+                $nilai = $item ? strtoupper(trim($item->nilai)) : null;
+            @endphp
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td style="text-align: left; padding-left: 8px;">{{ $indikator->nama_indikator }}</td>
+                <td>
+                    @if($nilai == 'T')
+                        <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>
+                    @endif
+                </td>
+                <td>
+                    @if($nilai == 'TT')
+                        <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>
+                    @endif
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="4" style="text-align: center; color: #777; font-style: italic;">
+                    Belum ada indikator
+                </td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
     @endforeach
 
     <div class="page-break"></div>
@@ -635,43 +620,109 @@
 
     <div class="page-break"></div>
 
-        <div class="content">
-      <h3 style="line-height: 1.6">
+    <div class="content">
+        <h3 style="line-height: 1.6">
           <strong>LAPORAN KEHADIRAN</strong>
-      </h3>
-      <div class="invoice-box">
-        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-            <thead>
+        </h3>
+        <div class="invoice-box">
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; border: 1px solid black; padding: 6px;">NO.</th>
+                        <th style="width: 90%; text-align: center; border: 1px solid black; padding: 6px;" colspan="2">KETIDAKHADIRAN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; border: 1px solid black; padding: 6px;">1</td>
+                        <td style="width: 50%; border: 1px solid black; padding: 6px;">Sakit</td>
+                        <td style="text-align: center; border: 1px solid black; padding: 6px;">
+                            {{ $anggotaKelas->kehadiran->sakit ? $anggotaKelas->kehadiran->sakit . ' hari' : '—' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; border: 1px solid black; padding: 6px;">2</td>
+                        <td style="border: 1px solid black; padding: 6px;">Izin</td>
+                        <td style="text-align: center; border: 1px solid black; padding: 6px;">
+                            {{ $anggotaKelas->kehadiran->izin ? $anggotaKelas->kehadiran->izin . ' hari' : '—' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; border: 1px solid black; padding: 6px;">3</td>
+                        <td style="border: 1px solid black; padding: 6px;">Tanpa Keterangan</td>
+                        <td style="text-align: center; border: 1px solid black; padding: 6px;">
+                            {{ $anggotaKelas->kehadiran->tanpa_keterangan ? $anggotaKelas->kehadiran->tanpa_keterangan . ' hari' : '—' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><br>
+
+        <div class="invoice-box">
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
                 <tr>
-                    <th style="width: 10%; text-align: center; border: 1px solid black; padding: 6px;">NO.</th>
-                    <th style="width: 90%; text-align: center; border: 1px solid black; padding: 6px;" colspan="2">KETIDAKHADIRAN</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="text-align: center; border: 1px solid black; padding: 6px;">1</td>
-                    <td style="width: 50%; border: 1px solid black; padding: 6px;">Sakit</td>
-                    <td style="text-align: center; border: 1px solid black; padding: 6px;">
-                        {{ $anggotaKelas->kehadiran->sakit ? $anggotaKelas->kehadiran->sakit . ' hari' : '—' }}
+                    <td style="width: 60%; border: 1px solid black; padding: 8px; vertical-align: top;">
+                        <div style="text-align: center; font-weight: bold; margin-bottom: 8px;">
+                            Komentar Guru
+                        </div>
+                        <div style="text-align: justify; line-height: 1.4; font-size: 11pt;">
+                            {{ $anggotaKelas->catatan->catatan ?? '-' }}
+                        </div>
+                    </td>
+                    <td style="width: 40%; border: 1px solid black; padding: 8px; text-align: center; vertical-align: top;">
+                        <div style="font-weight: bold; margin-bottom: 90px;">
+                            Tanda tangan Guru
+                        </div>
+                        <div style="font-weight: bold; text-decoration: underline;">
+                            {{ $anggotaKelas->kelas->waliKelas->nama_guru ?? '-' }}
+                        </div>
+                        <div>
+                            NUPTK. {{ $anggotaKelas->kelas->waliKelas->nip ?? '-' }}
+                        </div>
                     </td>
                 </tr>
+
                 <tr>
-                    <td style="text-align: center; border: 1px solid black; padding: 6px;">2</td>
-                    <td style="border: 1px solid black; padding: 6px;">Izin</td>
-                    <td style="text-align: center; border: 1px solid black; padding: 6px;">
-                        {{ $anggotaKelas->kehadiran->izin ? $anggotaKelas->kehadiran->izin . ' hari' : '—' }}
+                    <td style="border: 1px solid black; padding: 8px; vertical-align: top;">
+                        <div style="text-align: center; font-weight: bold; margin-bottom: 8px;">
+                            Komentar Orang Tua
+                        </div>
+                        <div style="border-bottom: 1px solid #aaa; margin-bottom: 12px; height: 12px;"></div>
+                        <div style="border-bottom: 1px solid #aaa; margin-bottom: 12px; height: 12px;"></div>
+                        <div style="border-bottom: 1px solid #aaa; margin-bottom: 12px; height: 12px;"></div>
+                        <div style="border-bottom: 1px solid #aaa; margin-bottom: 12px; height: 12px;"></div>
+                        <div style="border-bottom: 1px solid #aaa; margin-bottom: 5px; height: 12px;"></div>
+                    </td>
+                    <td style="border: 1px solid black; padding: 8px; text-align: center; vertical-align: top;">
+                        <div style="font-weight: bold; margin-bottom: 90px;">
+                            Tanda tangan Orang Tua
+                        </div>
+                        <div>
+                            ...................................................
+                        </div>
                     </td>
                 </tr>
-                <tr>
-                    <td style="text-align: center; border: 1px solid black; padding: 6px;">3</td>
-                    <td style="border: 1px solid black; padding: 6px;">Tanpa Keterangan</td>
-                    <td style="text-align: center; border: 1px solid black; padding: 6px;">
-                        {{ $anggotaKelas->kehadiran->tanpa_keterangan ? $anggotaKelas->kehadiran->tanpa_keterangan . ' hari' : '—' }}
-                    </td>
-                </tr>
-            </tbody>
+            </table>
+        </div>
+
+        <table style="width: 100%; margin-top: 25px; border-collapse: collapse;">
+            <tr>
+                <td style="width: 55%;"></td>
+                <td style="width: 45%; text-align: center; vertical-align: top;">
+                    <div>Garut, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
+                    <div>Mengetahui,</div>
+                    <div>Kepala Taman Kanak-Kanak Islam Plus</div>
+                    <div style="font-weight: bold; margin-bottom: 60px;">PRIMA INSANI</div>
+
+                    <div style="font-weight: bold; text-decoration: underline;">
+                        Santi Rismayanti, M.Pd.
+                    </div>
+                    <div>
+                        NUPTK. 9453758659300022
+                    </div>
+                </td>
+            </tr>
         </table>
-    </div>  
-</body>
+    </body>
 </html>
 

@@ -6,7 +6,6 @@ use App\Http\Requests\KesehatanGigiUpdateRequest;
 use App\Models\KesehatanGigi;
 use Illuminate\Http\Request;
 use App\Models\AnggotaKelas;
-use App\Models\Kehadiran;
 use App\Models\Kelas;
 
 class KesehatanGigiController extends Controller

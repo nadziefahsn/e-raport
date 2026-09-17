@@ -180,21 +180,27 @@ body {
     color: #000000;
 }
 
-/* Tabel Biodata Halaman 1 & Header Rapor */
+/* biodata */
+.container-pdf {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
 .table-biodata { 
     width: 100%; 
     border-collapse: collapse; 
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
+}
+
+.table-biodata td {
+    padding: 3px 0;
+    vertical-align: top;
+    white-space: nowrap;
 }
 
 .table-header-rapor {
     margin-bottom: 15px;
-}
-
-.table-biodata td { 
-    padding: 3px 0; 
-    vertical-align: top; 
-    font-size: 11.5pt; 
 }
 
 .label-bold { 
