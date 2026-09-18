@@ -7,35 +7,41 @@ use App\Models\KesehatanGigi;
 use Illuminate\Http\Request;
 use App\Models\AnggotaKelas;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 
 class KesehatanGigiController extends Controller
 {
     
     public function index(Request $request)
-{
-    $user = auth()->user();
-    $kesehatanGigis = collect();
-    $kelas = null;
+    {
+        $user = auth()->user();
+        $kesehatanGigis = collect();
+        $kelas = null;
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-    if ($user->hasRole('guru')) {
-        $guruId = $user->guru?->id;
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
 
-        $kelas = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->get();
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                        ->orWhere('pendamping_id', $guruId);
+                })
+                ->get();
+        } else {
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->get();
+            }
 
-        $kelasIds = $kelas->pluck('id');
+            $kelasIds = $kelas->pluck('id');
 
-        $kesehatanGigis = AnggotaKelas::whereIn('kelas_id', $kelasIds)
-            ->with(['siswa', 'kelas', 'kesehatanGigi'])
-            ->get();
-    } else {
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
-        $kesehatanGigis= AnggotaKelas::with(['siswa', 'kelas', 'kesehatanGigis'])->get();
+            $kesehatanGigis= AnggotaKelas::whereIn('kelas_id', $kelasIds)
+                ->with(['siswa', 'kelas', 'kesehatanGigi'])
+                ->get();
+
+        return view('gigis.index', compact('kesehatanGigis', 'kelas'));
     }
-
-    return view('gigis.index', compact('kesehatanGigis', 'kelas'));
-}
     
     public function create()
     {
