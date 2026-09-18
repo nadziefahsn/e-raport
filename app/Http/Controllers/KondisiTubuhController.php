@@ -17,25 +17,28 @@ class KondisiTubuhController extends Controller
         $user = auth()->user();
         $kondisiTubuhs = collect();
         $kelas = null;
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-    if ($user->hasRole('guru')) {
-        $guruId = $user->guru?->id;
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
 
-        $kelas = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->get();
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                        ->orWhere('pendamping_id', $guruId);
+                })
+                ->get();
+        } else {
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->get();
+        }
+            $kelasIds = $kelas->pluck('id');
 
-        $kelasIds = $kelas->pluck('id');
-
-        $kondisiTubuhs = AnggotaKelas::whereIn('kelas_id', $kelasIds)
-            ->with(['siswa', 'kelas', 'kondisiTubuh'])
-            ->get();
-    } else {
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
-        $kondisiTubuhs = AnggotaKelas::with(['siswa', 'kelas', 'kondisiTubuh'])->get();
-    }
-
-    return view('kondisi_tubuhs.index', compact('kondisiTubuhs', 'kelas'));
+            $kondisiTubuhs = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+                ->with(['siswa', 'kelas', 'kondisiTubuh'])
+                ->get();
+        return view('kondisi_tubuhs.index', compact('kondisiTubuhs', 'kelas'));
     }
 
     public function create()

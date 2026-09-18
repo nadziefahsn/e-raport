@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AnggotaKelas;
 use App\Models\User;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 
 class KesehatanMulutController extends Controller
 {
@@ -17,24 +18,28 @@ class KesehatanMulutController extends Controller
         $user = auth()->user();
         $kelas = null;
         $kesehatanMuluts = collect();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;
 
-            $kelas = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
-                ->get();
-
-            $kelasIds = $kelas->pluck('id');
-
-            $kesehatanMuluts = AnggotaKelas::whereIn('kelas_id', $kelasIds)
-                ->with(['siswa', 'kelas', 'kesehatanMulut'])
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                          ->orWhere('pendamping_id', $guruId);    
+                })
                 ->get();
         } else {
-            $kelas = Kelas::orderBy('rombel', 'asc')->get();
-            $kesehatanMuluts = AnggotaKelas::with(['siswa', 'kelas', 'kesehatanMulut' ])->get();
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->get(); 
         }
         
+        $kelasIds = $kelas->pluck('id');
+
+            $kesehatanMuluts = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+                ->with(['siswa', 'kelas', 'kesehatanMulut' ])
+                ->get();
 
         return view('muluts.index', compact('kesehatanMuluts', 'kelas'));
     }
