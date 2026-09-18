@@ -36,7 +36,7 @@
             'Tanggal Lahir',
             'L/P',
             'Kelas Saat Ini',
-            ['label' => 'Aksi', 'no-export' => true, 'width' => 12, 'className' => 'text-center'],
+            ['label' => 'Aksi', 'no-export' => true, 'width' => 10, 'className' => 'text-center'],
         ];
 
         $config = [
@@ -59,17 +59,9 @@
                     <td>{{ $item->kelas?->rombel ?? '-' }}</td>
                     <td class="text-center">
                         <nobr>
-                            {{-- Tombol Cetak Biodata (PDF) --}}
-                            <a href="{{ route('cetak.biodata', $item->id ?? $item->nis) }}" class="btn btn-xs btn-default text-info mx-1 shadow" title="Cetak Biodata" target="_blank">
-                                <i class="fa fa-lg fa-fw fa-print"></i>
-                            </a>
-
-                            {{-- Tombol Edit --}}
                             <button type="button" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" data-toggle="modal" data-target="#editModal{{ $item->nis }}">
                                 <i class="fa fa-lg fa-fw fa-pen"></i>
                             </button>
-
-                            {{-- Tombol Delete --}}
                             <form action="{{ route('siswa.destroy', $item->nis) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -77,6 +69,7 @@
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </button>
                             </form>
+
                         </nobr>
                     </td>
                 </tr>
@@ -91,7 +84,9 @@
 
 @stop
 
+
 @include('layouts.footer')
+
 
 @section('css')
 <style>
@@ -99,6 +94,7 @@
     .table thead th { font-weight: 600 !important; }
 </style>
 @stop
+
 
 @section('js')
 <script>

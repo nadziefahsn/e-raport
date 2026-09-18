@@ -7,6 +7,8 @@ use App\Models\Kelas;
 use App\Models\AnggotaKelas;
 use App\Models\IndikatorCapaian;
 use App\Models\Indikator;
+use App\Models\Guru;
+use App\Models\TahunAjaran;
 use App\Models\User;
 use App\Http\Requests\HasilCapaianUpdateRequest;
 use App\Models\CapaianPerkembangan;
@@ -15,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 
 class HasilCapaianController extends Controller
 {
-    
     private function getCategoryDetails($segment = null)
     { 
         if (!$segment) {
@@ -35,40 +36,50 @@ class HasilCapaianController extends Controller
             'life-skill'          => 'life skill dan jiwa wirausaha',
         ];
 
-        $keyword = $keywordMapping[$kategoriSlug]?? 'aqidah';
+        $keyword = $keywordMapping[$kategoriSlug] ?? 'aqidah';
 
         $capaianIds = DB::table('capaians')
-            ->whereRaw('LOWER(capaian_perkembangan) = ?',[strtolower($keyword)])
+            ->whereRaw('LOWER(capaian_perkembangan) = ?', [strtolower($keyword)])
             ->pluck('id')
             ->toArray();
 
-            return [
-                'slug' => $kategoriSlug,
-                'ids' => $capaianIds,
-                'name' => ucwords(str_replace('-','', $kategoriSlug))
-            ];
+        return [
+            'slug' => $kategoriSlug,
+            'ids'  => $capaianIds,
+            'name' => ucwords(str_replace('-', ' ', $kategoriSlug))
+        ];
     }
 
     public function index(Request $request, $slug = null)
     {
         $user = auth()->user();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
         
         $catInfo = $this->getCategoryDetails($slug);
         $namaKategori = $catInfo['name'];
         $kategori = $catInfo['slug'];
 
         $kelas = null;
-        $anggotaKelas = collect();
+        $data_anggota_kelas = collect();
         $rencanaIndikator = collect();
         $guruId = null;
 
         if ($user->hasRole('guru')) {
-            $guruId = $user->guru?->id;
-            $kelas = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
+            $guru = Guru::where('user_id', $user->id)->first();
+            $guruId = $guru?->id;
+
+            // Memfilter kelas berdasarkan Tahun Ajaran Aktif dan Wali Kelas
+            $kelas = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif?->id)
+                ->where(function ($q) use ($guruId) {
+                    $q->where('wali_kelas_id', $guruId)
+                      ->orWhere('pendamping_id', $guruId);
+                })
                 ->first();
         } else {
-            $kelas = Kelas::orderBy('rombel', 'asc')->first();
+            // Logika untuk Admin
+            $kelas = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif?->id)
+                ->orderBy('rombel', 'asc')
+                ->first() ?? Kelas::orderBy('rombel', 'asc')->first();
         }
 
         if ($kelas) {
@@ -94,28 +105,27 @@ class HasilCapaianController extends Controller
                 ->with('indikator')
                 ->get();
 
-            $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
+            // Menggunakan penamaan variabel $data_anggota_kelas
+            $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas->id)
                 ->with(['siswa', 'kelas', 'hasilCapaian'])
                 ->get();
         }
 
         return view('hasil_capaians.index', [
-            'anggotaKelas'      => $anggotaKelas,
-            'kelas'             => $kelas,
-            'guruId'            => $guruId,
-            'rencanaIndikator'  => $rencanaIndikator,
-            'namaKategori'      => $namaKategori,
-            'kategori'          => $kategori,
+            'data_anggota_kelas' => $data_anggota_kelas,
+            'kelas'              => $kelas,
+            'guruId'             => $guruId,
+            'rencanaIndikator'   => $rencanaIndikator,
+            'namaKategori'       => $namaKategori,
+            'kategori'           => $kategori,
         ]);
     }
 
-    
     public function create()
     {
-        
+
     }
 
-   
     public function store(HasilCapaianUpdateRequest $request)
     {
         $data = $request->validated();
@@ -147,19 +157,16 @@ class HasilCapaianController extends Controller
             ->with('success', 'Data hasil capaian berhasil disimpan.');
     }
 
-    
     public function show(HasilCapaian $hasilCapaian)
     {
-        
+
     }
 
-   
     public function edit(HasilCapaian $hasilCapaian)
     {
-        
+
     }
 
-   
     public function update(HasilCapaianUpdateRequest $request, $id = null)
     {
         $data = $request->validated();
@@ -191,7 +198,6 @@ class HasilCapaianController extends Controller
             ->with('success', 'Data hasil capaian berhasil disimpan.');
     }
 
-    
     public function destroy(HasilCapaian $hasilCapaian)
     {
 
