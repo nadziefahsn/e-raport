@@ -27,6 +27,7 @@ use App\Http\Controllers\KebersihanSiswaController;
 use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\CatatanController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
@@ -94,6 +95,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     ->whereNumber('telinga');
 
     Route::resource('data-karakter', DataKarakterController::class)->only(['index']);
+    Route::resource('catatan', CatatanController::class);
 
     });
 });
