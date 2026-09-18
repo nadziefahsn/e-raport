@@ -56,6 +56,7 @@ class PdfController extends Controller
             'siswa',
             'kelas.tahunAjaran',
             'nilaiKarakter',
+            'hasilCapaian',
             'kehadiran',
             'kebersihanSiswa',
             'kesehatanMata',

@@ -65,10 +65,8 @@
                                     <td class="text-center">
                                         <select name="nilai[{{ $item->id }}][{{ $rencana->indikator_id }}]" class="form-control text-center form-control-sm">
                                             <option value="" {{ $selectedValue == '' ? 'selected' : '' }}>-</option>
-                                            <option value="BB" {{ $selectedValue == 'BB' ? 'selected' : '' }}>BB</option>
-                                            <option value="MB" {{ $selectedValue == 'MB' ? 'selected' : '' }}>MB</option>
-                                            <option value="BSH" {{ $selectedValue == 'BSH' ? 'selected' : '' }}>BSH</option>
-                                            <option value="BSB" {{ $selectedValue == 'BSB' ? 'selected' : '' }}>BSB</option>
+                                            <option value="T" {{ $selectedValue == 'T' ? 'selected' : '' }}>Tampak</option>
+                                            <option value="TT" {{ $selectedValue == 'TT' ? 'selected' : '' }}>Tidak Tampak</option>
                                         </select>
                                     </td>
                                 @endforeach

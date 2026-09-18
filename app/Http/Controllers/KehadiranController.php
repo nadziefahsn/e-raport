@@ -21,7 +21,6 @@ class KehadiranController extends Controller
         $tahunAjaranAktif = TahunAjaran::latest()->first();
         $id_kelas_diampu = Kelas::whereTahunAjaranId( $tahunAjaranAktif->id)->whereWaliKelasId($wali_kelas->id)->get('id');
         $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
-        $kehadirans = Kehadiran::where('anggota_kelas_id', $anggota->id)->first();
 
         foreach ($data_anggota_kelas as $anggota) {
             $kehadirans = Kehadiran::where('anggota_kelas_id', $anggota->id)->first();

@@ -582,6 +582,12 @@ return [
     ],
 ],
     [
+        'text' => 'Catatan Wali Kelas',
+        'icon' => 'fas fa-fw fa-sticky-note',
+        'url'  => 'admin/catatan', 
+        'can'  => 'guru',
+    ],  
+    [
      'header' => 'PENGATURAN',
      'can'  => ['admin', 'guru'],
     ],
