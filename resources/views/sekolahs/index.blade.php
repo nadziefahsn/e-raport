@@ -123,11 +123,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-2 col-form-label">
-                    Logo Sekolah
-                </label>
                     <div class="col-md-10">
-                        <x-adminlte-input-file name="logo" placeholder="Choose a file" disable-feedback/>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="perbarui" name="perbarui">
                         <label class="form-check-label" for="perbarui">

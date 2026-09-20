@@ -27,7 +27,7 @@ class IndikatorCapaianController extends Controller
             'ibadah'              => 'ibadah',
             'akhlaq'              => 'akhlaq',
             'disiplin'            => 'disiplin dan kendali diri',
-            'al-quran'            => 'alquran',
+            'al-quran'            => 'al-quran',
             'keagamaan'           => 'wawasan keagamaan',
             'kesehatan-kebugaran' => 'kesehatan dan kebugaran',
             'life-skill'          => 'life skill dan jiwa wirausaha',
