@@ -55,6 +55,10 @@
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Anak ke-</label>
+                            <input type="text" name="anak_ke" class="form-control rounded-3" placeholder=" Anak ke-" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Telepon</label>
                             <input type="number" name="telepon" class="form-control rounded-3" placeholder=" Nomor HP" required>
                         </div>

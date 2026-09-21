@@ -16,7 +16,7 @@ class TahunAjaranUpdateRequest extends FormRequest
     {
         return [
             'tahun_ajaran' => ['required', 'string'],
-            'semester' => ['required', 'in:1,2'],
+            'semester' => ['required', 'in:Ganjil,Genap'],
         ];
     }
 }

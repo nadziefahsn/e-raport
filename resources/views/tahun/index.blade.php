@@ -45,7 +45,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->tahun_ajaran }}</td>
-                    <td>{{ $item->semester == '1' ? 'Semester Ganjil' : 'Semester Genap' }}</td>
+                    <td>{{ $item->semester == 'Ganjil' ? 'Semester Ganjil' : 'Semester Genap' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" class="btn btn-xs btn-default text-primary mx-1 shadow"

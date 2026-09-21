@@ -32,7 +32,7 @@
                                 <option value="" selected disabled>-- Pilih Tahun Ajaran --</option>
                                 @foreach($tahunAjarans as $ta)
                                 <option value="{{ $ta->id }}">
-                                    {{ $ta->tahun_ajaran }} - {{ $ta->semester == '1' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                                    {{ $ta->tahun_ajaran }} - {{ $ta->semester == 'Ganjil' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
                                 </option>
                             @endforeach
                             </select>
