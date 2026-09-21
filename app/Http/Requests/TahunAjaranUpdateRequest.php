@@ -17,6 +17,9 @@ class TahunAjaranUpdateRequest extends FormRequest
         return [
             'tahun_ajaran' => ['required', 'string'],
             'semester' => ['required', 'in:Ganjil,Genap'],
+            'kepala_sekolah'=> ['required', 'string'],
+            'nuptk'=> ['required', 'string'],
+            'titimangsa'=> ['required', 'date'],
         ];
     }
 }

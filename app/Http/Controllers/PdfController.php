@@ -10,6 +10,7 @@ use App\Models\Kehadiran;
 use App\Models\KriteriaPenilaian;
 use App\Models\Sekolah;
 use App\Models\AnggotaKelas;
+use App\Models\TahunAjaran;
 use App\Models\CapaianPerkembangan;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -50,8 +51,8 @@ class PdfController extends Controller
         $sekolah = Sekolah::first();
         $karakters = Karakter::all();
         $kehadirans = Kehadiran::all();
+        $tahun_ajarans = TahunAjaran::all();
         $kriterias = KriteriaPenilaian::all();
-
         $anggotaKelas = AnggotaKelas::with([
             'siswa',
             'kelas.tahunAjaran',
@@ -99,6 +100,8 @@ class PdfController extends Controller
             $daftarCapaian[$keyJudul] = $kategori->indikators;
         }
 
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
+
         $pdf = Pdf::loadView('pdf.rapot', compact(
             'sekolah',
             'karakters',
@@ -107,7 +110,8 @@ class PdfController extends Controller
             'anggotaKelas',
             'siswa',
             'jenjangTujuan',
-            'daftarCapaian'
+            'daftarCapaian',
+            'tahunAjaranAktif'
         ))->setPaper('A4', 'portrait')
         ->setOption($pdfOptions);
 
