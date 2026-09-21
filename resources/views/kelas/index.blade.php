@@ -52,7 +52,7 @@
                     <td>{{ $item->rombel }}</td>
                     <td>{{ $item->waliKelas->nama_guru ?? '-' }}</td>
                     <td>{{ $item->pendamping->nama_guru ?? '-' }}</td>
-                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }} {{ $item->tahunAjaran?->semester == '1' || $item->tahunAjaran?->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}</td>
+                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }} {{ $item->tahunAjaran?->semester == 'Ganjil' || $item->tahunAjaran?->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" 

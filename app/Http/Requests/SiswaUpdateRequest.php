@@ -21,6 +21,7 @@ class SiswaUpdateRequest extends FormRequest
             'tempat_lahir'=> 'required|string',
             'tanggal_lahir'=> 'required|date',
             'agama'=> 'required|in:Islam,Kristen Protestan,Katolik,Hindu,Buddha,Khonghucu',
+            'anak_ke'=> 'required',
             'nama_ayah'=> 'required',
             'nama_ibu'=> 'required',
             'pekerjaan_ayah'=> 'required',
