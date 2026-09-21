@@ -17,7 +17,7 @@
     <div class="card shadow-sm sekolah-card">
         <div class="card-body py-3">
             <h4>
-                PG-TK GIS PRIMA INSANI
+                PG-TK PRIMA INSANI
             </h4>
             <p class="tahun-pelajaran mb-0">
                 Tahun Pelajaran {{ $tahunAjaranAktif->tahun_ajaran ?? 'yow' }} Semester {{ $tahunAjaranAktif->semester ?? 'yuhu' }}
