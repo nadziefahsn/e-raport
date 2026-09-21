@@ -32,9 +32,7 @@
                         <thead class="text-white text-center" style="background-color: #17a2b8;">
                             <tr>
                                 <th rowspan="2" class="align-middle" style="width: 5%;">No</th>
-                                <th rowspan="2" class="align-middle" style="width: 12%;">NIS</th>
                                 <th rowspan="2" class="align-middle" style="min-width: 250px;">Nama Siswa</th>
-                                <th rowspan="2" class="align-middle" style="width: 10%;">Kelas</th>
                                 <th colspan="{{ $rencanaIndikator->count() }}" class="align-middle">Indikator</th>
                             </tr>
                             <tr>
@@ -50,9 +48,7 @@
                             @forelse ($anggotaKelas as $index => $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $item->siswa->nis ?? '-' }}</td>
                                 <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
-                                <td class="text-center">{{ $item->kelas->rombel ?? '-' }}</td>
 
                                 @foreach($rencanaIndikator as $rencana)
                                     @php

@@ -45,10 +45,7 @@
         @php
         $heads = [
             ['label' => 'No', 'width' => 5],
-            ['label' => 'Nomor Induk', 'width' => 15],
             'Nama Siswa',
-            ['label' => 'L/P', 'width' => 5, 'className' => 'text-center'],
-            ['label' => 'Kelas', 'width' => 10, 'className' => 'text-center'],
             ['label' => 'Berat Badan', 'width' => 20, 'className' => 'text-center'],
             ['label' => 'Tinggi Badan', 'width' => 20, 'className' => 'text-center'],
         ];
@@ -76,12 +73,7 @@
                 @forelse($kondisiTubuhs as $index => $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>
-                            {{ $item->siswa->nis ?? '-' }}
-                    </td>
                     <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
-                    <td class="text-center">{{ $item->siswa->jenis_kelamin ?? '-' }}</td>
-                    <td class="text-center">{{ $item->kelas->rombel ?? $kelas->rombel ?? '-' }}</td>
                     <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
                     <td>
                         <div class="input-group input-group-sm">

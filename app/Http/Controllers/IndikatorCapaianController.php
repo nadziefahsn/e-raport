@@ -27,7 +27,7 @@ class IndikatorCapaianController extends Controller
             'ibadah'              => 'ibadah',
             'akhlaq'              => 'akhlaq',
             'disiplin'            => 'disiplin dan kendali diri',
-            'al-quran'            => 'alquran',
+            'al-quran'            => 'al-quran',
             'keagamaan'           => 'wawasan keagamaan',
             'kesehatan-kebugaran' => 'kesehatan dan kebugaran',
             'life-skill'          => 'life skill dan jiwa wirausaha',
@@ -36,7 +36,7 @@ class IndikatorCapaianController extends Controller
         $keyword = $keywordMapping[$kategoriSlug] ?? 'aqidah';
 
         $capaianIds = DB::table('capaians')
-            ->whereRaw('LOWER(capaian_perkembangan) = ?', [strtolower($keyword)])
+            ->where('capaian_perkembangan', 'like', '%'. $keyword . '%')
             ->pluck('id')
             ->toArray();
 

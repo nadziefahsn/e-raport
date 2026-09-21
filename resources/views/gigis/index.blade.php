@@ -32,9 +32,7 @@
                         <thead class="text-white text-center" style="background-color:#17a2b8;">
                             <tr>
                                 <th style="width:5%;">No</th>
-                                <th style="width:12%;">NIS</th>
                                 <th>Nama Siswa</th>
-                                <th style="width:10%;">Kelas</th>
                                 <th style="width:15%;">Kondisi Gigi</th>
                                 <th style="width:20%;">Keterangan</th>
                             </tr>
@@ -43,9 +41,7 @@
                         @forelse($kesehatanGigis as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $item->siswa->nis ?? '-' }}</td>
                                 <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
-                                <td class="text-center">{{ $item->kelas->rombel ?? '-' }}</td>
 
                                 <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
 

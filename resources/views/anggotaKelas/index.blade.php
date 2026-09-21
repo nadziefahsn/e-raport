@@ -17,9 +17,11 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-user-graduates mr-2"></i>Data Anggota Kelas</h3>
         <div class="card-tools ml-auto">
+            @hasrole('admin')
             <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahAnggotaKelas">
                 <i class="fas fa-plus mr-1"></i>
             </button>
+            @endhasrole
         </div>
     </div>
     
@@ -53,6 +55,7 @@
                     <td>{{ $item->kelas->rombel ?? '-' }}</td>
                     <td class="text-center">
                         <nobr>
+                            @hasrole('admin')
                             <button type="button" 
                                     class="btn btn-xs btn-default text-primary mx-1 shadow" 
                                     title="Edit"
@@ -69,6 +72,7 @@
                                         onclick="return confirm('Hapus siswa ini dari anggota kelas?')">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </button>
+                                @endhasrole
                             </form>
                             <a href="{{ route('pdf.show', $item->id) }}" 
                                 target="_blank" 

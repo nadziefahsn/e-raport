@@ -10,43 +10,47 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AnggotaKelasStoreRequest;
 use App\Http\Requests\AnggotaKelasUpdateRequest;
 
-
 class AnggotaKelasController extends Controller
 {
-    
     public function index()
     {
-    $user = auth()->user();
-    $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
+        $user = auth()->user();
+        $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
 
-    if ($user->hasRole('guru')) {
-        $guruId = $user->guru?->id;
+        if ($user->hasRole('guru')) {
+            $guruId = $user->guru?->id;
 
-        $kelasIds = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->pluck('id');
+            $kelasIds = Kelas::where('wali_kelas_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)
+                ->pluck('id');
 
-        $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
-        $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
-    } else {
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+            $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
+            $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
+        } else {
+            $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        }
+
+        $anggotaKelas = $anggotaKelasQuery->get();
+        $siswas = Siswa::orderBy('nama_siswa', 'asc')->get();
+
+        return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
     }
 
-    $anggotaKelas = $anggotaKelasQuery->get();
-    $siswas = Siswa::orderBy('nama_siswa', 'asc')->get();
-
-    return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
-    }
-
-   
     public function create()
     {
+        if (!auth()->user()->hasRole('admin')) {
+            abort(403, 'Akses ditolak. Hanya Admin yang dapat menambah data.');
+        }
+
         return view('anggotaKelas.index');
     }
 
-   
     public function store(AnggotaKelasStoreRequest $request)
     {
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menambah data.');
+        }
+
         AnggotaKelas::create($request->validated());
 
         return redirect()
@@ -54,21 +58,26 @@ class AnggotaKelasController extends Controller
             ->with('success', 'Data siswa berhasil disimpan.');
     }
 
-   
     public function show(string $id)
     {
         return view('anggotaKelas.index');
     }
 
-   
     public function edit(string $id)
     {
+        if (!auth()->user()->hasRole('admin')) {
+            abort(403, 'Akses ditolak. Hanya Admin yang dapat mengubah data.');
+        }
+
         return view('anggotaKelas.index', compact('AnggotaKelas'));
     }
 
-   
     public function update(AnggotaKelasUpdateRequest $request, $id)
     {
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat mengubah data.');
+        }
+
         $anggotaKelas = AnggotaKelas::findOrFail($id);
         $anggotaKelas->update($request->validated());
 
@@ -77,9 +86,12 @@ class AnggotaKelasController extends Controller
             ->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-   
     public function destroy($id)
     {
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menghapus data.');
+        }
+
         $anggotaKelas = AnggotaKelas::findOrFail($id);
         $anggotaKelas->delete();
 

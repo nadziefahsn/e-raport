@@ -32,9 +32,7 @@
                         <thead class="text-white text-center" style="background-color: #17a2b8;">
                             <tr>
                                 <th rowspan="2" class="align-middle" >No</th>
-                                <th rowspan="2" class="align-middle" >NIS</th>
                                 <th rowspan="2" class="align-middle" style="min-width: 250px;">Nama Siswa</th>
-                                <th rowspan="2" class="align-middle" style="width: 10%;">Kelas</th>
                                 <th colspan="4" class="align-middle">Keadaan</th>
                                 <th rowspan="2" class="align-middle" style="width: 20%;">Keterangan</th>
                             </tr>
@@ -49,9 +47,7 @@
                             @forelse ($kebersihanSiswa as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $item->siswa->nis ?? '-' }}</td>
                                 <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
-                                <td class="text-center">{{ $item->kelas->rombel ?? '-' }}</td>
                                 <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
 
                                 <td>

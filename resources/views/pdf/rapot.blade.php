@@ -360,8 +360,8 @@
         </h3>
     </div>
 
-    <p style="font-weight: bold; margin-top: 15px; margin-bottom: 5px; text-align: left;">I. KEBERSIHAN PRIBADI</p>
-    <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center;">
+    <p style="font-weight: bold; margin-top: 10px; margin-bottom: 3px; text-align: left;">I. KEBERSIHAN PRIBADI</p>
+    <table border="1" cellspacing="0" cellpadding="2" style="width: 100%; border-collapse: collapse; text-align: center;">
         <thead>
             <tr style="font-weight: bold;">
                 <th style="width: 8%;">NO.</th>
@@ -435,8 +435,8 @@
         </tbody>
     </table>
 
-    <p style="font-weight: bold; margin-top: 15px; margin-bottom: 5px; text-align: left;">II. MATA</p>
-    <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center;">
+    <p style="font-weight: bold; margin-top: 10px; margin-bottom: 3px; text-align: left;">II. MATA</p>
+    <table border="1" cellspacing="0" cellpadding="2" style="width: 100%; border-collapse: collapse; text-align: center;">
         <thead>
             <tr style="font-weight: bold;">
                 <th style="width: 8%;">NO.</th>
@@ -510,8 +510,8 @@
         </tbody>
     </table>
 
-    <p style="font-weight: bold; margin-top: 15px; margin-bottom: 5px; text-align: left;">III. TELINGA</p>
-    <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center;">
+    <p style="font-weight: bold; margin-top: 10px; margin-bottom: 3px; text-align: left;">III. TELINGA</p>
+    <table border="1" cellspacing="0" cellpadding="2" style="width: 100%; border-collapse: collapse; text-align: center;">
         <thead>
             <tr style="font-weight: bold;">
                 <th style="width: 8%;">NO.</th>
@@ -561,8 +561,8 @@
         </tbody>
     </table>
 
-    <p style="font-weight: bold; margin-top: 15px; margin-bottom: 5px; text-align: left;">IV. GIGI DAN MULUT</p>
-    <table border="1" cellspacing="0" cellpadding="4" style="width: 100%; border-collapse: collapse;">
+    <p style="font-weight: bold; margin-top: 10px; margin-bottom: 3px; text-align: left;">IV. GIGI DAN MULUT</p>
+    <table border="1" cellspacing="0" cellpadding="2" style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr style="font-weight: bold; text-align: center;">
                 <th style="width: 8%;">NO.</th>
@@ -607,7 +607,7 @@
     </table>
 
     <br>
-    <table border="1" cellspacing="0" cellpadding="4" style="width: 100%; border-collapse: collapse;">
+    <table border="1" cellspacing="0" cellpadding="2" style="width: 100%; border-collapse: collapse;">
         <tr>
             <td style="width: 40%; padding-left: 8px; font-weight: bold;">BERAT BADAN</td>
             <td style="width: 60%; padding-left: 8px;">{{ $anggotaKelas?->kondisiTubuh?->berat_badan ?? '-' }} Kg</td>
