@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnggotaKelasStoreRequest;
 use App\Http\Requests\AnggotaKelasUpdateRequest;
+use App\Models\TahunAjaran;
 
 class AnggotaKelasController extends Controller
 {
@@ -18,10 +19,12 @@ class AnggotaKelasController extends Controller
         $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
 
         if ($user->hasRole('guru')) {
+            $tahunAjaranAktif = TahunAjaran::latest()->first();
+
             $guruId = $user->guru?->id;
 
             $kelasIds = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)->whereTahunAjaranId($tahunAjaranAktif->id)
                 ->pluck('id');
 
             $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
@@ -47,12 +50,13 @@ class AnggotaKelasController extends Controller
 
     public function store(AnggotaKelasStoreRequest $request)
     {
+        dd($request->validated());
         if (!auth()->user()->hasRole('admin')) {
             return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menambah data.');
         }
 
         AnggotaKelas::create($request->validated());
-
+        dd($request->validate());
         return redirect()
             ->route('anggota-kelas.index')
             ->with('success', 'Data siswa berhasil disimpan.');

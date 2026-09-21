@@ -41,7 +41,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::middleware(['role:admin|guru'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('anggota-kelas', AnggotaKelasController::class);
+    Route::resource('anggota-kelas', AnggotaKelasController::class)
+    ->parameters([
+        'anggota-kela' => 'anggota-kelas'
+    ]);
+    
     Route::resource('pdf', PdfController::class)->only(['show', 'index']);
     });
     

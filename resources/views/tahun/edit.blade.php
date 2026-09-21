@@ -19,11 +19,11 @@
                         <label class="form-label fw-bold">Semester</label>
                         <div class="mt-2">
                             <label class="mr-4">
-                                <input type="radio" name="semester" value="1" {{ $item->semester == '1' ? 'checked' : '' }} required>
+                                <input type="radio" name="semester" value="Ganjil" {{ $item->semester == 'Ganjil' ? 'checked' : '' }} required>
                                 <span class="ml-1">Semester Ganjil</span>
                             </label>
                             <label>
-                                <input type="radio" name="semester" value="2" {{ $item->semester == '2' ? 'checked' : '' }}>
+                                <input type="radio" name="semester" value="Genap" {{ $item->semester == 'Genap' ? 'checked' : '' }}>
                                 <span class="ml-1">Semester Genap</span>
                             </label>
                         </div>
