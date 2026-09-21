@@ -33,7 +33,7 @@ class GuruController extends Controller
 
     public function create()
     {
-        return view('gurus.index');
+        return view('gurus.create');
     }
 
    
@@ -81,7 +81,7 @@ class GuruController extends Controller
    
     public function edit(Guru $guru)
     {
-        return view('gurus.index', compact('guru'));
+        return view('gurus.edit', compact('guru'));
     }
 
     
