@@ -11,5 +11,8 @@ class TahunAjaran extends Model
     protected $fillable=[
         'tahun_ajaran',
         'semester',
+        'kepala_sekolah',
+        'nuptk',
+        'titimangsa',
     ];
 }

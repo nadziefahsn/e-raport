@@ -50,13 +50,11 @@ class AnggotaKelasController extends Controller
 
     public function store(AnggotaKelasStoreRequest $request)
     {
-        dd($request->validated());
         if (!auth()->user()->hasRole('admin')) {
             return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menambah data.');
         }
 
         AnggotaKelas::create($request->validated());
-        dd($request->validate());
         return redirect()
             ->route('anggota-kelas.index')
             ->with('success', 'Data siswa berhasil disimpan.');

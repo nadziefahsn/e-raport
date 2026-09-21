@@ -173,13 +173,14 @@
                 </div>
             </td>
             <td width="55%" class="ttd-box-bio">
-                Garut, 14 Juli 2025<br>
-                <u>Mengetahui,</u><br>
+                Garut, {{ isset($tahunAjaranAktif->titimangsa) ? 
+                    \Carbon\Carbon::parse($tahunAjaranAktif->titimangsa)->locale('id')->translatedFormat('d F Y') : '-' }}<br>
+                <div>Mengetahui,</div>
                 Kepala Taman Kanak–kanak Islam Plus<br>
                 <strong>PRIMA INSANI</strong>
                 <br><br><br><br><br>
-                <span class="ttd-nama">Santi Rismayanti, M.Pd.</span><br>
-                <span class="ttd-nuptk">NUPTK. 9453758659300022</span>
+                <span class="ttd-nama">{{ $tahunAjaranAktif->kepala_sekolah ?? '-' }}</span><br>
+                <span class="ttd-nuptk">NUPTK.{{ $tahunAjaranAktif->nuptk ?? '-' }}</span>
             </td>
         </tr>
     </table>
@@ -709,17 +710,18 @@
             <tr>
                 <td style="width: 55%;"></td>
                 <td style="width: 45%; text-align: center; vertical-align: top;">
-                    <div>Garut, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
-                    <div>Mengetahui,</div>
-                    <div>Kepala Taman Kanak-Kanak Islam Plus</div>
-                    <div style="font-weight: bold; margin-bottom: 60px;">PRIMA INSANI</div>
+                    Garut, {{ isset($tahunAjaranAktif->titimangsa) ? 
+                    \Carbon\Carbon::parse($tahunAjaranAktif->titimangsa)->locale('id')->translatedFormat('d F Y') : '-' }}
+                <div>Mengetahui,</div>
+                <div>Kepala Taman Kanak-Kanak Islam Plus</div>
+                <div style="font-weight: bold; margin-bottom: 60px;">PRIMA INSANI</div>
 
-                    <div style="font-weight: bold; text-decoration: underline;">
-                        Santi Rismayanti, M.Pd.
-                    </div>
-                    <div>
-                        NUPTK. 9453758659300022
-                    </div>
+                <div style="font-weight: bold; text-decoration: underline;">
+                    {{ $tahunAjaranAktif->kepala_sekolah ?? '-' }}
+                </div>
+                <div>
+                        NUPTK. {{ $tahunAjaranAktif->nuptk ?? '-' }}
+                </div>
                 </td>
             </tr>
         </table>

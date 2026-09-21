@@ -25,6 +25,18 @@
                             </label>
                         </div>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Kepala Sekolah</label>
+                        <input type="text" name="kepala_sekolah" class="form-control" value="{{ old('kepala_sekolah') }}" style="border-radius:14px;padding:12px;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">NUPTK</label>
+                        <input type="text" name="nuptk" class="form-control" value="{{ old('nuptk') }}" style="border-radius:14px;padding:12px;" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Titimangsa</label>
+                        <input type="date" name="titimangsa" class="form-control" value="{{ old('titimangsa') }}" style="border-radius:14px;padding:12px;" required>
+                    </div>
                 </div>
                 <div class="modal-footer border-0 pb-4 px-4">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>

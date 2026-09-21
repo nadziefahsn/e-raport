@@ -28,6 +28,9 @@
             ['label' => 'No', 'width' => 5],
             'Tahun Pelajaran',
             'Semester',
+            'Kepala Sekolah',
+            'NUPTK',
+            'Titimangsa',
             ['label' => 'Aksi', 'no-export' => true, 'width' => 10, 'className' => 'text-center'],
         ];
 
@@ -35,7 +38,7 @@
             'order' => [[0, 'asc']],
             'searching' => true,
             'lengthChange' => true,
-            'columns' => [null, null, null, ['orderable' => false]],
+            'columns' => [null, null, null, null, null, null, ['orderable' => false]],
         ];
     @endphp
 
@@ -46,6 +49,9 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->tahun_ajaran }}</td>
                     <td>{{ $item->semester == 'Ganjil' ? 'Semester Ganjil' : 'Semester Genap' }}</td>
+                    <td>{{ $item->kepala_sekolah }}</td>
+                    <td>{{ $item->nuptk }}</td>
+                    <td>{{ $item->titimangsa ? \Carbon\Carbon::parse($item->titimangsa)->format('d-M-Y') : '-' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" class="btn btn-xs btn-default text-primary mx-1 shadow"
