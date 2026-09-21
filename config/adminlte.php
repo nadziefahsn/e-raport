@@ -594,10 +594,6 @@ return [
         'url'  => 'admin/catatan', 
         'can'  => 'guru',
     ],  
-    [
-     'header' => 'PENGATURAN',
-     'can'  => ['admin', 'guru'],
-    ],
 ],
 
     /*
