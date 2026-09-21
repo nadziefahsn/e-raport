@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\KebersihanSiswaUpdateRequest;
 use App\Models\KebersihanSiswa;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
 
@@ -13,15 +14,19 @@ class KebersihanSiswaController extends Controller
    public function index(Request $request)
 {
     $user = auth()->user();
+    $tahunAjaranAktif = TahunAjaran::latest()->first();
     $kebersihanSiswa = collect();
     $kelas = null;
 
     if ($user->hasRole('guru')) {
         $guruId = $user->guru?->id;
 
-        $kelas = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->get();
+        $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                          ->orWhere('pendamping_id', $guruId);    
+                })
+                ->get();
 
         $kelasIds = $kelas->pluck('id');
 

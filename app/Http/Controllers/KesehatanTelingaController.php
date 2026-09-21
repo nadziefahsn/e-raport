@@ -6,6 +6,7 @@ use App\Http\Requests\KesehatanTelingaUpdateRequest;
 use App\Models\KesehatanTelinga;
 use Illuminate\Http\Request;
 use App\Models\AnggotaKelas;
+use App\Models\TahunAjaran;
 use App\Models\Kelas;
 
 class KesehatanTelingaController extends Controller
@@ -15,13 +16,17 @@ class KesehatanTelingaController extends Controller
 {
     $user = auth()->user();
     $kesehatanTelingas = collect();
+    $tahunAjaranAktif = TahunAjaran::latest()->first();
     $kelas = null;
 
     if ($user->hasRole('guru')) {
         $guruId = $user->guru?->id;
-        $kelas = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->get();
+        $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                          ->orWhere('pendamping_id', $guruId);    
+                })
+                ->get();
 
         $kelasIds = $kelas->pluck('id');
 
@@ -29,7 +34,10 @@ class KesehatanTelingaController extends Controller
             ->with(['siswa', 'kelas', 'kesehatanTelinga'])
             ->get();
     } else {
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->get(); 
+                
         $kesehatanTelingas = AnggotaKelas::with(['siswa', 'kelas', 'kesehatanTelinga'])->get();
     }
 
