@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\KesehatanMataUpdateRequest;
 use App\Models\AnggotaKelas;
 use App\Models\KesehatanMata;
+use App\Models\TahunAjaran;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 
@@ -15,14 +16,18 @@ class KesehatanMataController extends Controller
 {
     $user = auth()->user();
     $kesehatanMatas = collect();
+    $tahunAjaranAktif = TahunAjaran::latest()->first();
     $kelas = null;
 
     if ($user->hasRole('guru')) {
         $guruId = $user->guru?->id;
 
-        $kelas = Kelas::where('wali_kelas_id', $guruId)
-            ->orWhere('pendamping_id', $guruId)
-            ->get();
+        $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                          ->orWhere('pendamping_id', $guruId);    
+                })
+                ->get();
 
         $kelasIds = $kelas->pluck('id');
 
@@ -30,7 +35,10 @@ class KesehatanMataController extends Controller
             ->with(['siswa', 'kelas', 'kesehatanMata'])
             ->get();
     } else {
-        $kelas = Kelas::orderBy('rombel', 'asc')->get();
+        $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->get();
+                
         $kesehatanMata = AnggotaKelas::with(['siswa', 'kelas', 'kesehataMata'])->get();
     }
 
