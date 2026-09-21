@@ -20,7 +20,7 @@
                 PG-TK GIS PRIMA INSANI
             </h4>
             <p class="tahun-pelajaran mb-0">
-                Tahun Pelajaran 2025/2026 Semester Genap
+                Tahun Pelajaran {{ $tahunAjaranAktif->tahun_ajaran ?? 'yow' }} Semester {{ $tahunAjaranAktif->semester ?? 'yuhu' }}
             </p>
         </div>
     </div>

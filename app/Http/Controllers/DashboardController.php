@@ -7,6 +7,7 @@ use App\Models\Pengumuman;
 use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 
 class DashboardController extends Controller
 {
@@ -20,10 +21,12 @@ class DashboardController extends Controller
         $jumlahGuru = Guru::count();
         $jumlahKelas = Kelas::count();
 
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
+
         if (!$sekolah) {
             return redirect()->route('sekolah.index');
         }else{
-        return view('dashboard.index', compact('sekolah', 'pengumumans', 'jumlahSiswa', 'jumlahGuru', 'jumlahKelas'));
+        return view('dashboard.index', compact('sekolah', 'pengumumans', 'jumlahSiswa', 'jumlahGuru', 'jumlahKelas', 'tahunAjaranAktif'));
     }
     }
 }
