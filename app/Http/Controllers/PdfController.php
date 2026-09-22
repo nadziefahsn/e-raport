@@ -74,13 +74,13 @@ class PdfController extends Controller
 
         if (str_contains($rombelUpper, 'B')) {
             $jenjangTujuan = 'TK B';
-            $usia = '5-6 TAHUN';
+            $usia = '5-6';
         } elseif (str_contains($rombelUpper, 'A')) {
             $jenjangTujuan = 'TK A';
-            $usia = '4-5 TAHUN';
+            $usia = '4-5';
         } else {
             $jenjangTujuan = 'PG';
-            $usia = '3-4 TAHUN';
+            $usia = '3-4';
         }
 
         $kelasId = $anggotaKelas->kelas_id;

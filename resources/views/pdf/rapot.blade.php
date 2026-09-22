@@ -23,7 +23,7 @@
         <div style="width: 100%; margin: 0 auto;">
             <h3 style="line-height: 1.5; font-size: 20px; font-weight: bold; margin: 0; letter-spacing: 0.5px; text-transform: uppercase;">
                 LAPORAN PERKEMBANGAN SISWA<br>
-                USIA {{ $usia }}<br>
+                USIA {{ $usia }} TAHUN<br>
                 TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '1025-1026') }}
             </h3>
         </div>
@@ -234,7 +234,7 @@
             <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
             <td width="20%"><strong> Kelompok Usia</td>
             <td width="2%">:</td>
-            <td width="28%">{{ $usia }}</td>
+            <td width="28%">{{ $usia }} Tahun</td>
         </tr>
         <tr>
             <td><strong>NIS</td>
