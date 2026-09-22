@@ -74,10 +74,13 @@ class PdfController extends Controller
 
         if (str_contains($rombelUpper, 'B')) {
             $jenjangTujuan = 'TK B';
+            $usia = '5-6 TAHUN';
         } elseif (str_contains($rombelUpper, 'A')) {
             $jenjangTujuan = 'TK A';
+            $usia = '4-5 TAHUN';
         } else {
             $jenjangTujuan = 'PG';
+            $usia = '3-4 TAHUN';
         }
 
         $kelasId = $anggotaKelas->kelas_id;
@@ -110,13 +113,14 @@ class PdfController extends Controller
             'anggotaKelas',
             'siswa',
             'jenjangTujuan',
+            'usia', 
             'daftarCapaian',
             'tahunAjaranAktif'
         ))->setPaper('A4', 'portrait')
         ->setOption($pdfOptions);
 
         $namaKelasClean = $namaKelas ?: 'Kelas';
-        $namaSiswa = $siswa->nama_siswa ?? $siswa->nama_siswa ?? 'Siswa';
+        $namaSiswa = $siswa->nama_siswa ?? 'Siswa';
         
         $fileName = 'Penilaian Karakter & Biodata (' . $jenjangTujuan . ') - ' . trim($namaKelasClean) . '_' . trim($namaSiswa) . '.pdf';
 

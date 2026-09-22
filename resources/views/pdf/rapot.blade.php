@@ -23,8 +23,8 @@
         <div style="width: 100%; margin: 0 auto;">
             <h3 style="line-height: 1.5; font-size: 20px; font-weight: bold; margin: 0; letter-spacing: 0.5px; text-transform: uppercase;">
                 LAPORAN PERKEMBANGAN SISWA<br>
-                USIA {{ $anggotaKelas->kelas->tingkatan ?? '5-6 TAHUN' }}<br>
-                TAHUN AJARAN {{ str_replace('/', '-', $anggotaKelas->kelas->tahunAjaran->tahun ?? '1025-1026') }}
+                USIA {{ $usia }}<br>
+                TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '1025-1026') }}
             </h3>
         </div>
 
@@ -234,7 +234,7 @@
             <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
             <td width="20%"><strong> Kelompok Usia</td>
             <td width="2%">:</td>
-            <td width="28%">{{ $anggotaKelas->kelas->kelompok_usia ?? '3-4 Tahun' }}</td>
+            <td width="28%">{{ $usia }}</td>
         </tr>
         <tr>
             <td><strong>NIS</td>
@@ -242,7 +242,7 @@
             <td>{{ $anggotaKelas->siswa->nis ?? '-' }} / {{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
             <td><strong> Tahun Ajaran</td>
             <td>:</td>
-            <td>{{ $anggotaKelas->kelas->tahunAjaran->tahun_ajaran ?? '2023/2024' }}</td>
+            <td>{{ $tahunAjaranAktif->tahun_ajaran ?? '2023/2024' }}</td>
         </tr>
         <tr>
             <td><strong>NISN</td>
@@ -250,7 +250,7 @@
             <td>{{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
             <td><strong>Semester</td>
             <td>:</td>
-            <td>{{ $anggotaKelas->kelas->tahunAjaran->semester ?? 'Ganjil' }}</td>
+            <td>{{ $tahunAjaranAktif->semester ?? 'ganjil' }}</td>
         </tr>
     </table>
 
