@@ -19,7 +19,7 @@
         <div class="card-tools ml-auto d-flex align-items-center gap-2">
             <form action="{{ route('kelas.duplicate') }}" method="POST" class="m-0" onsubmit="return confirm('Apakah Anda yakin ingin menyalin kelas dari semester sebelumnya?')">
                 @csrf
-                <button type="submit" class="btn btn-secondary">
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">
                     <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
                 </button>
             </form>
