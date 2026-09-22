@@ -17,7 +17,7 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Data Kelas Dan Pembimbing</h3>
         <div class="card-tools ml-auto d-flex align-items-center gap-2">
-            <form action="{{ route('kelas.duplicate') }}" method="POST" class="m-0" onsubmit="return confirm('Apakah Anda yakin ingin menyalin kelas dari semester sebelumnya?')">
+            <form action="{{ route('kelas.duplicate') }}" method="POST" class="m-2" onsubmit="return confirm('Apakah Anda yakin ingin menyalin kelas dari semester sebelumnya?')">
                 @csrf
                 <button type="submit" class="btn btn-outline-secondary rounded-pill">
                     <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
