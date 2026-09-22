@@ -7,6 +7,7 @@ use App\Models\Guru;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Http\Requests\KelasUpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class KelasController extends Controller
 {
@@ -97,7 +98,7 @@ class KelasController extends Controller
             foreach ($kelasLama as $item) {
                 $dataInsert[] = [
                     'tahun_ajaran_id' => $semesterBaru->id,
-                    'nama_kelas'      => $item->nama_kelas,
+                    'rombel'      => $item->rombel,
                     'wali_kelas_id'   => $item->wali_kelas_id,
                     'pendamping_id'   => $item->pendamping_id,
                     'created_at'      => $now,
