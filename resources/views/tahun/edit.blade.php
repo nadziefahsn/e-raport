@@ -34,7 +34,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">NUPTK</label>
-                        <input type="text" name="nuptk" class="form-control" value="{{ $item->nuptk }}" required>
+                        <input type="text" name="nuptk" class="form-control" value="{{ $item->nuptk }}" required
+                         inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="20">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Titimangsa</label>

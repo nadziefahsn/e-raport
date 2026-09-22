@@ -22,12 +22,13 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Tahun Ajaran</label>
                             <select name="tahun_ajaran_id" class="form-control rounded-3" required>
-                                <option value="" disabled>-- Pilih Tahun Ajaran --</option>
-                                @foreach($tahunAjarans as $ta)
-                                <option value="{{ $ta->id }}" {{ $item->tahun_ajaran_id == $ta->id ? 'selected' : '' }}>
-                                    {{ $ta->tahun_ajaran }} - {{ $ta->semester == 'Ganjil' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
-                                </option>
-                            @endforeach
+                                @if($tahunAjarans)
+                                    <option value="{{ $tahunAjarans->id }}" {{ (isset($item) && $item->tahun_ajaran_id == $tahunAjarans->id) ? 'selected' : '' }}>
+                                        {{ $tahunAjarans->tahun_ajaran }} - {{ $tahunAjarans->semester }}
+                                    </option>
+                                @else
+                                    <option value="" disabled>-- Belum Ada Data Tahun Ajaran --</option>
+                                @endif
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
