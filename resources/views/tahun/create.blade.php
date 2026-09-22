@@ -12,18 +12,15 @@
                         <label class="form-label fw-bold">Tahun Pelajaran</label>
                         <input type="text" name="tahun_ajaran" class="form-control" placeholder="Masukkan tahun pelajaran..." value="{{ old('tahun_ajaran') }}" style="border-radius:14px;padding:12px;" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Semester</label>
-                        <div class="mt-2">
-                            <label class="mr-4">
-                                <input type="radio" name="semester" value="1" {{ old('semester') == '1' ? 'checked' : '' }} required>
-                                <span class="ml-1">Semester Ganjil</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="semester" value="2" {{ old('semester') == '2' ? 'checked' : '' }}>
-                                <span class="ml-1">Semester Genap</span>
-                            </label>
-                        </div>
+                    <div class="mt-2">
+                        <label class="mr-4">
+                            <input type="radio" name="semester" value="Ganjil" {{ old('semester') == 'Ganjil' ? 'checked' : '' }} required>
+                            <span class="ml-1">Semester Ganjil</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="semester" value="Genap" {{ old('semester') == 'Genap' ? 'checked' : '' }} required>
+                            <span class="ml-1">Semester Genap</span>
+                        </label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Kepala Sekolah</label>

@@ -13,6 +13,19 @@
 @stop
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 <div class="card">
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-calendar-alt mr-2"></i>Data Tahun Pelajaran</h3>

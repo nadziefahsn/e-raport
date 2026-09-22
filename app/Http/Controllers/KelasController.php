@@ -18,7 +18,6 @@ class KelasController extends Controller
         $gurus = Guru::all();
         $tahunAjarans = TahunAjaran::all();
         
-
         return view('kelas.index', compact('kelas','gurus','tahunAjarans'));
     }
 
