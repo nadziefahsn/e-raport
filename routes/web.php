@@ -51,6 +51,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     
     Route::middleware(['role:admin'])->group(function () {
     Route::resource('sekolah', SekolahController::class)->except(['create','show','edit','destroy'])->whereNumber('sekolah');
+    Route::post('/kelas/duplicate', [KelasController::class, 'duplicateFromPreviousSemester'])->name('kelas.duplicate');
     Route::resource('kriteria', KriteriaPenilaianController::class)->parameters([
         'kriteria' => 'kriteriapenilaian',
     ]);

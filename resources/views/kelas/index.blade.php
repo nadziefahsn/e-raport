@@ -20,6 +20,12 @@
             <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKelas">
                 <i class="fas fa-plus"></i>
             </button>
+            <form action="{{ route('kelas.duplicate') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menyalin mata pelajaran dari semester sebelumnya?')">
+                @csrf
+                <button type="submit" class="btn btn-secondary">
+                    <i class="fas fa-copy"></i> Salin Mapel Semester Lalu
+                </button>
+            </form>
         </div>
     </div>
     
