@@ -587,7 +587,9 @@
                         <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>                    
                     @endif
                 </td>
-                <td>{{ $anggotaKelas?->kesehatanGigi?->keterangan }}</td>
+                <td style="text-align: center;">
+                    {{ $anggotaKelas?->kesehatanGigi?->keterangan }}
+                </td>
             </tr>
             <tr>
                 <td style="text-align: center;">2</td>
@@ -602,7 +604,9 @@
                         <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>                    
                     @endif
                 </td>
-                <td>{{ $anggotaKelas?->kesehatanMulut?->keterangan }}</td>
+                <td style="text-align: center;">
+                    {{ $anggotaKelas?->kesehatanMulut?->keterangan }}
+                </td>
             </tr>
         </tbody>
     </table>
