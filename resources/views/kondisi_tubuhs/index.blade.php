@@ -13,110 +13,100 @@
 @stop
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="icon fas fa-check mr-1"></i> {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="icon fas fa-ban mr-1"></i> {{ session('error') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
-<form action="{{ route('kondisi-tubuh.update', 0) }}" method="POST">
-    @csrf
-    @method('PUT')
-    
-    <div class="card">
-        <div class="card-header d-flex align-items-center">
-            <h3 class="card-title mb-0">
-                <i class="fas fa-heartbeat mr-2"></i>Input Kondisi Tubuh Kelas
-            </h3>
-        </div>
-
-        @php
-        $heads = [
-            ['label' => 'No', 'width' => 5],
-            'Nama Siswa',
-            ['label' => 'Berat Badan', 'width' => 20, 'className' => 'text-center'],
-            ['label' => 'Tinggi Badan', 'width' => 20, 'className' => 'text-center'],
-        ];
-
-        $config = [
-            'order' => [[0, 'asc']],
-            'searching' => true,    
-            'lengthChange' => true, 
-            'paging' => false, 
-            'columns' => [
-                null, 
-                null, 
-                null,
-                ['className' => 'text-center'],
-                ['className' => 'text-center'],
-                ['className' => 'text-center'],
-                ['orderable' => false],
-                ['orderable' => false]
-            ],
-        ];
-        @endphp
-
-        <div class="card-body p-3">
-            <x-adminlte-datatable id="tableKondisiTubuh" :heads="$heads" :config="$config" stripe hoverable buffered text-sm>
-                @forelse($kondisiTubuhs as $index => $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
-                    <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
-                    <td>
-                        <div class="input-group input-group-sm">
-                            <input type="number" 
-                                step="0.1" 
-                                name="berat_badan[]" 
-                                value="{{ old('berat_badan.'.$index, $item->kondisiTubuh->berat_badan ?? '') }}" 
-                                class="form-control text-center" 
-                                placeholder="...">
-                            <div class="input-group-append">
-                                <span class="input-group-text">kg</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group input-group-sm">
-                            <input type="number" 
-                                step="0.1" 
-                                name="tinggi_badan[]" 
-                                value="{{ old('tinggi_badan.'.$index, $item->kondisiTubuh->tinggi_badan ?? '') }}" 
-                                class="form-control text-center" 
-                                placeholder="...">
-                            <div class="input-group-append">
-                                <span class="input-group-text">cm</span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-            <tr>
-                <td colspan="11" class="text-center py-4 text-muted">Data kesehatan mata belum tersedia.</td>
-            </tr>
-            @endforelse
-            </x-adminlte-datatable>
-        </div>
-
-        <div class="card-footer d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary px-4 fw-bold">
-                <i class="fas fa-save mr-1"></i> Simpan Data
+<div class="container-fluid">
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="icon fas fa-check mr-1"></i> {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    </div>
-</form>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="icon fas fa-ban mr-1"></i> {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    <form action="{{ route('kondisi-tubuh.update', 0) }}" method="POST">
+        @csrf
+        @method('PUT')
+        
+        <div class="card shadow-sm border-0 mb-5">
+            <div class="card-header bg-white py-3 px-4">
+                <h5 class="card-title fw-bold mb-0">
+                    <i class="fas fa-heartbeat mr-2"></i> Input Kondisi Tubuh Kelas
+                </h5>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle mb-0">
+                        <thead class="text-white text-center" style="background-color: #17a2b8;">
+                            <tr>
+                                <th style="width: 5%;">No</th>
+                                <th>Nama Siswa</th>
+                                <th style="width: 20%;">Berat Badan</th>
+                                <th style="width: 20%;">Tinggi Badan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($kondisiTubuhs as $index => $item)
+                            <tr>
+                                <td class="text-center">
+                                    {{ $loop->iteration }}
+                                    <input type="hidden" name="anggota_kelas_id[]" value="{{ $item->id }}">
+                                </td>
+                                <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
+                                <td>
+                                    <div class="input-group input-group-sm">
+                                        <input type="number" 
+                                            step="0.1" 
+                                            name="berat_badan[]" 
+                                            value="{{ old('berat_badan.'.$index, $item->kondisiTubuh->berat_badan ?? '') }}" 
+                                            class="form-control text-center" 
+                                            placeholder="...">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">kg</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group input-group-sm">
+                                        <input type="number" 
+                                            step="0.1" 
+                                            name="tinggi_badan[]" 
+                                            value="{{ old('tinggi_badan.'.$index, $item->kondisiTubuh->tinggi_badan ?? '') }}" 
+                                            class="form-control text-center" 
+                                            placeholder="...">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">cm</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">Data kondisi tubuh belum tersedia.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white text-right py-3 px-4">
+                <button type="submit" class="btn btn-info text-white px-4">
+                    <i class="fas fa-save me-1"></i> Simpan
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 @stop
 
 @include('layouts.footer')
@@ -131,8 +121,7 @@
     .table thead th {
         font-weight: 600 !important;
         text-align: center;
-        background-color: #17a2b8 !important;
-        color: white !important;
+        vertical-align: middle !important;
     }
 </style>
 @stop
