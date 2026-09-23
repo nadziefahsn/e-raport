@@ -6,6 +6,7 @@ use App\Http\Requests\SiswaStoreRequest;
 use App\Http\Requests\SiswaUpdateRequest;
 use App\Models\Siswa;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 
 class SiswaController extends Controller
 {
@@ -13,7 +14,10 @@ class SiswaController extends Controller
     public function index()
     {
         $siswas = Siswa::all();
-        $kelas = Kelas::all();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
+        $kelas = $tahunAjaranAktif 
+            ? Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get() 
+            : Kelas::all();
 
         return view('siswas.index', compact('siswas','kelas',));
     }
