@@ -103,6 +103,9 @@
                     </td>
                 </tr>
             @empty
+            <tr>
+                <td colspan="11" class="text-center py-4 text-muted">Data kesehatan mata belum tersedia.</td>
+            </tr>
             @endforelse
             </x-adminlte-datatable>
         </div>
