@@ -81,7 +81,7 @@ public function index(Request $request)
 
         $guruId = $request->input('guru_id');
 
-        $tahunAjaranAktif = TahunAjaran::first();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         if (!$tahunAjaranAktif) {
             return redirect()->back()->with('error', 'Data Tahun Ajaran belum ada di database!');
