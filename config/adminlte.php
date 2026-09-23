@@ -372,9 +372,15 @@ return [
             ],
             [
                 'text' => 'Anggota Kelas',
-                'url' => 'admin/anggota-kelas',
+                'url'  => 'admin/anggota-kelas',
                 'icon' => 'fas fa-users',
-                'can'  => ['admin', 'guru'],
+                'can'  => 'admin',
+            ],
+            [
+                'text' => 'Anggota Kelas',
+                'url'  => 'guru/anggota-kelas',
+                'icon' => 'fas fa-users',
+                'can'  => 'guru',
             ],
         ],
     ],

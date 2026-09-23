@@ -43,7 +43,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::resource('pengumuman', PengumumanController::class)->except(['show'])->whereNumber('pengumuman');
         Route::resource('sekolah', SekolahController::class)->except(['create','show','edit','destroy'])->whereNumber('sekolah');
         Route::resource('tahun_ajaran', TahunAjaranController::class);
-        
+        Route::resource('anggota-kelas', AnggotaKelasController::class)->parameters([
+            'anggota-kelas' => 'anggotaKelas'
+        ]);
+
         Route::resource('guru', GuruController::class);
         Route::get('/guru/{id}/edit-password', [GuruController::class, 'editPassword'])->name('guru.edit-password');
         Route::put('/guru/{id}/update-password', [GuruController::class, 'updatePassword'])->name('guru.update-password');
@@ -61,9 +64,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['role:admin|guru'])->group(function () {
-        Route::resource('anggota-kelas', AnggotaKelasController::class)->parameters([
-            'anggota-kelas' => 'anggotaKelas'
-        ]);
         Route::resource('pdf', PdfController::class)->only(['show', 'index']);
     });
 
@@ -71,6 +71,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 Route::prefix('guru')->middleware(['auth', 'role:guru'])->group(function () {
 
+    Route::resource('anggota-kelas', AnggotaKelasController::class)->parameters([
+            'anggota-kelas' => 'anggotaKelas'
+        ]);
     Route::resource('data-karakter', DataKarakterController::class)->only(['index']);
 
     Route::get('/indikator-{kategori}', [IndikatorCapaianController::class, 'index'])->name('indikator-capaian.index');
