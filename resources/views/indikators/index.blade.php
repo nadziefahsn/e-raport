@@ -23,7 +23,6 @@
                     <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
                 </button>
             </form>
-            <div class="card-tools ml-auto">
             <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
                 <i class="fas fa-plus mr-1"></i>
             </button>
