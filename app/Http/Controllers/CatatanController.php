@@ -6,6 +6,7 @@ use App\Http\Requests\CatatanUpdateRequest;
 use App\Models\Catatan;
 use App\Models\Kelas;
 use App\Models\AnggotaKelas;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 
 class CatatanController extends Controller
@@ -13,14 +14,18 @@ class CatatanController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
         $catatans = collect();
         $kelas = null;
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;
 
-            $kelas = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                          ->orWhere('pendamping_id', $guruId);    
+                })
                 ->get();
 
             $kelasIds = $kelas->pluck('id');

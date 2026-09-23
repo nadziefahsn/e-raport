@@ -15,28 +15,40 @@ use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
 {
-    public function index(Request $request)
-    {
-        $wali_kelas = Guru::where('user_id', Auth::user()->id)->first();
-        $tahunAjaranAktif = TahunAjaran::latest()->first();
-        $id_kelas_diampu = Kelas::whereTahunAjaranId( $tahunAjaranAktif->id)->whereWaliKelasId($wali_kelas->id)->get('id');
-        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
+public function index(Request $request)
+{
+    $user = auth()->user();
+    $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-        foreach ($data_anggota_kelas as $anggota) {
-            $kehadirans = Kehadiran::where('anggota_kelas_id', $anggota->id)->first();
-            if (is_null($kehadirans)) {
-                $anggota->sakit = 0;
-                $anggota->izin = 0;
-                $anggota->tanpa_keterangan = 0;
-                    } else {
-                        $anggota->sakit = $kehadirans->sakit;
-                        $anggota->izin = $kehadirans->izin;
-                        $anggota->tanpa_keterangan = $kehadirans->tanpa_keterangan;
-                    }
-                }                        
+    if ($user->hasRole('guru')) {
+        $guruId = $user->guru?->id;
 
-        return view('kehadirans.index', compact('data_anggota_kelas'));
+        $kelasIds = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where(function ($query) use ($guruId) {
+                $query->where('wali_kelas_id', $guruId)
+                      ->orWhere('pendamping_id', $guruId);
+            })
+            ->pluck('id');
+
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+            ->with(['siswa', 'kehadiran'])
+            ->get();
+    } else {
+        $data_anggota_kelas = AnggotaKelas::whereHas('kelas', function ($query) use ($tahunAjaranAktif) {
+                $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+            })
+            ->with(['siswa', 'kehadiran'])
+            ->get();
     }
+
+    foreach ($data_anggota_kelas as $anggota) {
+        $anggota->sakit = $anggota->kehadiran->sakit ?? 0;
+        $anggota->izin = $anggota->kehadiran->izin ?? 0;
+        $anggota->tanpa_keterangan = $anggota->kehadiran->tanpa_keterangan ?? 0;
+    }
+
+    return view('kehadirans.index', compact('data_anggota_kelas'));
+}
 
   
     public function create()
