@@ -2,123 +2,104 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Indikator;
-use App\Models\CapaianPerkembangan;
+use App\Models\Kelas;
+use App\Models\AnggotaKelas;
+use App\Models\Siswa;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\AnggotaKelasStoreRequest;
+use App\Http\Requests\AnggotaKelasUpdateRequest;
 use App\Models\TahunAjaran;
-use App\Http\Requests\IndikatorUpdateRequest;
-use Illuminate\Support\Facades\DB;
 
-
-class IndikatorController extends Controller
+class AnggotaKelasController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
+        $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
-        $capaians = CapaianPerkembangan::all();
 
-        $indikators = $tahunAjaranAktif 
-            ? Indikator::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get() 
-            : Indikator::all();
+        if ($user->hasRole('guru')) {
 
-        return view('indikators.index', compact('capaians', 'indikators', 'tahunAjaranAktif'));
+            $guruId = $user->guru?->id;
+
+            $kelasIds = Kelas::where('wali_kelas_id', $guruId)
+                ->orWhere('pendamping_id', $guruId)->whereTahunAjaranId($tahunAjaranAktif->id)
+                ->pluck('id');
+
+            $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
+            $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
+        } else {
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)->orderBy('rombel', 'asc')->get();
+
+        }
+
+        $anggotaKelas = $anggotaKelasQuery->get();
+        $siswas = Siswa::orderBy('nama_siswa', 'asc')->get();
+
+        return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
     }
 
     public function create()
     {
-        return view('indikators.index');
+        if (!auth()->user()->hasRole('admin')) {
+            abort(403, 'Akses ditolak. Hanya Admin yang dapat menambah data.');
+        }
+
+        return view('anggotaKelas.index');
     }
 
-    public function store(IndikatorUpdateRequest $request)
+    public function store(AnggotaKelasStoreRequest $request)
     {
-        Indikator::create($request->validated());
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menambah data.');
+        }
 
+        AnggotaKelas::create($request->validated());
         return redirect()
-            ->route('indikator.index')
-            ->with('success', 'Indikator berhasil disimpan.');
+            ->route('anggota-kelas.index')
+            ->with('success', 'Data siswa berhasil disimpan.');
     }
 
     public function show(string $id)
     {
-        return view('indikators.index');
+        return view('anggotaKelas.index');
     }
 
     public function edit(string $id)
     {
-        $indikator = Indikator::findOrFail($id);
-        return view('indikators.index', compact('indikator'));
+        if (!auth()->user()->hasRole('admin')) {
+            abort(403, 'Akses ditolak. Hanya Admin yang dapat mengubah data.');
+        }
+
+        return view('anggotaKelas.index', compact('AnggotaKelas'));
     }
 
-    public function update(IndikatorUpdateRequest $request, Indikator $indikator)
+    public function update(AnggotaKelasUpdateRequest $request, $id)
     {
-        $indikator->update($request->validated());
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat mengubah data.');
+        }
+
+        $anggotaKelas = AnggotaKelas::findOrFail($id);
+        $anggotaKelas->update($request->validated());
 
         return redirect()
-            ->route('indikator.index')
-            ->with('success', 'Indikator berhasil diperbarui.');
+            ->route('anggota-kelas.index')
+            ->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-    public function destroy(Indikator $indikator)
+    public function destroy($id)
     {
-        $indikator->delete();
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menghapus data.');
+        }
+
+        $anggotaKelas = AnggotaKelas::findOrFail($id);
+        $anggotaKelas->delete();
 
         return redirect()
-            ->route('indikator.index')
-            ->with('success', 'Indikator Berhasil Dihapus!');
-    }
-
-    public function duplicateFromPreviousSemester()
-    {
-        $semesters = TahunAjaran::latest()->take(2)->get();
-
-        if ($semesters->count() < 2) {
-            return redirect()->route('indikator.index')
-                ->with('error', 'Minimal harus ada 2 data semester (Tahun Ajaran) di sistem untuk melakukan penyalinan.');
-        }
-
-        $semesterBaru = $semesters[0];
-        $semesterLama = $semesters[1];
-
-        $indikatorSudahAda = Indikator::where('tahun_ajaran_id', $semesterBaru->id)->exists();
-        if ($indikatorSudahAda) {
-            return redirect()->route('indikator.index')
-                ->with('warning', 'Gagal menyalin. Data kelas untuk semester saat ini sudah ada.');
-        }
-
-        $indikatorLama = Indikator::where('tahun_ajaran_id', $semesterLama->id)->get();
-
-        if ($indikatorLama->isEmpty()) {
-            return redirect()->route('indikator.index')
-                ->with('warning', 'Tidak ada data kelas di semester sebelumnya untuk disalin.');
-        }
-
-        DB::transaction(function () use ($indikatorLama, $semesterBaru) {
-            $dataInsert = [];
-            $now = now();
-
-            foreach ($indikatorLama as $item) {
-                $dataInsert[] = [
-                    'tahun_ajaran_id' => $semesterBaru->id,
-                    'capaian_perkembangan_id' => $item->capaian_perkembangan_id,
-                    'kode'                    => $item->kode,
-                    'nama_indikator'          => $item->nama_indikator,
-                    'jenjang'                 => $item->jenjang,
-                    'created_at'      => $now,
-                    'updated_at'      => $now,
-                ];
-            }
-
-            Indikator::insert($dataInsert);
-        });
-
-        return redirect()->route('indikator.index')
-            ->with('success', 'Data kelas berhasil disalin dari semester sebelumnya.');
-    }
-
-    public function importPrevious(IndikatorService $service)
-    {
-        $result = $service->duplicateFromPreviousSemester();
-
-        return redirect()->route('indikator.index')
-        ->with($result['status'], $result['message']);
+            ->route('anggota-kelas.index')
+            ->with('success', 'Siswa berhasil dihapus dari anggota kelas!');
     }
 }
