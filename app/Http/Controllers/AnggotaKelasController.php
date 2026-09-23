@@ -17,9 +17,10 @@ class AnggotaKelasController extends Controller
     {
         $user = auth()->user();
         $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         if ($user->hasRole('guru')) {
-            $tahunAjaranAktif = TahunAjaran::latest()->first();
+
 
             $guruId = $user->guru?->id;
 
@@ -30,7 +31,9 @@ class AnggotaKelasController extends Controller
             $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
             $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
         } else {
-            $kelas = Kelas::orderBy('rombel', 'asc')->get();
+
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)->orderBy('rombel', 'asc')->get();
+
         }
 
         $anggotaKelas = $anggotaKelasQuery->get();
