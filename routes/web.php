@@ -56,12 +56,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::resource('kriteria', KriteriaPenilaianController::class)->parameters(['kriteria' => 'kriteriapenilaian']);
         Route::resource('karakter', KarakterController::class)->except(['show']);
         Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
+        Route::post('/indikator/duplicate', [IndikatorController::class, 'duplicateFromPreviousSemester'])->name('indikator.duplicate');
         Route::resource('indikator', IndikatorController::class);
     });
 
     Route::middleware(['role:admin|guru'])->group(function () {
         Route::resource('anggota-kelas', AnggotaKelasController::class)->parameters([
-            'anggota-kela' => 'anggota-kelas'
+            'anggota-kelas' => 'anggotaKelas'
         ]);
         Route::resource('pdf', PdfController::class)->only(['show', 'index']);
     });
