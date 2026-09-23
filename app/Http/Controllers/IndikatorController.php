@@ -11,11 +11,11 @@ class IndikatorController extends Controller
 {
     public function index()
     {
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
         $capaians = CapaianPerkembangan::all();
-        $indikators = Indikator::all();
-        $tahunAjarans = TahunAjaran::all();
+        $indikators = Indikator::with(['capaianPerkembangan', 'tahunAjaran'])->whereTahunAjaranId($tahunAjaranAktif->id)->get();
 
-        return view('indikators.index', compact('capaians', 'indikators', 'tahunAjarans'));
+        return view('indikators.index', compact('capaians', 'indikators', 'tahunAjaranAktif'));
     }
 
     public function create()

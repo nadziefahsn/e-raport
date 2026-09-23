@@ -1,4 +1,3 @@
-<!-- Modal Edit Anggota Kelas -->
 @foreach($anggotaKelas as $item)
 <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -55,7 +54,6 @@
 </div>
 @endforeach
 
-<!-- JavaScript Autofill Dynamic Update untuk Modal Edit Loop -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const editSelects = document.querySelectorAll('.select-nis-edit');
