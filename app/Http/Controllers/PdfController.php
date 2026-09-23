@@ -20,6 +20,7 @@ class PdfController extends Controller
     public function index(Request $request)
     {
         $anggotaKelasId = $request->input('anggota_id');
+        $tahunAjarans = TahunAjaran::latest()->first();
 
         if (!$anggotaKelasId) {
             $anggotaKelas = AnggotaKelas::first();
@@ -51,8 +52,9 @@ class PdfController extends Controller
         $sekolah = Sekolah::first();
         $karakters = Karakter::all();
         $kehadirans = Kehadiran::all();
-        $tahun_ajarans = TahunAjaran::all();
+        $tahun_ajarans = TahunAjaran::all(); 
         $kriterias = KriteriaPenilaian::all();
+        
         $anggotaKelas = AnggotaKelas::with([
             'siswa',
             'kelas.tahunAjaran',
@@ -84,12 +86,17 @@ class PdfController extends Controller
         }
 
         $kelasId = $anggotaKelas->kelas_id;
+        
         $tahunAjaranId = $anggotaKelas->kelas->tahun_ajaran_id ?? null;
 
-        $capaianPerkembangan = CapaianPerkembangan::with(['indikators' => function ($query) use ($jenjangTujuan) {
+        $capaianPerkembangan = CapaianPerkembangan::with(['indikators' => function ($query) use ($jenjangTujuan, $tahunAjaranId) {
             $query->when($jenjangTujuan, function ($q) use ($jenjangTujuan) {
                 $q->where('jenjang', $jenjangTujuan);
-            })->with('indikatorCapaian');
+            })
+            ->when($tahunAjaranId, function ($q) use ($tahunAjaranId) {
+                $q->where('tahun_ajaran_id', $tahunAjaranId);
+            })
+            ->with('indikatorCapaian');
         }])->get();
 
         $daftarCapaian = [];

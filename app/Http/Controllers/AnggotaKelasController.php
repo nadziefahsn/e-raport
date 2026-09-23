@@ -20,20 +20,22 @@ class AnggotaKelasController extends Controller
         $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         if ($user->hasRole('guru')) {
+        $guruId = $user->guru?->id;
 
+        $kelasIds = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where(function ($query) use ($guruId) {
+                $query->where('wali_kelas_id', $guruId)
+                      ->orWhere('pendamping_id', $guruId);
+            })
+            ->pluck('id');
 
-            $guruId = $user->guru?->id;
-
-            $kelasIds = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)->whereTahunAjaranId($tahunAjaranAktif->id)
-                ->pluck('id');
-
-            $anggotaKelasQuery->whereIn('kelas_id', $kelasIds);
+            $anggotaKelasQuery = AnggotaKelas::whereIn('kelas_id', $kelasIds);
             $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
         } else {
-
             $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)->orderBy('rombel', 'asc')->get();
-
+            $anggotaKelasQuery = AnggotaKelas::whereHas('kelas', function ($query) use ($tahunAjaranAktif) {
+                $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+            });
         }
 
         $anggotaKelas = $anggotaKelasQuery->get();
