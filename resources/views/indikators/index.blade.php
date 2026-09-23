@@ -23,9 +23,9 @@
                     <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
                 </button>
             </form>
-            
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
-                <i class="fas fa-plus mr-1"></i> 
+            <div class="card-tools ml-auto">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
+                <i class="fas fa-plus mr-1"></i>
             </button>
         </div>
     </div>
@@ -66,7 +66,7 @@
                     <td>{{ $item->capaianPerkembangan->capaian_perkembangan ?? '-' }}</td>
                     <td>{{ $item->nama_indikator }}</td>
                     <td>{{ $item->jenjang ?? '-' }}</td>
-                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }}</td>
+                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }} {{ $item->tahunAjaran?->semester == 'Ganjil' || $item->tahunAjaran?->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" 

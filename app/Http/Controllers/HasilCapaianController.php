@@ -36,7 +36,6 @@ class HasilCapaianController extends Controller
         ];
 
         $keyword = $keywordMapping[$kategoriSlug]?? 'aqidah';
-
         $capaianIds = DB::table('capaians')
             ->where('capaian_perkembangan', 'like', '%'. $keyword . '%')
             ->pluck('id')
@@ -93,7 +92,7 @@ class HasilCapaianController extends Controller
                 })
                 ->with('indikator')
                 ->get();
-
+                
             $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
                 ->with(['siswa', 'kelas', 'hasilCapaian'])
                 ->get();
