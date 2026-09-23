@@ -19,7 +19,6 @@ class AnggotaKelasStoreRequest extends FormRequest
             'nis_id' => [
                 'required',
                 'exists:siswas,nis',
-                'unique:anggota_kelas,nis_id', 
             ],
             'kelas_id' => [
                 'required',

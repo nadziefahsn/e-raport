@@ -10,6 +10,7 @@ use App\Models\Indikator;
 use App\Models\User;
 use App\Http\Requests\HasilCapaianUpdateRequest;
 use App\Models\CapaianPerkembangan;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,6 +51,7 @@ class HasilCapaianController extends Controller
 
     public function index(Request $request, $slug = null)
     {
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
         $user = auth()->user();
         
         $catInfo = $this->getCategoryDetails($slug);
@@ -62,12 +64,18 @@ class HasilCapaianController extends Controller
         $guruId = null;
 
         if ($user->hasRole('guru')) {
-            $guruId = $user->guru?->id;
-            $kelas = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
+        $guruId = $user->guru?->id;
+
+        $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                          ->orWhere('pendamping_id', $guruId);    
+                })
                 ->first();
         } else {
-            $kelas = Kelas::orderBy('rombel', 'asc')->first();
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->first();
         }
 
         if ($kelas) {
@@ -77,6 +85,7 @@ class HasilCapaianController extends Controller
 
             $masterIndikator = Indikator::where('jenjang', $jenjangTujuan)
                 ->whereIn('capaian_perkembangan_id', $catInfo['ids'])
+                ->whereTahunAjaranId($tahunAjaranAktif->id)
                 ->get();
 
             foreach ($masterIndikator as $master) {
@@ -87,10 +96,12 @@ class HasilCapaianController extends Controller
             }
 
             $rencanaIndikator = IndikatorCapaian::where('kelas_id', $kelas->id)
-                ->whereHas('indikator', function($q) use ($catInfo) {
-                    $q->whereIn('capaian_perkembangan_id', $catInfo['ids']);
+                ->whereHas('indikator', function($q) use ($catInfo, $tahunAjaranAktif) {
+                    $q->whereIn('capaian_perkembangan_id', $catInfo['ids'])
+                      ->whereTahunAjaranId($tahunAjaranAktif->id);
+
                 })
-                ->with('indikator')
+                ->with('indikator') 
                 ->get();
                 
             $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)

@@ -6,6 +6,7 @@ use App\Models\IndikatorCapaian;
 use App\Http\Requests\IndikatorCapaianStoreRequest;
 use App\Models\Indikator;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +50,7 @@ class IndikatorCapaianController extends Controller
 
     public function index(Request $request, $slug = null)
     {
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
         $user = auth()->user();
         $catInfo = $this->getCategoryDetails($slug);
         $namaKategori = $catInfo['name'];
@@ -59,12 +61,18 @@ class IndikatorCapaianController extends Controller
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;
-            $kelas = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
+
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                        ->orWhere('pendamping_id', $guruId);
+                })
                 ->first();
         } else {
-            $kelas = Kelas::orderBy('rombel', 'asc')->first();
-        }
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                ->orderBy('rombel', 'asc')
+                ->first();
+            }
 
         if (!$kelas) {
             return view('indikatorCapaians.index', [
@@ -87,23 +95,25 @@ class IndikatorCapaianController extends Controller
 
         $masterIndikator = Indikator::where('jenjang', $jenjangTujuan)
             ->whereIn('capaian_perkembangan_id', $catInfo['ids'])
+            ->whereTahunAjaranId($tahunAjaranAktif->id)
             ->get();
 
         foreach ($masterIndikator as $master) {
             IndikatorCapaian::firstOrCreate([
-                'kelas_id'     => $kelas->id,
-                'indikator_id' => $master->id,
+                'kelas_id'        => $kelas->id,
+                'indikator_id'    => $master->id,
             ]);
         }
 
         $rencanaIndikator = IndikatorCapaian::where('kelas_id', $kelas->id)
-            ->whereHas('indikator', function($query) use ($catInfo) {
-                $query->whereIn('capaian_perkembangan_id', $catInfo['ids']);
+            ->whereHas('indikator', function($query) use ($catInfo, $tahunAjaranAktif) {
+                $query->whereIn('capaian_perkembangan_id', $catInfo['ids'])
+                      ->whereTahunAjaranId($tahunAjaranAktif->id);
             })
             ->with('indikator')
             ->get();
 
-        return view('indikatorCapaians.index', compact('rencanaIndikator', 'kelas', 'namaKategori', 'guruId', 'kategori'));
+        return view('indikatorCapaians.index', compact('rencanaIndikator', 'kelas', 'namaKategori', 'guruId', 'kategori', 'tahunAjaranAktif'));
     }
     
     public function create()
