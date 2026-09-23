@@ -14,14 +14,13 @@ class IndikatorController extends Controller
     public function index()
     {
         $tahunAjaranAktif = TahunAjaran::latest()->first();
-        $tahunAjarans = TahunAjaran::all();
         $capaians = CapaianPerkembangan::all();
 
         $indikators = $tahunAjaranAktif 
             ? Indikator::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get() 
             : Indikator::all();
 
-        return view('indikators.index', compact('capaians', 'indikators', 'tahunAjaranAktif', 'tahunAjarans'));
+        return view('indikators.index', compact('capaians', 'indikators', 'tahunAjaranAktif'));
     }
 
     public function create()
