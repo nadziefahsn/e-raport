@@ -47,7 +47,7 @@
 
                                 <td>
                                     <select name="kesehatan_gigi[]" class="form-control">
-                                        <option value="" {{ !$item->kesehatanGigi ? 'selected' : '' }}>-- Pilih Kondisi --</option>
+                                        <option value="" {{ !$item->kesehatanGigi ? 'selected' : '' }}></option>
                                         <option value="Baik" {{ ($item->kesehatanGigi->kesehatan_gigi ?? '') == 'Baik' ? 'selected' : '' }}>Baik</option>
                                         <option value="Kurang baik" {{ ($item->kesehatanGigi->kesehatan_gigi ?? '') == 'Kurang baik' ? 'selected' : '' }}>Kurang baik</option>
                                     </select>
