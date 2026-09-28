@@ -15,7 +15,7 @@
                         <label class="form-label fw-bold">Tahun Pelajaran</label> 
                         <input type="text" name="tahun_ajaran" class="form-control rounded-3" value="{{ $item->tahun_ajaran }}" placeholder="Masukkan tahun pelajaran..." required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" 
                         <label class="form-label fw-bold">Semester</label>
                         <div class="mt-2">
                             <label class="mr-4">

@@ -41,40 +41,29 @@ class KehadiranController extends Controller
                 ->get();
         }
 
-        foreach ($data_anggota_kelas as $anggota) {
-            $anggota->sakit = $anggota->kehadiran->sakit ?? 0;
-            $anggota->izin = $anggota->kehadiran->izin ?? 0;
-            $anggota->tanpa_keterangan = $anggota->kehadiran->tanpa_keterangan ?? 0;
-        }
-
         return view('kehadirans.index', compact('data_anggota_kelas'));
     }
 
-  
     public function create()
     {
         
     }
 
-   
     public function store(Request $request)
     {
       
     }
 
-   
     public function show(Kehadiran $kehadiran)
     {
         
     }
 
-   
     public function edit(Kehadiran $kehadiran)
     {
         
     }
 
-   
     public function update(KehadiranUpdateRequest $request)
     {
         $validated = $request->validated();
@@ -88,17 +77,17 @@ class KehadiranController extends Controller
         }
 
         foreach ($validated['anggota_kelas_id'] as $index => $anggotaId) {
-        Kehadiran::updateOrCreate(
-            [
-                'anggota_kelas_id' => $anggotaId,
-                'tahun_ajaran_id'  => $tahunAjaranAktif->id, 
-            ],
-            [
-                'sakit'            => $validated['sakit'][$index] ?? 0,
-                'izin'             => $validated['izin'][$index] ?? 0,
-                'tanpa_keterangan' => $validated['tanpa_keterangan'][$index] ?? 0,
-            ]
-        );
+            Kehadiran::updateOrCreate(
+                [
+                    'anggota_kelas_id' => $anggotaId,
+                    'tahun_ajaran_id'  => $tahunAjaranAktif->id, 
+                ],
+                [
+                    'sakit'            => $validated['sakit'][$index] ?? 0,
+                    'izin'             => $validated['izin'][$index] ?? 0,
+                    'tanpa_keterangan' => $validated['tanpa_keterangan'][$index] ?? 0,
+                ]
+            );
         }
 
         return redirect()
@@ -106,7 +95,6 @@ class KehadiranController extends Controller
             ->with('success', 'Data kehadiran berhasil disimpan!');
     }
 
-    
     public function destroy(Kehadiran $kehadiran)
     {
         
