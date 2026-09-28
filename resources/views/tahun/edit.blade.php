@@ -15,7 +15,7 @@
                         <label class="form-label fw-bold">Tahun Pelajaran</label> 
                         <input type="text" name="tahun_ajaran" class="form-control rounded-3" value="{{ $item->tahun_ajaran }}" placeholder="Masukkan tahun pelajaran..." required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" 
                         <label class="form-label fw-bold">Semester</label>
                         <div class="mt-2">
                             <label class="mr-4">
@@ -27,18 +27,6 @@
                                 <span class="ml-1">Semester Genap</span>
                             </label>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Kepala Sekolah</label>
-                        <input type="text" name="kepala_sekolah" class="form-control" value="{{ $item->kepala_sekolah }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">NUPTK</label>
-                        <input type="text" name="nuptk" class="form-control" value="{{ $item->nuptk }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Titimangsa</label>
-                        <input type="date" name="titimangsa" class="form-control" value="{{ $item->titimangsa }}" required>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pb-4 px-4">

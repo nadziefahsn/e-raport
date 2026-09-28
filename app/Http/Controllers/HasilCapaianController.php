@@ -16,38 +16,40 @@ use Illuminate\Support\Facades\DB;
 class HasilCapaianController extends Controller
 {
     
-    private function getCategoryDetails($segment = null)
-    { 
-        if (!$segment) {
-            $segment = request()->segment(3) ?? 'aqidah';
-        }
-
-        $kategoriSlug = str_replace('indikator-', '', $segment);
-
-        $keywordMapping = [
-            'aqidah'              => 'aqidah',
-            'ibadah'              => 'ibadah',
-            'akhlaq'              => 'akhlaq',
-            'disiplin'            => 'disiplin dan kendali diri',
-            'al-quran'            => 'al-quran',
-            'keagamaan'           => 'wawasan keagamaan',
-            'kesehatan-kebugaran' => 'kesehatan dan kebugaran',
-            'life-skill'          => 'life skill dan jiwa wirausaha',
-        ];
-
-        $keyword = $keywordMapping[$kategoriSlug]?? 'aqidah';
-
-        $capaianIds = DB::table('capaians')
-            ->where('capaian_perkembangan', 'like', '%'. $keyword . '%')
-            ->pluck('id')
-            ->toArray();
-
-            return [
-                'slug' => $kategoriSlug,
-                'ids' => $capaianIds,
-                'name' => ucwords(str_replace('-','', $kategoriSlug))
-            ];
+   private function getCategoryDetails($segment = null)
+{ 
+    if (!$segment) {
+        $segment = request()->segment(3) ?? 'aqidah';
     }
+
+    $kategoriSlug = str_replace('indikator-', '', $segment);
+ 
+    // Disesuaikan persis 100% dengan isi tabel capaian kamu
+    $keywordMapping = [
+        'aqidah'              => 'Aqidah',
+        'ibadah'              => 'Ibadah',
+        'akhlaq'              => 'Akhlak',
+        'disiplin'            => 'Disiplin',
+        'al-quran'            => 'Al-Quran',
+        'keagamaan'           => 'Keagamaan',
+        'kesehatan-kebugaran' => 'Kesehatan',
+        'life-skill'          => 'Life Skill',
+    ];
+
+    $keyword = $keywordMapping[$kategoriSlug] ?? $kategoriSlug;
+
+    // Pakai LOWER agar tidak masalah huruf besar / kecil
+    $capaianIds = DB::table('capaians')
+        ->whereRaw('LOWER(capaian_perkembangan) LIKE ?', ['%' . strtolower($keyword) . '%'])
+        ->pluck('id')
+        ->toArray();
+
+    return [
+        'slug' => $kategoriSlug,
+        'ids'  => $capaianIds,
+        'name' => ucwords(str_replace('-', ' ', $kategoriSlug))
+    ];
+}
 
     public function index(Request $request, $slug = null)
     {
