@@ -13,15 +13,15 @@ use App\Models\TahunAjaran;
 
 class NilaiKarakterController extends Controller
 {
-
     public function index(Request $request)
     {
         $user = auth()->user();
         $kelas = null;
         $anggotaKelas = collect();
-        $karakters = Karakter::all(); 
-        $nilaiExisting = [];
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+
+        $karakters = Karakter::where('tahun_ajaran_id', $tahunAjaranAktif?->id)->get(); 
+        $nilaiExisting = [];
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;
@@ -36,24 +36,20 @@ class NilaiKarakterController extends Controller
             $kelasIds = $kelas->pluck('id');
 
             $anggotaKelas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
-                ->with(['siswa', 'kelas'])
+                ->with(['siswa', 'kelas', 'nilaiKarakter'])
                 ->get();
         } else {
             $kelas = Kelas::orderBy('rombel', 'asc')->get();
-            $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas'])->get();
-
-            $karakters = AnggotaKelas::with(['siswa', 'kelas', 'karakter'])->get();
+            $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas', 'nilaiKarakter'])->get();
         }
         
         return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'karakters', 'nilaiExisting'));
     }
 
-
     public function create()
     {
-
+        
     }
-
 
     public function store(Request $request)
     {

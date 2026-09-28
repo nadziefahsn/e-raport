@@ -9,23 +9,21 @@
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item active">Karakter</li>
     </ol>
-</div>@stop
+</div>
+@stop
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="icon fas fa-check"></i> {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
 <div class="card">
     <div class="card-header d-flex align-items-center">
-        <h3 class="card-title mb-0"><i class="fas fa-star mr-2"></i>Data Karakter</h3>
-        <div class="card-tools ml-auto">
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKarakter">
+        <h3 class="card-title mb-0"><i class="fas fa-clipboard-list mr-2"></i>Data Karakter</h3>
+        <div class="card-tools ml-auto d-flex align-items-center gap-2">
+            <form action="{{ route('karakter.duplicate') }}" method="POST" class="m-2" onsubmit="return confirm('Apakah Anda yakin ingin menyalin kelas dari semester sebelumnya?')">
+                @csrf
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">
+                    <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
+                </button>
+            </form>
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKarakter">
                 <i class="fas fa-plus"></i> 
             </button>
         </div>
@@ -36,6 +34,7 @@
         ['label' => 'No', 'width' => 5],
         ['label' => 'Kode', 'width' => 15],
         'Karakter',
+        'Tahun Ajaran',
         ['label' => 'Aksi', 'no-export' => true, 'width' => 10, 'className' => 'text-center'],
     ];
 
@@ -43,7 +42,7 @@
         'order' => [[0, 'asc']],
         'searching' => true,    
         'lengthChange' => true, 
-        'columns' => [ null, null, null,
+        'columns' => [ null, null, null, null,
             ['orderable' => false] 
         ],
     ];
@@ -57,8 +56,9 @@
                 @endphp
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td><span class="badge badge-secondary">{{ $item->id }}</span></td>
+                    <td><span class="badge badge-secondary">{{ $item->kode }}</span></td>
                     <td>{{ $item->karakter }}</td>
+                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }} {{ $item->tahunAjaran?->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit" data-toggle="modal" data-target="#editModal{{ $slugId }}">

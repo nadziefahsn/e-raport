@@ -53,6 +53,7 @@
             null,
             ['orderable' => false]
         ],
+        
     ];
     @endphp
 

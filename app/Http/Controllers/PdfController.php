@@ -69,6 +69,10 @@ class PdfController extends Controller
             'kondisiTubuh'
         ])->findOrFail($decryptedId);
 
+        $tahunAjaranId = $anggotaKelas->kelas->tahun_ajaran_id ?? null;
+
+        $karakters = Karakter::where('tahun_ajaran_id', $tahunAjaranId)->get();
+
         $siswa = $anggotaKelas->siswa;
 
         $namaKelas = $anggotaKelas->kelas->rombel ?? '';

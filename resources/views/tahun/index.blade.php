@@ -30,7 +30,7 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-calendar-alt mr-2"></i>Data Tahun Pelajaran</h3>
         <div class="card-tools ml-auto">
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#exampleModal">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
