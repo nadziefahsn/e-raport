@@ -46,7 +46,7 @@
                                 @foreach($karakters as $karakter)
                                     <th class="text-center" data-toggle="tooltip" data-placement="bottom"
                                         title="{{ $karakter->karakter ?? 'Tidak ada deskripsi' }}">
-                                        {{ $karakter->id ?? '-' }}
+                                        {{ $karakter->kode ?? '-' }}
                                     </th>
                                 @endforeach
                             </tr>

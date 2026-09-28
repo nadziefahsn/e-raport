@@ -24,7 +24,7 @@
                 </button>
             </form>
 
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKelas">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKelas">
                 <i class="fas fa-plus"></i>
             </button>
         </div>

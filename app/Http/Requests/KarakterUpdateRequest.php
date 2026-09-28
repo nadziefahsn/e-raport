@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Models\TahunAjaran;
 
 class KarakterUpdateRequest extends FormRequest
 {
@@ -13,15 +15,31 @@ class KarakterUpdateRequest extends FormRequest
     {
         return true;
     }
-    
+
     public function rules(): array
     {
-        $id = $this->route('karakter');
+        $karakter = $this->route('karakter');
         
-        $karakterId = $id instanceof \App\Models\Karakter ? $id->id : $id;
+        $karakterId = $karakter instanceof \App\Models\Karakter ? $karakter->id : $karakter;
+        
+        if ($karakter instanceof \App\Models\Karakter) {
+            $tahunAjaranId = $karakter->tahun_ajaran_id;
+        } else {
+            $tahunAjaranAktif = TahunAjaran::latest()->first();
+            $tahunAjaranId = $tahunAjaranAktif ? $tahunAjaranAktif->id : null;
+        }
 
         return [
-            'id' => ['required', 'string', 'max:10', 'unique:karakters,id,' . $karakterId . ',id'],
+            'kode' => [
+                'required',
+                'string',
+                'max:10',
+                Rule::unique('karakters', 'kode')
+                    ->where(function ($query) use ($tahunAjaranId) {
+                        return $query->where('tahun_ajaran_id', $tahunAjaranId);
+                    })
+                    ->ignore($karakterId),
+            ],
             'karakter' => ['required', 'string', 'max:255'],
         ];
     }
@@ -29,7 +47,7 @@ class KarakterUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id.unique' => 'Kode karakter sudah tersedia, gunakan kode lain.',
+            'kode.unique' => 'Kode karakter sudah digunakan pada tahun ajaran ini.',
         ];
     }
 }

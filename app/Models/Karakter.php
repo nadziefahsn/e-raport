@@ -10,7 +10,13 @@ class Karakter extends Model
     protected $keyType = 'string';
     
     protected $fillable = [
-        'id',
+        'kode',
         'karakter',
+        'tahun_ajaran_id',
     ];
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
+    }
 }

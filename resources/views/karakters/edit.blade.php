@@ -19,18 +19,34 @@
                 <div class="modal-body p-4">
                     @if($isThisModalError)
                         <div class="alert alert-danger py-2 mb-3">
-                            <small><i class="fas fa-ban mr-1"></i> {{ $errors->first('id') }}</small>
+                            <small><i class="fas fa-ban mr-1"></i> {{ $errors->first('kode') }}</small>
                         </div>
                     @endif
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Kode Karakter</label>
-                        <input type="text" name="id" class="form-control rounded-3 @error('id') is-invalid @enderror" value="{{ $isThisModalError ? old('id') : $item->id }}" maxlength="10" required>
+                        <input type="text" name="kode" class="form-control rounded-3 @error('kode') is-invalid @enderror" value="{{ $isThisModalError ? old('kode') : $item->kode }}" maxlength="10" required>
                         <small class="text-muted">Maksimal 10 karakter (contoh: 1.1)</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Karakter</label>
                         <input type="text" name="karakter" class="form-control rounded-3 @error('karakter') is-invalid @enderror" value="{{ $isThisModalError ? old('karakter') : $item->karakter }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tahun Ajaran</label>
+                        <select name="tahun_ajaran_id" class="form-control rounded-3" required>
+                            @if($item->tahunAjaran)
+                                <option value="{{ $item->tahun_ajaran_id }}" selected>
+                                    {{ $item->tahunAjaran->tahun_ajaran }} - {{ $item->tahunAjaran->semester == '1' || $item->tahunAjaran->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                                </option>
+                            @elseif($tahunAjaranAktif)
+                                <option value="{{ $tahunAjaranAktif->id }}" selected>
+                                    {{ $tahunAjaranAktif->tahun_ajaran }} - {{ $tahunAjaranAktif->semester == '1' || $tahunAjaranAktif->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                                </option>
+                            @else
+                                <option value="" disabled selected>-- Belum Ada Data Tahun Ajaran --</option>
+                            @endif
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pb-4 px-4">

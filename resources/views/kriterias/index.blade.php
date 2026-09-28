@@ -17,7 +17,7 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-layer-group mr-2"></i>Kriteria Penilaian</h3>
         <div class="card-tools ml-auto">
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKriteria">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahKriteria">
                 <i class="fas fa-plus mr-1"></i>
             </button>
         </div>

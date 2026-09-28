@@ -22,7 +22,7 @@
         <h3 class="card-title mb-0"><i class="fas fa-user-graduate mr-2"></i>Data Peserta Didik</h3>
 
         <div class="card-tools ml-auto">
-            <button type="button" class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahSiswa">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahSiswa">
                 <i class="fas fa-plus"></i>
             </button>
         </div>

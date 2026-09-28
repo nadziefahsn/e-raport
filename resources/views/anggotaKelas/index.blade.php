@@ -18,7 +18,7 @@
         <h3 class="card-title mb-0"><i class="fas fa-user-graduates mr-2"></i>Data Anggota Kelas</h3>
         <div class="card-tools ml-auto">
             @hasrole('admin')
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahAnggotaKelas">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal"data-target="#modalTambahAnggotaKelas">
                 <i class="fas fa-plus mr-1"></i>
             </button>
             @endhasrole
