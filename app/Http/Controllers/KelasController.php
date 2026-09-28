@@ -14,10 +14,14 @@ class KelasController extends Controller
    
     public function index()
     {
-        $tahunAjaranAktif = TahunAjaran::latest()->first();
-        $kelas = Kelas::with(['waliKelas','pendamping','tahunAjaran'])->whereTahunAjaranId($tahunAjaranAktif->id)->get();
-        $gurus = Guru::all();
         $tahunAjarans = TahunAjaran::latest()->first();
+        if ($tahunAjarans)
+        {$kelas = Kelas::with(['waliKelas','pendamping','tahunAjaran'])->whereTahunAjaranId($tahunAjarans->id)->get();
+        $gurus = Guru::all();}
+        else {
+            return redirect()
+                ->route('tahun_ajaran.index');
+        }
         
         return view('kelas.index', compact('kelas','gurus','tahunAjarans'));
     }
