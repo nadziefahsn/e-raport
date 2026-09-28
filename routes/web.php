@@ -30,6 +30,9 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
     return view('auth.login');
 });
 
