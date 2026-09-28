@@ -123,13 +123,8 @@
                 </div>
             </div>
             <div class="form-group row">
-                    <div class="col-md-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="perbarui" name="perbarui">
-                        <label class="form-check-label" for="perbarui">
-                            Perbarui data profil sekolah
-                        </label> 
-                    </div>
+                <label class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
                     <button type="submit" class="btn btn-primary mt-2">
                         Simpan
                     </button>
