@@ -133,7 +133,7 @@ class PdfController extends Controller
         $namaKelasClean = $namaKelas ?: 'Kelas';
         $namaSiswa = $siswa->nama_siswa ?? 'Siswa';
         
-        $fileName = 'Penilaian Karakter & Biodata (' . $jenjangTujuan . ') - ' . trim($namaKelasClean) . '_' . trim($namaSiswa) . '.pdf';
+        $fileName = trim($namaKelasClean) . '_' . trim($namaSiswa) . '.pdf';
 
         return response($pdf->output(), 200, [
             'Content-Type' => 'application/pdf',
