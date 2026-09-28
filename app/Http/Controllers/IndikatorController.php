@@ -79,12 +79,6 @@ class IndikatorController extends Controller
         $semesterBaru = $semesters[0];
         $semesterLama = $semesters[1];
 
-        $indikatorSudahAda = Indikator::where('tahun_ajaran_id', $semesterBaru->id)->exists();
-        if ($indikatorSudahAda) {
-            return redirect()->route('indikator.index')
-                ->with('warning', 'Gagal menyalin. Data kelas untuk semester saat ini sudah ada.');
-        }
-
         $indikatorLama = Indikator::where('tahun_ajaran_id', $semesterLama->id)->get();
 
         if ($indikatorLama->isEmpty()) {
