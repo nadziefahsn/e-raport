@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('karakters', function (Blueprint $table) {
-            $table->string('id', 10)->primary();
+            $table->id();
+            $table->string('kode');
             $table->string('karakter');
+            $table->foreignId('tahun_ajaran_id')->constrained('tahun_ajarans')->onDelete('cascade');
             $table->timestamps();
+            
         });
     }
 
