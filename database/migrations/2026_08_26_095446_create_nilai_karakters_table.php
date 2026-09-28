@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('nilai_karakters', function (Blueprint $table) {
             $table->id();
             $table->foreignId('anggota_kelas_id')->constrained('anggota_kelas')->cascadeOnDelete();
-            $table->string('karakter_id', 10);
+            $table->string('karakter_id');
             $table->foreign('karakter_id')->references('id')->on('karakters')->cascadeOnDelete();
             $table->enum('nilai', ['T', 'TT'])->nullable();
             $table->timestamps();
