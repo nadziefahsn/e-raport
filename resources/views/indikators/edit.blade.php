@@ -28,7 +28,7 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Capaian Perkembangan</label>
                         <select name="capaian_perkembangan_id" class="form-control rounded-3" required>
-                            <option value="">-- Pilih Capaian Perkembangan --</option>
+                            <option value="" disabled>-- Pilih Capaian Perkembangan --</option>
                             @foreach($capaians as $capaian)
                                 <option value="{{ $capaian->id }}" {{ old('capaian_perkembangan_id', $item->capaian_perkembangan_id) == $capaian->id ? 'selected' : '' }}>
                                     {{ $capaian->capaian_perkembangan }}
@@ -60,12 +60,17 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Tahun Ajaran</label>
                         <select name="tahun_ajaran_id" class="form-control rounded-3" required>
-                            <option value="" disabled>-- Pilih Tahun Ajaran --</option>
-                            @foreach($tahunAjarans as $ta)
-                                <option value="{{ $ta->id }}" {{ old('tahun_ajaran_id', $item->tahun_ajaran_id) == $ta->id ? 'selected' : '' }}>
-                                    {{ $ta->tahun_ajaran }} - {{ $ta->semester == '1' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                            @if($item->tahunAjaran)
+                                <option value="{{ $item->tahun_ajaran_id }}" selected>
+                                    {{ $item->tahunAjaran->tahun_ajaran }} - {{ $item->tahunAjaran->semester == '1' || $item->tahunAjaran->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
                                 </option>
-                            @endforeach
+                            @elseif($tahunAjaranAktif)
+                                <option value="{{ $tahunAjaranAktif->id }}" selected>
+                                    {{ $tahunAjaranAktif->tahun_ajaran }} - {{ $tahunAjaranAktif->semester == '1' || $tahunAjaranAktif->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                                </option>
+                            @else
+                                <option value="" disabled selected>-- Belum Ada Data Tahun Ajaran --</option>
+                            @endif
                         </select>
                     </div>
                 </div>

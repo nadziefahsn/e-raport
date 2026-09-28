@@ -22,7 +22,6 @@
             <form action="{{ route('anggota-kelas.store') }}" method="post">
                 @csrf
                 <div class="modal-body p-4">
-                    <!-- Dropdown Pilih NIS -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">NIS Siswa</label>
                         <select name="nis_id" id="nis_id_create" class="form-control rounded-3" required>
@@ -35,13 +34,11 @@
                         </select>
                     </div>
 
-                    <!-- Input Nama Siswa (Autofill & Readonly) -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Nama Siswa</label>
                         <input type="text" id="nama_siswa_create" class="form-control rounded-3 bg-light" placeholder="Nama akan terisi otomatis" readonly>
                     </div>
 
-                    <!-- Dropdown Pilih Kelas -->
                     <div class="mb-3">
                         <label class="form-label fw-bold">Kelas / Rombel</label>
                         <select name="kelas_id" class="form-control rounded-3" required>
@@ -64,7 +61,6 @@
     </div>
 </div>
 
-<!-- JavaScript Autofill Nama Siswa -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const nisSelect = document.getElementById('nis_id_create');
@@ -76,10 +72,8 @@
             namaInput.value = namaSiswa;
         }
 
-        // Jalankan saat dropdown NIS berubah
         nisSelect.addEventListener('change', updateNamaSiswa);
 
-        // Jalankan otomatis saat pertama kali dibuka (jika ada nilai old)
         if (nisSelect.value) {
             updateNamaSiswa();
         }

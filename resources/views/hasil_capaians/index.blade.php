@@ -59,7 +59,7 @@
                                     @endphp
                                     <td class="text-center">
                                         <select name="nilai[{{ $item->id }}][{{ $rencana->indikator_id }}]" class="form-control text-center form-control-sm">
-                                            <option value="" {{ $selectedValue == '' ? 'selected' : '' }}>-</option>
+                                            <option value="" {{ $selectedValue == '' ? 'selected' : '' }}></option>
                                             <option value="T" {{ $selectedValue == 'T' ? 'selected' : '' }}>Tampak</option>
                                             <option value="TT" {{ $selectedValue == 'TT' ? 'selected' : '' }}>Tidak Tampak</option>
                                         </select>

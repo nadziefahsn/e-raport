@@ -23,8 +23,8 @@
         <div style="width: 100%; margin: 0 auto;">
             <h3 style="line-height: 1.5; font-size: 20px; font-weight: bold; margin: 0; letter-spacing: 0.5px; text-transform: uppercase;">
                 LAPORAN PERKEMBANGAN SISWA<br>
-                USIA {{ $anggotaKelas->kelas->tingkatan ?? '5-6 TAHUN' }}<br>
-                TAHUN AJARAN {{ str_replace('/', '-', $anggotaKelas->kelas->tahunAjaran->tahun ?? '1025-1026') }}
+                USIA {{ $usia }} TAHUN <br>
+                TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '1025-1026') }}
             </h3>
         </div>
 
@@ -234,7 +234,7 @@
             <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
             <td width="20%"><strong> Kelompok Usia</td>
             <td width="2%">:</td>
-            <td width="28%">{{ $anggotaKelas->kelas->kelompok_usia ?? '3-4 Tahun' }}</td>
+            <td width="28%">{{ $usia }} Tahun</td>
         </tr>
         <tr>
             <td><strong>NIS</td>
@@ -242,7 +242,7 @@
             <td>{{ $anggotaKelas->siswa->nis ?? '-' }} / {{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
             <td><strong> Tahun Ajaran</td>
             <td>:</td>
-            <td>{{ $anggotaKelas->kelas->tahunAjaran->tahun_ajaran ?? '2023/2024' }}</td>
+            <td>{{ $tahunAjaranAktif->tahun_ajaran ?? '2023/2024' }}</td>
         </tr>
         <tr>
             <td><strong>NISN</td>
@@ -250,7 +250,7 @@
             <td>{{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
             <td><strong>Semester</td>
             <td>:</td>
-            <td>{{ $anggotaKelas->kelas->tahunAjaran->semester ?? 'Ganjil' }}</td>
+            <td>{{ $tahunAjaranAktif->semester ?? 'ganjil' }}</td>
         </tr>
     </table>
 
@@ -271,12 +271,14 @@
         <tbody>
         @forelse($indikators as $indikator)
             @php
-                $item = $anggotaKelas?->hasilCapaian?->firstWhere('indikator_id', $indikator->id);
-                $nilai = $item ? strtoupper(trim($item->nilai)) : null;
+                $item = $anggotaKelas?->hasilCapaian?->first(function($h) use ($indikator) {
+                    return $h->indikator_id == $indikator->id;
+                });
+                 $nilai = $item ? strtoupper(trim($item->nilai)) : null;
             @endphp
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td style="text-align: left; padding-left: 8px;">{{ $indikator->nama_indikator }}</td>
+                <td style="text-align: left; padding-left: 8px;">{{ $indikator->nama_indikator }}</td>                    
                 <td>
                     @if($nilai == 'T')
                         <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>
@@ -386,7 +388,9 @@
                         <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>
                     @endif
                 </td>
-                <td>{{ $anggotaKelas?->kebersihanSiswa?->keterangan }}</td>
+                <td style="text-align: center;">
+                    {{ $anggotaKelas?->kesehatanSiswa?->keterangan }}
+                </td>
             </tr>
             <tr>
                 <td>2</td>
@@ -642,21 +646,21 @@
                         <td style="text-align: center; border: 1px solid black; padding: 6px;">1</td>
                         <td style="width: 50%; border: 1px solid black; padding: 6px;">Sakit</td>
                         <td style="text-align: center; border: 1px solid black; padding: 6px;">
-                            {{ $anggotaKelas->kehadiran->sakit ? $anggotaKelas->kehadiran->sakit . ' hari' : '—' }}
+                            {{ $anggotaKelas->kehadiran?->sakit ? $anggotaKelas->kehadiran->sakit . ' hari' : '—' }}
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align: center; border: 1px solid black; padding: 6px;">2</td>
                         <td style="border: 1px solid black; padding: 6px;">Izin</td>
                         <td style="text-align: center; border: 1px solid black; padding: 6px;">
-                            {{ $anggotaKelas->kehadiran->izin ? $anggotaKelas->kehadiran->izin . ' hari' : '—' }}
+                            {{ $anggotaKelas->kehadiran?->izin ? $anggotaKelas->kehadiran->izin . ' hari' : '—' }}
                         </td>
                     </tr>
-                    <tr>
+                        <tr>
                         <td style="text-align: center; border: 1px solid black; padding: 6px;">3</td>
                         <td style="border: 1px solid black; padding: 6px;">Tanpa Keterangan</td>
                         <td style="text-align: center; border: 1px solid black; padding: 6px;">
-                            {{ $anggotaKelas->kehadiran->tanpa_keterangan ? $anggotaKelas->kehadiran->tanpa_keterangan . ' hari' : '—' }}
+                            {{ $anggotaKelas->kehadiran?->tanpa_keterangan ? $anggotaKelas->kehadiran->tanpa_keterangan . ' hari' : '—' }}
                         </td>
                     </tr>
                 </tbody>

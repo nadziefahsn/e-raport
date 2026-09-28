@@ -15,40 +15,42 @@ use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
 {
-    public function index(Request $request)
-    {
-        $wali_kelas = Guru::where('user_id', Auth::user()->id)->first();
+public function index(Request $request)
+{
+    $user = auth()->user();
+    $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-        if (!$wali_kelas) {
-            return redirect()->back()->with('error', 'Data guru tidak ditemukan!');
-        }
+    if ($user->hasRole('guru')) {
+        $guruId = $user->guru?->id;
 
-        // Mengambil ID kelas tempat guru menjadi Wali Kelas ATAU Pendamping
-        $id_kelas_diampu = Kelas::where('wali_kelas_id', $wali_kelas->id)
-            ->orWhere('pendamping_id', $wali_kelas->id)
+        $kelasIds = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            ->where(function ($query) use ($guruId) {
+                $query->where('wali_kelas_id', $guruId)
+                      ->orWhere('pendamping_id', $guruId);
+            })
             ->pluck('id');
 
-        // Mengambil semua anggota kelas beserta data siswanya tanpa terkunci filter tahun ajaran
-        $data_anggota_kelas = AnggotaKelas::with('siswa')
-            ->whereIn('kelas_id', $id_kelas_diampu)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
+            ->with(['siswa', 'kehadiran'])
             ->get();
-
-        foreach ($data_anggota_kelas as $anggota) {
-            $kehadirans = Kehadiran::where('anggota_kelas_id', $anggota->id)->first();
-            if (is_null($kehadirans)) {
-                $anggota->sakit = 0;
-                $anggota->izin = 0;
-                $anggota->tanpa_keterangan = 0;
-            } else {
-                $anggota->sakit = $kehadirans->sakit;
-                $anggota->izin = $kehadirans->izin;
-                $anggota->tanpa_keterangan = $kehadirans->tanpa_keterangan;
-            }
-        }                        
-
-        return view('kehadirans.index', compact('data_anggota_kelas'));
+    } else {
+        $data_anggota_kelas = AnggotaKelas::whereHas('kelas', function ($query) use ($tahunAjaranAktif) {
+                $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+            })
+            ->with(['siswa', 'kehadiran'])
+            ->get();
     }
 
+
+    foreach ($data_anggota_kelas as $anggota) {
+        $anggota->sakit = $anggota->kehadiran->sakit ?? 0;
+        $anggota->izin = $anggota->kehadiran->izin ?? 0;
+        $anggota->tanpa_keterangan = $anggota->kehadiran->tanpa_keterangan ?? 0;
+    }
+
+    return view('kehadirans.index', compact('data_anggota_kelas'));
+    }   
+    
     public function create()
     {
         
@@ -75,7 +77,7 @@ class KehadiranController extends Controller
 
         $guruId = $request->input('guru_id');
 
-        $tahunAjaranAktif = TahunAjaran::first();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         if (!$tahunAjaranAktif) {
             return redirect()->back()->with('error', 'Data Tahun Ajaran belum ada di database!');

@@ -9,45 +9,47 @@ use App\Models\AnggotaKelas;
 use App\Models\Kelas;
 use App\Models\User;
 use App\Models\Karakter;
+use App\Models\TahunAjaran;
 
 class NilaiKarakterController extends Controller
 {
-
     public function index(Request $request)
     {
         $user = auth()->user();
         $kelas = null;
         $anggotaKelas = collect();
-        $karakters = Karakter::all(); 
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
+
+        $karakters = Karakter::where('tahun_ajaran_id', $tahunAjaranAktif?->id)->get(); 
         $nilaiExisting = [];
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;
 
-            $kelas = Kelas::where('wali_kelas_id', $guruId)
-                ->orWhere('pendamping_id', $guruId)
-                ->get();
+            $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
+                    ->where(function ($query) use ($guruId) {
+                        $query->where('wali_kelas_id', $guruId)
+                            ->orWhere('pendamping_id', $guruId);    
+                    })
+                    ->get();
 
             $kelasIds = $kelas->pluck('id');
 
             $anggotaKelas = AnggotaKelas::whereIn('kelas_id', $kelasIds)
-                ->with(['siswa', 'kelas'])
+                ->with(['siswa', 'kelas', 'nilaiKarakter'])
                 ->get();
         } else {
             $kelas = Kelas::orderBy('rombel', 'asc')->get();
-            $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas'])->get();
+            $anggotaKelas = AnggotaKelas::with(['siswa', 'kelas', 'nilaiKarakter'])->get();
         }
         
-
         return view('nilai_karakters.index', compact('anggotaKelas', 'kelas', 'karakters', 'nilaiExisting'));
     }
 
-
     public function create()
     {
-
+        
     }
-
 
     public function store(Request $request)
     {

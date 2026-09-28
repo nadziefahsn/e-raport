@@ -8,7 +8,7 @@
                 </button>
             </div>
             
-            @if ($errors->any() && !old('_method'))
+            @if ($errors->any() && old('_method') != 'PUT')
                 <div class="alert alert-danger mx-4">
                     <ul class="mb-0">
                         @foreach ($errors->all() as $error)
@@ -20,11 +20,12 @@
 
             <form action="{{ route('indikator.store') }}" method="POST">
                 @csrf
+
                 <div class="modal-body p-4">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Capaian Perkembangan</label>
                         <select name="capaian_perkembangan_id" class="form-control rounded-3" required>
-                            <option value="">-- Pilih Capaian Perkembangan --</option>
+                            <option value="" disabled selected>-- Pilih Capaian Perkembangan --</option>
                             @foreach($capaians as $capaian)
                                 <option value="{{ $capaian->id }}" {{ old('capaian_perkembangan_id') == $capaian->id ? 'selected' : '' }}>
                                     {{ $capaian->capaian_perkembangan }}
@@ -40,13 +41,13 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Nama Indikator</label>
-                        <textarea name="nama_indikator" class="form-control rounded-3" placeholder="Masukkan detail indikator..." rows="3" required>{{ old('nama_indikator') }}</textarea>
+                        <textarea name="nama_indikator" class="form-control rounded-3" rows="3" placeholder="Masukkan nama indikator" required>{{ old('nama_indikator') }}</textarea>
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label fw-bold">Jenjang</label>
                         <select name="jenjang" class="form-control rounded-3" required>
-                            <option value="" disabled {{ old('jenjang') ? '' : 'selected' }}>-- Pilih Jenjang --</option>
+                            <option value="" disabled selected>-- Pilih Jenjang --</option>
                             <option value="TK A" {{ old('jenjang') == 'TK A' ? 'selected' : '' }}>TK A</option>
                             <option value="TK B" {{ old('jenjang') == 'TK B' ? 'selected' : '' }}>TK B</option>
                             <option value="PG" {{ old('jenjang') == 'PG' ? 'selected' : '' }}>PG</option>
@@ -56,19 +57,20 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Tahun Ajaran</label>
                         <select name="tahun_ajaran_id" class="form-control rounded-3" required>
-                            <option value="" disabled {{ old('tahun_ajaran_id') ? '' : 'selected' }}>-- Pilih Tahun Ajaran --</option>
-                            @foreach($tahunAjarans as $ta)
-                                <option value="{{ $ta->id }}" {{ old('tahun_ajaran_id') == $ta->id ? 'selected' : '' }}>
-                                    {{ $ta->tahun_ajaran }} - {{ $ta->semester == '1' || $ta->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
+                            @if($tahunAjaranAktif)
+                                <option value="{{ $tahunAjaranAktif->id }}" selected>
+                                    {{ $tahunAjaranAktif->tahun_ajaran }} - {{ $tahunAjaranAktif->semester == '1' || $tahunAjaranAktif->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}
                                 </option>
-                            @endforeach
+                            @else
+                                <option value="" selected disabled>-- Belum Ada Data Tahun Ajaran --</option>
+                            @endif
                         </select>
                     </div>
                 </div>
 
                 <div class="modal-footer border-0 pb-4 px-4">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-light py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Kembali</button>
+                    <button type="submit" class="btn btn-primary flex-grow-1 py-2 fw-bold" style="border-radius: 12px;">Simpan Data</button>
                 </div>
             </form>
         </div>

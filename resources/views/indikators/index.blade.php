@@ -16,9 +16,15 @@
 <div class="card">
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-clipboard-list mr-2"></i>Data Indikator</h3>
-        <div class="card-tools ml-auto">
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
-                <i class="fas fa-plus mr-1"></i> 
+        <div class="card-tools ml-auto d-flex align-items-center gap-2">
+            <form action="{{ route('indikator.duplicate') }}" method="POST" class="m-2" onsubmit="return confirm('Apakah Anda yakin ingin menyalin kelas dari semester sebelumnya?')">
+                @csrf
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">
+                    <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
+                </button>
+            </form>
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
+                <i class="fas fa-plus mr-1"></i>
             </button>
         </div>
     </div>
@@ -47,6 +53,7 @@
             null,
             ['orderable' => false]
         ],
+        
     ];
     @endphp
 
@@ -59,7 +66,7 @@
                     <td>{{ $item->capaianPerkembangan->capaian_perkembangan ?? '-' }}</td>
                     <td>{{ $item->nama_indikator }}</td>
                     <td>{{ $item->jenjang ?? '-' }}</td>
-                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }}</td>
+                    <td>{{ $item->tahunAjaran->tahun_ajaran ?? '-' }} {{ $item->tahunAjaran?->semester == 'Ganjil' || $item->tahunAjaran?->semester == 'Ganjil' ? 'Ganjil' : 'Genap' }}</td>
                     <td class="text-center">
                         <nobr>
                             <button type="button" 

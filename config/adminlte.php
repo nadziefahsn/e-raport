@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'E-Rapot PG-TK PI',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
     'logo' => 'E-Raport PG-TK PI',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'asset/logo_tk.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -109,7 +109,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'mode' => 'fullscreen',
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
@@ -259,8 +259,8 @@ return [
     'dashboard_url' => 'admin/dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
-    'password_reset_url' => 'password/reset',
+    'register_url' => null,
+    'password_reset_url' => null,
     'password_email_url' => 'password/email',
     'profile_url' => false,
     'disable_darkmode_routes' => false,
@@ -284,6 +284,7 @@ return [
     'laravel_asset_bundling' => false,
     'laravel_css_path' => 'css/app.css',
     'laravel_js_path' => 'js/app.js',
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -372,9 +373,15 @@ return [
             ],
             [
                 'text' => 'Anggota Kelas',
-                'url' => 'admin/anggota-kelas',
+                'url'  => 'admin/anggota-kelas',
                 'icon' => 'fas fa-users',
-                'can'  => ['admin', 'guru'],
+                'can'  => 'admin',
+            ],
+            [
+                'text' => 'Anggota Kelas',
+                'url'  => 'guru/anggota-kelas',
+                'icon' => 'fas fa-users',
+                'can'  => 'guru',
             ],
         ],
     ],

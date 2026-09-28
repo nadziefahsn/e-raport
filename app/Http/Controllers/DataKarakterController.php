@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataKarakter;
 use App\Models\Karakter;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 
 class DataKarakterController extends Controller
@@ -11,9 +12,13 @@ class DataKarakterController extends Controller
    
     public function index()
     {
-        $karakters = Karakter::all();
+        $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-        return view('data_karakters.index', compact('karakters'));
+        $karakters = $tahunAjaranAktif 
+            ? Karakter::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get() 
+            : collect();
+
+        return view('data_karakters.index', compact('karakters', 'tahunAjaranAktif'));
     }
 
    

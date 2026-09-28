@@ -17,7 +17,7 @@ class KelasController extends Controller
         $tahunAjaranAktif = TahunAjaran::latest()->first();
         $kelas = Kelas::with(['waliKelas','pendamping','tahunAjaran'])->whereTahunAjaranId($tahunAjaranAktif->id)->get();
         $gurus = Guru::all();
-        $tahunAjarans = TahunAjaran::all();
+        $tahunAjarans = TahunAjaran::latest()->first();
         
         return view('kelas.index', compact('kelas','gurus','tahunAjarans'));
     }

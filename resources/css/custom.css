@@ -1,0 +1,31 @@
+.card-primary.card-outline,
+.card-outline {
+    border-top: 3px solid #F37F30 !important;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: #F37F30 !important;
+    border-color: #F37F30 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.btn-primary:hover {
+    background-color: #d96d24 !important;
+    border-color: #d96d24 !important;
+}
+
+.login-box a {
+    color: #F37F30 !important;
+}
+
+.login-box a:hover {
+    color: #d96d24 !important;
+}
+
+.form-control:focus {
+    border-color: #F37F30 !important;
+    box-shadow: 0 0 0 0.2rem rgba(243, 127, 48, 0.25) !important;
+}

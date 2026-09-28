@@ -52,7 +52,7 @@
 
                                 <td>
                                     <select name="hasil_pakaian[]" class="form-control">
-                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}>-- Pilih Kondisi --</option>
+                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}></option>
                                         <option value="Bersih" {{ ($item->kebersihanSiswa->hasil_pakaian ?? '') == 'Bersih' ? 'selected' : '' }}>Bersih</option>
                                         <option value="Kotor" {{ ($item->kebersihanSiswa->hasil_pakaian ?? '') == 'Kotor' ? 'selected' : '' }}>Kotor</option>
                                     </select>
@@ -60,7 +60,7 @@
 
                                 <td>
                                     <select name="hasil_kuku[]" class="form-control">
-                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}>-- Pilih Kondisi --</option>
+                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}></option>
                                         <option value="Bersih" {{ ($item->kebersihanSiswa->hasil_kuku ?? '') == 'Bersih' ? 'selected' : '' }}>Bersih</option>
                                         <option value="Kotor" {{ ($item->kebersihanSiswa->hasil_kuku ?? '') == 'Kotor' ? 'selected' : '' }}>Kotor</option>
                                     </select>
@@ -68,7 +68,7 @@
 
                                 <td>
                                     <select name="hasil_rambut[]" class="form-control">
-                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}>-- Pilih Kondisi --</option>
+                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}></option>
                                         <option value="Bersih" {{ ($item->kebersihanSiswa->hasil_rambut ?? '') == 'Bersih' ? 'selected' : '' }}>Bersih</option>
                                         <option value="Kotor" {{ ($item->kebersihanSiswa->hasil_rambut ?? '') == 'Kotor' ? 'selected' : '' }}>Kotor</option>
                                     </select>
@@ -76,7 +76,7 @@
 
                                 <td>
                                     <select name="hasil_kulit[]" class="form-control">
-                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}>-- Pilih Kondisi --</option>
+                                        <option value="" {{ !$item->kebersihanSiswa ? 'selected' : '' }}></option>
                                         <option value="Bersih" {{ ($item->kebersihanSiswa->hasil_kulit ?? '') == 'Bersih' ? 'selected' : '' }}>Bersih</option>
                                         <option value="Kotor" {{ ($item->kebersihanSiswa->hasil_kulit ?? '') == 'Kotor' ? 'selected' : '' }}>Kotor</option>
                                     </select>

@@ -21,7 +21,7 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-bullhorn mr-2"></i>Pengumuman</h3>
         <div class="card-tools ml-auto">
-            <button class="btn btn-light px-4 py-2 rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahPengumuman">
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal"  data-target="#modalTambahPengumuman">
                 <i class="fas fa-plus"></i>
             </button>
         </div>

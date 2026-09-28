@@ -36,7 +36,7 @@
                                 @forelse($karakters as $index => $item)
                                     <tr>
                                         <td class="text-center align-middle">{{ $index + 1 }}</td>
-                                        <td class="align-middle">{{ $item->id ?? '-' }}</td>
+                                        <td class="align-middle">{{ $item->kode ?? '-' }}</td>
                                         <td class="align-middle">{{ $item->karakter ?? '-' }}</td>
                                     </tr>
                                 @empty
