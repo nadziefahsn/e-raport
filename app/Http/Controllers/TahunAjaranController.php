@@ -24,7 +24,7 @@ class TahunAjaranController extends Controller
 
     public function store(TahunAjaranUpdateRequest $request)
     {
-        TahunAjaran::create($request->validated());
+        TahunAjaran::firstOrCreate($request->validated());
 
         return redirect()
             ->route('tahun_ajaran.index')

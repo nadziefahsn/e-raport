@@ -59,10 +59,6 @@
                             <input type="text" name="anak_ke" class="form-control rounded-3" placeholder=" Anak ke-" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Telepon</label>
-                            <input type="number" name="telepon" class="form-control rounded-3" placeholder=" Nomor HP" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Nama Ayah</label>
                             <input type="text" name="nama_ayah" class="form-control rounded-3" placeholder=" Nama Ayah" required>
                         </div>
@@ -78,9 +74,9 @@
                             <label class="form-label fw-bold">Pekerjaan Ibu</label>
                             <input type="text" name="pekerjaan_ibu" class="form-control rounded-3" placeholder=" Pekerjaan Ibu" required>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <label class="form-label fw-bold">Alamat</label>
-                            <textarea name="alamat" class="form-control rounded-3" rows="2" placeholder=" Alamat Lengkap" required></textarea>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Telepon</label>
+                            <input type="number" name="telepon" class="form-control rounded-3" placeholder=" Nomor HP" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Kelas</label>
@@ -92,6 +88,10 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">Alamat</label>
+                            <textarea name="alamat" class="form-control rounded-3" rows="2" placeholder=" Alamat Lengkap" required></textarea>
                         </div>
                     </div>
                 </div>

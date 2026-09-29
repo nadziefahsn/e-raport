@@ -30,6 +30,10 @@
         <h3 class="card-title mb-0"><i class="fas fa-user-graduate mr-2"></i>Data Peserta Didik</h3>
 
         <div class="card-tools ml-auto">
+            <button type="button" class="btn btn-sm rounded-4 fw-bold mr-1" data-toggle="modal" data-target="#modalImportSiswa" title="Import Excel">
+                <i class="fas fa-upload mr-1"></i>
+            </button>
+
             <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahSiswa">
                 <i class="fas fa-plus"></i>
             </button>
@@ -89,6 +93,7 @@
 
 @include('siswas.create')
 @include('siswas.edit')
+@include('siswas.import')
 
 @stop
 
@@ -107,5 +112,23 @@
 @section('js')
 <script>
     console.log("Halaman Peserta Didik berhasil dimuat.");
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init();
+
+        @if ($errors->any())
+            @if(session('edit_id'))
+                $('#editModal{{ session('edit_id') }}').modal('show');
+            @elseif($errors->has('file'))
+                $('#modalImportSiswa').modal('show');
+            @else
+                $('#modalTambahSiswa').modal('show');
+            @endif
+        @endif
+    });
 </script>
 @stop

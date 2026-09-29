@@ -62,10 +62,6 @@
                             <input type="text" name="anak_ke" class="form-control rounded-3" value="{{ $item->anak_ke }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Telepon</label>
-                            <input type="number" name="telepon" class="form-control rounded-3" value="{{ $item->telepon }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Nama Ayah</label>
                             <input type="text" name="nama_ayah" class="form-control rounded-3" value="{{ $item->nama_ayah }}" required>
                         </div>
@@ -81,9 +77,9 @@
                             <label class="form-label fw-bold">Pekerjaan Ibu</label>
                             <input type="text" name="pekerjaan_ibu" class="form-control rounded-3" value="{{ $item->pekerjaan_ibu }}" required>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <label class="form-label fw-bold">Alamat</label>
-                            <textarea name="alamat" class="form-control rounded-3" rows="2" required>{{ $item->alamat }}</textarea>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Telepon</label>
+                            <input type="number" name="telepon" class="form-control rounded-3" value="{{ $item->telepon }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Kelas</label>
@@ -96,6 +92,10 @@
                                     </option>
                                     @endforeach>
                             </select>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">Alamat</label>
+                            <textarea name="alamat" class="form-control rounded-3" rows="2" required>{{ $item->alamat }}</textarea>
                         </div>
                     </div>
                 </div>

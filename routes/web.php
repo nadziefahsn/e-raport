@@ -28,6 +28,7 @@ use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
+use Sabberworm\CSS\Property\Import;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -57,7 +58,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
         Route::post('/kelas/duplicate', [KelasController::class, 'duplicateFromPreviousSemester'])->name('kelas.duplicate');
         Route::resource('kelas', KelasController::class)->parameters(['kelas' => 'kelas']);
-        Route::resource('siswa', SiswaController::class)->except(['show'])->whereNumber('siswa');
+        
+        Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
+        Route::resource('siswa', SiswaController::class)->except(['show'])->whereNumber('siswa');;
 
         Route::resource('kriteria', KriteriaPenilaianController::class)->parameters(['kriteria' => 'kriteriapenilaian']);
         Route::post('/karakter/duplicate', [KarakterController::class, 'duplicateFromPreviousSemester'])->name('karakter.duplicate');

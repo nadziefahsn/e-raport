@@ -4,12 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SiswaStoreRequest;
 use App\Http\Requests\SiswaUpdateRequest;
+use App\Imports\SiswaImport;
 use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\TahunAjaran;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ]);
+
+        Excel::import(new SiswaImport, $request->file('file'));
+
+        return redirect()
+            ->back()
+            ->with('success', 'Data siswa berhasil diimport');
+    }
 
     public function index()
     {

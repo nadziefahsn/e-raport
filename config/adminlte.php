@@ -378,13 +378,14 @@ return [
                 'icon' => 'fas fa-users',
                 'can'  => 'admin',
             ],
-            [
-                'text' => 'Anggota Kelas',
-                'url'  => 'guru/anggota-kelas',
-                'icon' => 'fas fa-users',
-                'can'  => 'guru',
-            ],
+        
         ],
+    ],
+    [
+        'text' => 'Anggota Kelas',
+        'url'  => 'guru/anggota-kelas',
+        'icon' => 'fas fa-users',
+        'can'  => 'guru',
     ],
     [
         'text' => 'Penilaian',

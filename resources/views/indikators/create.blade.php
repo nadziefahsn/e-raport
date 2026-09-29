@@ -69,8 +69,8 @@
                 </div>
 
                 <div class="modal-footer border-0 pb-4 px-4">
-                    <button type="button" class="btn btn-light py-2 px-4 fw-bold" data-dismiss="modal" style="border-radius: 12px;">Kembali</button>
-                    <button type="submit" class="btn btn-primary flex-grow-1 py-2 fw-bold" style="border-radius: 12px;">Simpan Data</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>

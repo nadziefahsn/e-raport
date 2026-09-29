@@ -25,7 +25,7 @@ class CapaianPerkembanganController extends Controller
     
     public function store(CapaianPerkembanganUpdateRequest $request)
     {
-        CapaianPerkembangan::create($request->validated());
+        CapaianPerkembangan::firstOrCreate($request->validated());
 
         return redirect()->back()->with('success', 'Data capaian perkembangan berhasil ditambahkan!');
     }
