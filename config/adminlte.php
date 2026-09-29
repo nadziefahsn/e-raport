@@ -323,7 +323,13 @@ return [
         'text' => 'Dashboard', 
         'url' => 'admin/dashboard',
         'icon' => 'fas fa-tachometer-alt',
-        'can'  => ['admin', 'guru'],
+        'can'  => 'admin',
+    ],
+    [
+        'text' => 'Dashboard', 
+        'url' => 'guru/dashboard',
+        'icon' => 'fas fa-tachometer-alt',
+        'can'  => 'guru',
     ],
     [
         'text' => 'Pengumuman', 

@@ -35,7 +35,7 @@ class IndikatorController extends Controller
 
         return redirect()
             ->route('indikator.index')
-            ->with('success', 'Indikator berhasil disimpan.');
+            ->with('success', ' Data indikator berhasil disimpan.');
     }
 
     public function show(string $id)
@@ -55,7 +55,7 @@ class IndikatorController extends Controller
 
         return redirect()
             ->route('indikator.index')
-            ->with('success', 'Indikator berhasil diperbarui.');
+            ->with('success', ' Data indikator berhasil diperbarui.');
     }
 
     public function destroy(Indikator $indikator)
@@ -64,7 +64,7 @@ class IndikatorController extends Controller
 
         return redirect()
             ->route('indikator.index')
-            ->with('success', 'Indikator Berhasil Dihapus!');
+            ->with('success', 'Data indikator Berhasil Dihapus!');
     }
 
     public function duplicateFromPreviousSemester()

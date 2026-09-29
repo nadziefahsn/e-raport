@@ -74,6 +74,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 Route::prefix('guru')->middleware(['auth', 'role:guru'])->group(function () {
+    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('anggota-kelas', AnggotaKelasController::class)->parameters([
             'anggota-kelas' => 'anggotaKelas'
