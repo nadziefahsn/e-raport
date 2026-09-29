@@ -16,8 +16,8 @@ class AnggotaKelasController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->latest();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+
 
         if ($user->hasRole('guru')) {
         $guruId = $user->guru?->id;
