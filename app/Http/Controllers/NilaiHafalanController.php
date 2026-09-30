@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\NilaiHafalan;
 use App\Models\Hafalan;
 use App\Models\TahunAjaran;
+use App\Models\Materi;
+use App\Models\MateriHafalan;
 use App\Models\Kelas;
 use App\Models\AnggotaKelas;
 use App\Http\Requests\NilaiHafalanUpdateRequest;
@@ -54,7 +56,6 @@ class NilaiHafalanController extends Controller
 
         $kelas = null;
         $anggotaKelas = collect();
-        $masterHafalan = collect();
         $guruId = null;
 
         if ($user->hasRole('guru')) {
@@ -63,7 +64,7 @@ class NilaiHafalanController extends Controller
             $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)
                 ->where(function ($query) use ($guruId) {
                     $query->where('wali_kelas_id', $guruId)
-                          ->orWhere('pendamping_id', $guruId);    
+                        ->orWhere('pendamping_id', $guruId);    
                 })
                 ->first();
         } else {
@@ -72,19 +73,50 @@ class NilaiHafalanController extends Controller
                 ->first();
         }
 
-        if ($kelas) {
-            $rombelUpper = strtoupper($kelas->rombel);
-            $jenjangTujuan = str_contains($rombelUpper, 'B') ? 'TK B' : 
-                            (str_contains($rombelUpper, 'A') ? 'TK A' : 'PG');
-
-            $masterHafalan = Hafalan::where('jenjang', $jenjangTujuan)
-                ->whereIn('id', $catInfo['ids'])
-                ->get();
-
-            $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
-                ->with(['siswa', 'kelas', 'nilaiHafalan'])
-                ->get();
+        if (!$kelas) {
+            return view('nilai_hafalans.index', [
+                'kelas'         => null,
+                'guruId'        => $guruId,
+                'masterHafalan' => collect(),
+                'anggotaKelas'  => collect(),
+                'namaKategori'  => $namaKategori,
+                'kategori'      => $kategori,
+            ]);
         }
+
+        $anggotaKelas = AnggotaKelas::where('kelas_id', $kelas->id)
+            ->with(['siswa', 'nilaiHafalan'])
+            ->get();
+
+        $rombelUpper = strtoupper($kelas->rombel);
+        if (str_contains($rombelUpper, 'B')) {
+            $jenjangTujuan = 'TK B';
+        } elseif (str_contains($rombelUpper, 'A')) {
+            $jenjangTujuan = 'TK A';
+        } else {
+            $jenjangTujuan = 'PG';
+        }
+
+        $masterMateri = Materi::where('jenjang', $jenjangTujuan)
+            ->whereIn('capaian_hafalan_id', $catInfo['ids'])
+            ->whereTahunAjaranId($tahunAjaranAktif->id)
+            ->get();
+
+        foreach ($masterMateri as $master) {
+            MateriHafalan::firstOrCreate([
+                'kelas_id'  => $kelas->id,
+                'materi_id' => $master->id,
+            ]);
+        }
+
+        $masterHafalan = MateriHafalan::where('kelas_id', $kelas->id)
+            ->whereHas('materi', function($query) use ($catInfo, $tahunAjaranAktif, $jenjangTujuan) {
+                $query->whereIn('capaian_hafalan_id', $catInfo['ids'])
+                    ->where('jenjang', $jenjangTujuan)
+                    ->whereTahunAjaranId($tahunAjaranAktif->id);
+            })
+            ->with('materi')
+            ->get();
 
         return view('nilai_hafalans.index', [
             'anggotaKelas'  => $anggotaKelas,
@@ -95,18 +127,12 @@ class NilaiHafalanController extends Controller
             'kategori'      => $kategori,
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(NilaiHafalanUpdateRequest $request)
     {
         $data = $request->validated();
@@ -139,33 +165,21 @@ class NilaiHafalanController extends Controller
             ->with('success', 'Data nilai hafalan berhasil disimpan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(NilaiHafalan $nilaiHafalan)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(NilaiHafalan $nilaiHafalan)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(NilaiHafalanUpdateRequest $request, $id = null)
     {
         return $this->store($request);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(NilaiHafalan $nilaiHafalan)
     {
         //

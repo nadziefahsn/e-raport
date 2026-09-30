@@ -22,10 +22,10 @@ class MateriHafalanController extends Controller
 
         $keywordMapping = [
             'tahsin'              => 'tahsin',
-            'doa-harian'              => 'doa harian',
-            'tahfidz-alquran'              => 'tahfidz',
-            'hadits'            => 'hadits',
-            'wudhu'            => 'wudhu',
+            'doa-harian'          => 'doa harian',
+            'tahfidz-alquran'     => 'tahfidz',
+            'hadits'              => 'hadits',
+            'wudhu'               => 'wudhu',
         ];
 
         $keyword = $keywordMapping[$kategoriSlug] ?? 'hafalan';

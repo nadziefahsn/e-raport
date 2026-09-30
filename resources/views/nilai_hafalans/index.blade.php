@@ -47,8 +47,8 @@
                             <tr>
                                 @foreach($masterHafalan as $materi)
                                     <th class="text-center" data-toggle="tooltip" data-placement="bottom"
-                                        title="{{ $materi->deskripsi ?? $materi->nama_hafalan ?? 'Tidak ada deskripsi' }}">
-                                        {{ $materi->kode ?? $materi->nama_hafalan ?? '-' }}
+                                        title="{{ $materi->materi->nama_materi ?? 'Tidak ada nama materi' }}">
+                                        {{ $materi->materi->kode ?? $materi->materi->nama_materi ?? '-' }}
                                     </th>
                                 @endforeach
                             </tr>
@@ -62,12 +62,12 @@
                                 @foreach($masterHafalan as $materi)
                                     @php
                                         $nilaiExist = $item->nilaiHafalan->first(function ($nh) use ($materi) {
-                                            return $nh->materi_id == $materi->id;
+                                            return $nh->materi_id == $materi->materi_id;
                                         });
-                                        $selectedValue = old('nilai.' . $item->id . '.' . $materi->id, $nilaiExist ? $nilaiExist->nilai : '');
+                                        $selectedValue = old('nilai.' . $item->id . '.' . $materi->materi_id, $nilaiExist ? $nilaiExist->nilai : '');
                                     @endphp
                                     <td class="text-center">
-                                        <select name="nilai[{{ $item->id }}][{{ $materi->id }}]" class="form-control text-center form-control-sm">
+                                        <select name="nilai[{{ $item->id }}][{{ $materi->materi_id }}]" class="form-control text-center form-control-sm">
                                             <option value="" {{ $selectedValue == '' ? 'selected' : '' }}></option>
                                             <option value="T" {{ $selectedValue == 'T' ? 'selected' : '' }}>Tampak</option>
                                             <option value="TT" {{ $selectedValue == 'TT' ? 'selected' : '' }}>Tidak Tampak</option>
