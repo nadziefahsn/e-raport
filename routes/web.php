@@ -30,6 +30,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\HafalanController;
 use App\Http\Controllers\MateriController;
+use App\Http\Controllers\MateriHafalanController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -91,6 +92,9 @@ Route::prefix('guru')->middleware(['auth', 'role:guru'])->group(function () {
 
     Route::get('/indikator-{kategori}', [IndikatorCapaianController::class, 'index'])->name('indikator-capaian.index');
     Route::resource('indikator-capaian', IndikatorCapaianController::class)->except(['create','show','edit','update'])->whereNumber('indikator-capaian');
+
+    Route::get('/materi-{kategori}', [MateriHafalanController::class, 'index'])->name('materi-hafalan.index');
+    Route::resource('materi-hafalan', MateriHafalanController::class)->except(['create','show','edit','update'])->whereNumber('materi-hafalan');
 
     Route::resource('kondisi-tubuh', KondisiTubuhController::class)->only(['index','update'])->whereNumber('kondisi-tubuh');
     Route::resource('kebersihan-siswa', KebersihanSiswaController::class)->only(['index','update'])->whereNumber('kebersihan-siswa');
