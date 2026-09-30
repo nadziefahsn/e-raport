@@ -25,6 +25,9 @@
     <div class="card-header d-flex align-items-center">
         <h3 class="card-title mb-0"><i class="fas fa-chalkboard-teacher mr-2"></i>Data Guru</h3>
             <div class="card-tools ml-auto">
+            <button type="button" class="btn btn-sm mr-1" data-toggle="modal" data-target="#modalImportGuru">
+                <i class="fas fa-upload mr-1"></i>
+            </button>
             <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahGuru">
                 <i class="fas fa-plus"></i>
             </button>
@@ -95,12 +98,30 @@
 
 @include('gurus.create')
 @include('gurus.edit')
+@include('gurus.import')
 
 @stop
 
 @include('layouts.footer')
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init();
+
+        @if ($errors->any())
+            @if(session('edit_id'))
+                $('#editModal{{ session('edit_id') }}').modal('show');
+            @elseif($errors->has('file'))
+                $('#modalImportGuru').modal('show');
+            @else
+                $('#modalTambahGuru').modal('show');
+            @endif
+        @endif
+    });
+</script>
 <script>
     $(document).ready(function() {
         

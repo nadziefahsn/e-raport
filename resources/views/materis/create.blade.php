@@ -1,8 +1,8 @@
-<div class="modal fade" id="modalTambahIndikator" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalTambahMateri" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
             <div class="modal-header border-0 pt-4 px-4">
-                <h5 class="modal-title fw-bold">Tambah Indikator</h5>
+                <h5 class="modal-title fw-bold">Tambah Materi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -18,30 +18,30 @@
                 </div>
             @endif
 
-            <form action="{{ route('indikator.store') }}" method="POST">
+            <form action="{{ route('materi.store') }}" method="POST">
                 @csrf
 
                 <div class="modal-body p-4">
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Capaian Perkembangan</label>
-                        <select name="capaian_perkembangan_id" class="form-control rounded-3" required>
-                            <option value="" disabled selected>-- Pilih Capaian Perkembangan --</option>
-                            @foreach($capaians as $capaian)
-                                <option value="{{ $capaian->id }}" {{ old('capaian_perkembangan_id') == $capaian->id ? 'selected' : '' }}>
-                                    {{ $capaian->capaian_perkembangan }}
+                        <label class="form-label fw-bold">Capaian Hafalan</label>
+                        <select name="capaian_hafalan_id" class="form-control rounded-3" required>
+                            <option value="" disabled selected>-- Pilih Capaian Hafalan --</option>
+                            @foreach($hafalans as $capaian)
+                                <option value="{{ $capaian->id }}" {{ old('capaian_hafalan_id') == $capaian->id ? 'selected' : '' }}>
+                                    {{ $capaian->capaian_hafalan }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Kode Indikator</label>
-                        <input type="text" name="kode" class="form-control rounded-3" value="{{ old('kode') }}" placeholder="Contoh: 3.1" required>
+                        <label class="form-label fw-bold">Kode Materi</label>
+                        <input type="text" name="kode" class="form-control rounded-3" value="{{ old('kode') }}" placeholder="Contoh: M-01" required>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Nama Indikator</label>
-                        <textarea name="nama_indikator" class="form-control rounded-3" rows="3" placeholder="Masukkan nama indikator" required>{{ old('nama_indikator') }}</textarea>
+                        <label class="form-label fw-bold">Nama Materi</label>
+                        <textarea name="nama_materi" class="form-control rounded-3" rows="3" placeholder="Masukkan nama materi..." required>{{ old('nama_materi') }}</textarea>
                     </div>
 
                     <div class="form-group mb-3">
@@ -69,11 +69,7 @@
                 </div>
 
                 <div class="modal-footer border-0 pb-4 px-4">
-<<<<<<< HEAD
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-=======
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
->>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

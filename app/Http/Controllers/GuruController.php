@@ -6,10 +6,32 @@ use App\Models\Guru;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\GuruImport;
 
 class GuruController extends Controller
 {
-  
+    public function importForm()
+    {
+        return view('gurus.import');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ], [
+            'file.required' => 'File Excel wajib diunggah!',
+            'file.mimes'    => 'Format file harus .xlsx, .xls, atau .csv!',
+            'file.max'      => 'Ukuran file maksimal 2MB!',
+        ]);
+
+        Excel::import(new GuruImport, $request->file('file'));
+
+        return redirect()->route('guru.index')->with('success', 'Data Guru berhasil di-import!');
+    }
+
     public function index()
     {
         $gurus = Guru::with('user')->get();
@@ -53,6 +75,7 @@ class GuruController extends Controller
         ]);
 
         
+        DB::transaction(function () use ($request) {
         $user = User::create([
             'name'     => $request->nama_guru,
             'email'    => $request->email,
@@ -61,13 +84,16 @@ class GuruController extends Controller
         ]);
 
         Guru::create([
-            'user_id'       => $user->id,
-            'nama_guru'     => $request->nama_guru,
-            'jabatan'       => $request->jabatan,
-            'nip'           => $request->nip,
+            'user_id'   => $user->id,
+            'nama_guru' => $request->nama_guru,
+            'jabatan'   => $request->jabatan,
+            'nip'       => $request->nip,
         ]);
 
-        $user->assignRole('guru');
+        if (method_exists($user, 'assignRole')) {
+            $user->assignRole('guru');
+        }
+    });
 
         return redirect()->back()->with('success', 'Data Guru berhasil disimpan!');
     }

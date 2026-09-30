@@ -381,6 +381,7 @@ return [
         
         ],
     ],
+<<<<<<< HEAD
     [
         'text' => 'Anggota Kelas',
         'url'  => 'guru/anggota-kelas',
@@ -397,27 +398,65 @@ return [
                 'icon' => 'fas fa-list-ul',
                 'url' => 'admin/kriteria',
                 'can'  => 'admin',
+=======
+[
+    'text' => 'Penilaian',
+    'icon' => 'fas fa-clipboard-list',
+    'can'  => 'admin',
+    'submenu' => [
+        [
+            'text' => 'Kriteria Penilaian',
+            'icon' => 'fas fa-list-ul',
+            'url'  => 'admin/kriteria',
+            'can'  => 'admin',
+        ],
+        [
+            'text' => 'Karakter',
+            'icon' => 'fas fa-star',
+            'url'  => 'admin/karakter',
+            'can'  => 'admin',
+        ],
+        [
+            'text'    => 'Capaian Perkembangan',
+            'icon'    => 'fas fa-chart-line',
+            'can'     => 'admin',
+            'submenu' => [
+                [
+                    'text' => 'Perkembangan',
+                    'icon' => 'fas fa-chart-line',
+                    'url'  => 'admin/capaian-perkembangan',
+                    'can'  => 'admin',
+                ],
+                [
+                    'text' => 'Indikator',
+                    'icon' => 'fas fa-clipboard-list',
+                    'url'  => 'admin/indikator',
+                    'can'  => 'admin',
+                ],
+>>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
             ],
-            [
-                'text' => 'Karakter',
-                'icon' => 'fas fa-star',
-                'url' => 'admin/karakter',
-                'can'  => 'admin',
-            ],
-            [
-                'text' => 'Capaian Perkembangan',
-                'icon' => 'fas fa-chart-line',
-                'url' => 'admin/capaian-perkembangan',
-                'can'  => 'admin',
-            ],
-            [
-                'text' => 'Indikator',
-                'icon' => 'fas fa-clipboard-list',
-                'url' => 'admin/indikator',
-                'can'  => 'admin',
+        ],
+        [
+            'text'    => 'Capaian Hafalan',
+            'icon'    => 'fas fa-quran',
+            'can'     => 'admin',
+            'submenu' => [
+                [
+                    'text' => 'Hafalan',
+                    'icon' => 'fas fa-chart-line',
+                    'url'  => 'admin/capaian-hafalan',
+                    'can'  => 'admin',
+                ],
+                [
+                    'text' => 'Materi',
+                    'icon' => 'fas fa-book',
+                    'url'  => 'admin/materi',
+                    'can'  => 'admin',
+                ],
             ],
         ],
     ],
+],
     [
     'header' => 'Rencana Penilaian',
     'can'    => 'guru',
@@ -483,6 +522,44 @@ return [
         ],
     ],
 ],
+    [
+    'text' => 'Materi Hafalan',
+    'icon' => 'fas fa-check-circle',
+    'can'  => 'guru',
+    'submenu' => [
+        [
+            'text' => 'Tahsin',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-tahsin',
+            'can'  => 'guru', 
+        ],
+        [
+            'text' => 'Doa Harian',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-doa-harian', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Tahfidz Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-tahfidz-alquran', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Hadits',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-hadits', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Meniru Gerakan Wudhu',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-wudhu', 
+            'can'  => 'guru',
+        ],
+    ],
+],
+
     [
     'header' => 'Penilaian',
     'can'    => 'guru',
@@ -598,6 +675,43 @@ return [
     ],
 ],
     [
+    'text' => 'Nilai Hafalan',
+    'icon' => 'fas fa-check-circle',
+    'can'  => 'guru',
+    'submenu' => [
+        [
+            'text' => 'Tahsin',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/tahsin',
+            'can'  => 'guru', 
+        ],
+        [
+            'text' => 'Doa Harian',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/doa-harian', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Tahfidz Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/tahfidz-alquran', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Hadits',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/hadits', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Meniru Gerakan Wudhu',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/wudhu', 
+            'can'  => 'guru',
+        ],
+    ],
+],
+        [
         'text' => 'Catatan Wali Kelas',
         'icon' => 'fas fa-fw fa-sticky-note',
         'url'  => 'guru/catatan', 
@@ -639,27 +753,42 @@ return [
     |
     */
 
-    'plugins' => [
-        'Datatables' => [
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => true,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
-                ],
+'plugins' => [
+    'Datatables' => [
+        'active' => true,
+        'files' => [
+            [
+                'type' => 'js',
+                'asset' => true,
+                'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+            ],
+            [
+                'type' => 'js',
+                'asset' => true,
+                'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+            ],
+            [
+                'type' => 'css',
+                'asset' => true,
+                'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
             ],
         ],
+    ],
+    'CustomSubmenu' => [
+        'active' => true,
+        'files' => [
+            [
+                'type' => 'css',
+                'asset' => false,
+                'location' => 'css/custom.css',
+            ],
+            [
+                'type' => 'js',
+                'asset' => false,
+                'location' => 'js/custom.js',
+            ],
+        ],
+    ],
         'Select2' => [
             'active' => false,
             'files' => [

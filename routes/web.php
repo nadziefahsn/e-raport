@@ -28,7 +28,14 @@ use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
+<<<<<<< HEAD
 use Sabberworm\CSS\Property\Import;
+=======
+use App\Http\Controllers\HafalanController;
+use App\Http\Controllers\MateriController;
+use App\Http\Controllers\NilaiHafalanController;
+use App\Http\Controllers\MateriHafalanController;
+>>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -55,6 +62,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::get('/guru/{id}/edit-password', [GuruController::class, 'editPassword'])->name('guru.edit-password');
         Route::put('/guru/{id}/update-password', [GuruController::class, 'updatePassword'])->name('guru.update-password');
         Route::put('/guru/{id}/update-user', [GuruController::class, 'updateUser'])->name('guru.update-user');
+        Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
 
         Route::post('/kelas/duplicate', [KelasController::class, 'duplicateFromPreviousSemester'])->name('kelas.duplicate');
         Route::resource('kelas', KelasController::class)->parameters(['kelas' => 'kelas']);
@@ -68,6 +76,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
         Route::post('/indikator/duplicate', [IndikatorController::class, 'duplicateFromPreviousSemester'])->name('indikator.duplicate');
         Route::resource('indikator', IndikatorController::class);
+        Route::resource('capaian-hafalan', HafalanController::class);
+        Route::resource('materi', MateriController::class);
+
+
     });
 
     Route::middleware(['role:admin|guru'])->group(function () {
@@ -88,6 +100,9 @@ Route::prefix('guru')->middleware(['auth', 'role:guru'])->group(function () {
     Route::get('/indikator-{kategori}', [IndikatorCapaianController::class, 'index'])->name('indikator-capaian.index');
     Route::resource('indikator-capaian', IndikatorCapaianController::class)->except(['create','show','edit','update'])->whereNumber('indikator-capaian');
 
+    Route::get('/materi-{kategori}', [MateriHafalanController::class, 'index'])->name('materi-hafalan.index');
+    Route::resource('materi-hafalan', MateriHafalanController::class)->except(['create','show','edit','update'])->whereNumber('materi-hafalan');
+
     Route::resource('kondisi-tubuh', KondisiTubuhController::class)->only(['index','update'])->whereNumber('kondisi-tubuh');
     Route::resource('kebersihan-siswa', KebersihanSiswaController::class)->only(['index','update'])->whereNumber('kebersihan-siswa');
     Route::resource('mata', KesehatanMataController::class)->only(['index','update'])->whereNumber('mata');
@@ -101,9 +116,12 @@ Route::prefix('guru')->middleware(['auth', 'role:guru'])->group(function () {
     Route::resource('kehadiran', KehadiranController::class)->only(['index','update'])->whereNumber('kehadiran');
     Route::resource('nilai-karakter', NilaiKarakterController::class)->except(['create','show','edit','destroy'])->whereNumber('nilai-karakter');
 
-    Route::get('/hasil-capaian/{slug?}', [HasilCapaianController::class, 'index'])->name('hasil-capaian.kategori');
+    Route::get('/hasil-capaian/{slug}', [HasilCapaianController::class, 'index'])->name('hasil-capaian.kategori');
     Route::resource('hasil-capaian', HasilCapaianController::class)->except(['create','show','edit','destroy'])->whereNumber('hasil-capaian');
 
+    Route::get('/nilai-hafalan/{slug}', [NilaiHafalanController::class, 'index'])->name('nilai-hafalan.kategori');
+    Route::resource('nilai-hafalan', NilaiHafalanController::class)->except(['create', 'show', 'edit', 'destroy'])->whereNumber('nilai-hafalan');
+            
     Route::resource('catatan', CatatanController::class);
 
 });
