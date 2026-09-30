@@ -28,6 +28,8 @@ use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\HafalanController;
+use App\Http\Controllers\MateriController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -66,6 +68,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
         Route::post('/indikator/duplicate', [IndikatorController::class, 'duplicateFromPreviousSemester'])->name('indikator.duplicate');
         Route::resource('indikator', IndikatorController::class);
+        Route::resource('capaian-hafalan', HafalanController::class);
+        Route::resource('materi', MateriController::class);
+
+
     });
 
     Route::middleware(['role:admin|guru'])->group(function () {

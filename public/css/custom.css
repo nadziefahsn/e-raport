@@ -1,0 +1,16 @@
+.nav-treeview .nav-treeview {
+    padding-left: 15px; 
+    background-color: transparent !important;
+}
+
+.nav-treeview .nav-item.menu-open > .nav-link,
+.nav-treeview .nav-item > .nav-link.active {
+    background-color: transparent !important;
+    color: #ffffff !important;
+}
+
+.nav-treeview .nav-treeview .nav-link.active {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+    border-radius: 4px;
+}
