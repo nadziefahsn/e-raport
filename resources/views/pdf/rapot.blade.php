@@ -18,6 +18,44 @@
     </style>
 </head>
 <body>
+<div style="font-family: Tahoma; text-align: center; padding: 10px 0;">
+    <div style="margin-top: 10px; margin-bottom: 25px;">
+        <img src="{{ public_path('asset/logo_tk.png') }}" alt="Logo Sekolah" style="width: 210px; height: auto;">
+    </div>
+
+    <div style="margin-bottom: 70px;">
+        <h2 style="font-size: 18pt; font-weight: bold; margin: 0; line-height: 1.3; text-transform: uppercase;">
+            LAPORAN PERKEMBANGAN SISWA
+        </h2>
+        <h2 style="font-size: 18pt; font-weight: bold; margin: 5px 0 0 0; line-height: 1.3; text-transform: uppercase;">
+            TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '2025-2026') }}
+        </h2>
+    </div>
+
+    <div style="margin-bottom: 12px;">
+        <p style="font-size: 13pt; margin: 0 0 2px 0; font-weight: normal;">
+            Nama Peserta Didik
+        </p>
+        <h3 style="font-size: 15pt; font-weight: bold; margin: 0; line-height: 1.1;">
+            {{ $anggotaKelas->siswa->nama_siswa ?? '-' }}
+        </h3>
+    </div>
+
+    <div style="margin-bottom: 50px;">
+        <p style="font-size: 13pt; margin: 0 0 2px 0; font-weight: normal;">
+            Nomor Induk
+        </p>
+        <h3 style="font-size: 15pt; font-weight: bold; margin: 0; line-height: 1.1;">
+            {{ $anggotaKelas->siswa->nis ?? '-' }}
+        </h3>
+    </div>
+
+    <div>
+        <img src="{{ public_path('asset/footer.png') }}" alt="Footer Sekolah" style="width: 320px; height: auto;">
+    </div>
+    </div>
+
+    <div class="page-break"></div>
     {{-- cover --}}
     <div style="font-family: 'Times New Roman', Times, serif; text-align: center; padding: 10px 0;">
         <div style="width: 100%; margin: 0 auto;">
@@ -106,7 +144,10 @@
         <tr>
             <td class="label-bold">5.</td>
             <td class="label-bold">Tempat / Tgl. Lahir</td>
-            <td>: {{ $anggotaKelas->siswa->ttl ?? ($anggotaKelas->siswa->tempat_lahir . ' / ' . $anggotaKelas->siswa->tanggal_lahir) ?? '-' }}</td>
+            <td>:
+                {{ $anggotaKelas->siswa->tempat_lahir ?? '-' }} /
+                {{ !empty($anggotaKelas->siswa->tanggal_lahir) ? \Carbon\Carbon::parse($anggotaKelas->siswa->tanggal_lahir)->locale('id')->translatedFormat('d F Y') : '-' }}                
+            </td>
         </tr>
         <tr>
             <td class="label-bold">6.</td>
@@ -116,7 +157,7 @@
         <tr>
             <td class="label-bold">7.</td>
             <td class="label-bold">Anak Ke</td>
-            <td>: {{ $anggotaKelas->siswa->anak_ke ?? '-' }}</td>
+            <td>: {{ $anggotaKelas->siswa->anak_ke_formatted }}</td>
         </tr>
         <tr>
             <td class="label-bold">8.</td>
@@ -231,7 +272,7 @@
         <tr>
             <td width="15%"><strong>Nama Siswa</td>
             <td width="2%">:</td>
-            <td width="38%"><strong>{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</strong></td>
+            <td width="38%">{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</td>
             <td width="20%"><strong> Kelompok Usia</td>
             <td width="2%">:</td>
             <td width="28%">{{ $usia }} Tahun</td>
@@ -239,7 +280,7 @@
         <tr>
             <td><strong>NIS</td>
             <td>:</td>
-            <td>{{ $anggotaKelas->siswa->nis ?? '-' }} / {{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
+            <td>{{ $anggotaKelas->siswa->nis ?? '-' }}</td>
             <td><strong> Tahun Ajaran</td>
             <td>:</td>
             <td>{{ $tahunAjaranAktif->tahun_ajaran ?? '2023/2024' }}</td>

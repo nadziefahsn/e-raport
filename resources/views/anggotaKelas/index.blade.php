@@ -80,8 +80,8 @@
                                         onclick="return confirm('Hapus siswa ini dari anggota kelas?')">
                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                 </button>
-                                @endhasrole
                             </form>
+                            @endhasrole
                             <a href="{{ route('pdf.show', $item->id) }}" 
                                 target="_blank" 
                                 class="btn btn-xs btn-default text-success mx-1 shadow" 

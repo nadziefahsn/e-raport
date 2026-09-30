@@ -32,6 +32,7 @@ class IndikatorCapaianController extends Controller
             'keagamaan'           => 'wawasan keagamaan',
             'kesehatan-kebugaran' => 'kesehatan dan kebugaran',
             'life-skill'          => 'life skill dan jiwa wirausaha',
+            'doa-harian'          => 'Doa Harian',
         ];
 
         $keyword = $keywordMapping[$kategoriSlug] ?? 'aqidah';

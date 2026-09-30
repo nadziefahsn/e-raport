@@ -13,32 +13,48 @@ use App\Models\TahunAjaran;
 
 class AnggotaKelasController extends Controller
 {
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ]);
+
+        Excel::import(new SiswaImport, $request->file('file'));
+
+        return redirect()
+            ->back()
+            ->with('success', 'Data anggota kelas berhasil diimport');
+    }
+
     public function index()
     {
         $user = auth()->user();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
 
-
         if ($user->hasRole('guru')) {
-        $guruId = $user->guru?->id;
+            $guruId = $user->guru?->id;
 
-        $kelasIds = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)
-            ->where(function ($query) use ($guruId) {
-                $query->where('wali_kelas_id', $guruId)
-                      ->orWhere('pendamping_id', $guruId);
-            })
-            ->pluck('id');
+            $kelasIds = Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->where(function ($query) use ($guruId) {
+                    $query->where('wali_kelas_id', $guruId)
+                        ->orWhere('pendamping_id', $guruId);
+                })
+                ->pluck('id');
 
             $anggotaKelasQuery = AnggotaKelas::whereIn('kelas_id', $kelasIds);
             $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
         } else {
             $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)->orderBy('rombel', 'asc')->get();
-            $anggotaKelasQuery = AnggotaKelas::whereHas('kelas', function ($query) use ($tahunAjaranAktif) {
-                $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+            
+            $anggotaKelasQuery = AnggotaKelas::where(function ($query) use ($tahunAjaranAktif) {
+                $query->whereNull('kelas_id')
+                    ->orWhereHas('kelas', function ($q) use ($tahunAjaranAktif) {
+                        $q->where('tahun_ajaran_id', $tahunAjaranAktif->id);
+                    });
             });
         }
 
-        $anggotaKelas = $anggotaKelasQuery->get();
+        $anggotaKelas = $anggotaKelasQuery->with(['siswa', 'kelas'])->get();
         $siswas = Siswa::orderBy('nama_siswa', 'asc')->get();
 
         return view('anggotaKelas.index', compact('anggotaKelas', 'siswas', 'kelas'));
