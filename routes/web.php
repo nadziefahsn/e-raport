@@ -30,6 +30,8 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\HafalanController;
 use App\Http\Controllers\MateriController;
+use App\Http\Controllers\NilaiHafalanController;
+use App\Models\NilaiHafalan;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -105,9 +107,12 @@ Route::prefix('guru')->middleware(['auth', 'role:guru'])->group(function () {
     Route::resource('kehadiran', KehadiranController::class)->only(['index','update'])->whereNumber('kehadiran');
     Route::resource('nilai-karakter', NilaiKarakterController::class)->except(['create','show','edit','destroy'])->whereNumber('nilai-karakter');
 
-    Route::get('/hasil-capaian/{slug?}', [HasilCapaianController::class, 'index'])->name('hasil-capaian.kategori');
+    Route::get('/hasil-capaian/{slug}', [HasilCapaianController::class, 'index'])->name('hasil-capaian.kategori');
     Route::resource('hasil-capaian', HasilCapaianController::class)->except(['create','show','edit','destroy'])->whereNumber('hasil-capaian');
 
+    Route::get('/nilai-hafalan/{slug}', [NilaiHafalanController::class, 'index'])->name('nilai-hafalan.kategori');
+    Route::resource('nilai-hafalan', NilaiHafalanController::class)->except(['create', 'show', 'edit', 'destroy'])->whereNumber('nilai-hafalan');
+            
     Route::resource('catatan', CatatanController::class);
 
 });

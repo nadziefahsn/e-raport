@@ -623,6 +623,43 @@ return [
     ],
 ],
     [
+    'text' => 'Nilai Hafalan',
+    'icon' => 'fas fa-check-circle',
+    'can'  => 'guru',
+    'submenu' => [
+        [
+            'text' => 'Tahsin',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/tahsin',
+            'can'  => 'guru', 
+        ],
+        [
+            'text' => 'Doa Harian',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/doa-harian', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Tahfidz Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/tahfidz-alquran', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Hadits',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/hadits', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Meniru Gerakan Wudhu',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/nilai-hafalan/wudhu', 
+            'can'  => 'guru',
+        ],
+    ],
+],
+        [
         'text' => 'Catatan Wali Kelas',
         'icon' => 'fas fa-fw fa-sticky-note',
         'url'  => 'guru/catatan', 
