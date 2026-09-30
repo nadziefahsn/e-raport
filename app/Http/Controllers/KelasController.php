@@ -34,7 +34,7 @@ class KelasController extends Controller
 
     public function store(KelasUpdateRequest $request)
     {
-        Kelas::create($request->validated());
+        Kelas::firstOrCreate($request->validated());
 
         return redirect()
             ->route('kelas.index')

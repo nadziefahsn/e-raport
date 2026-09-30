@@ -29,7 +29,7 @@ class SiswaController extends Controller
 
     public function store(SiswaStoreRequest $request)
     {
-        Siswa::create($request->validated());
+        Siswa::firstOrCreate($request->validated());
 
         return redirect()
             ->route('siswa.index')

@@ -54,6 +54,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::get('/guru/{id}/edit-password', [GuruController::class, 'editPassword'])->name('guru.edit-password');
         Route::put('/guru/{id}/update-password', [GuruController::class, 'updatePassword'])->name('guru.update-password');
         Route::put('/guru/{id}/update-user', [GuruController::class, 'updateUser'])->name('guru.update-user');
+        Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
 
         Route::post('/kelas/duplicate', [KelasController::class, 'duplicateFromPreviousSemester'])->name('kelas.duplicate');
         Route::resource('kelas', KelasController::class)->parameters(['kelas' => 'kelas']);
