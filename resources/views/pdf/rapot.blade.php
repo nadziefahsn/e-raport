@@ -18,42 +18,42 @@
     </style>
 </head>
 <body>
-<div style="font-family: Tahoma; text-align: center; padding: 0;">
-    <div style="margin-top: 35px; margin-bottom: 45px;">
-        <img src="{{ public_path('asset/logo_tk.png') }}" alt="Logo Sekolah" style="width: 210px; height: auto;">
-    </div>
+    <div style="font-family: Tahoma; text-align: center; padding: 0;">
+        <div style="margin-top: 35px; margin-bottom: 45px;">
+            <img src="{{ public_path('asset/logo_tk.png') }}" alt="Logo Sekolah" style="width: 210px; height: auto;">
+        </div>
 
-    <div style="margin-bottom: 230px;">
-        <h2 style="font-size: 16pt; font-weight: bold; margin: 0; line-height: 1.3; text-transform: uppercase;">
-            LAPORAN PERKEMBANGAN SISWA
-        </h2>
-        <h2 style="font-size: 16pt; font-weight: bold; margin: 6px 0 0 0; line-height: 1.3; text-transform: uppercase;">
-            TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '2025-2026') }}
-        </h2>
-    </div>
+        <div style="margin-bottom: 230px;">
+            <h2 style="font-size: 16pt; font-weight: bold; margin: 0; line-height: 1.3; text-transform: uppercase;">
+                LAPORAN PERKEMBANGAN SISWA
+            </h2>
+            <h2 style="font-size: 16pt; font-weight: bold; margin: 6px 0 0 0; line-height: 1.3; text-transform: uppercase;">
+                TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '2025-2026') }}
+            </h2>
+        </div>
 
-    <div style="margin-bottom: 15px;">
-        <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
-            Nama Peserta Didik
-        </p>
-        <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
-            {{ $anggotaKelas->siswa->nama_siswa ?? '-' }}
-        </h3>
-    </div>
+        <div style="margin-bottom: 15px;">
+            <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
+                Nama Peserta Didik
+            </p>
+            <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
+                {{ $anggotaKelas->siswa->nama_siswa ?? '-' }}
+            </h3>
+        </div>
 
-    <div style="margin-bottom: 45px;">
-        <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
-            Nomor Induk
-        </p>
-        <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
-            {{ $anggotaKelas->siswa->nis ?? '-' }}
-        </h3>
+        <div style="margin-bottom: 45px;">
+            <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
+                Nomor Induk
+            </p>
+            <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
+                {{ $anggotaKelas->siswa->nis ?? '-' }}
+            </h3>
+        </div>
+        
+        <div>
+            <img src="{{ public_path('asset/footer.png') }}" alt="Footer Sekolah" style="width: 320px; height: auto;">
+        </div>
     </div>
-    
-    <div>
-        <img src="{{ public_path('asset/footer.png') }}" alt="Footer Sekolah" style="width: 320px; height: auto;">
-    </div>
-</div>
 
     <div class="page-break"></div>
     {{-- cover --}}
