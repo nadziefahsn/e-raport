@@ -509,6 +509,44 @@ return [
     ],
 ],
     [
+    'text' => 'Materi Hafalan',
+    'icon' => 'fas fa-check-circle',
+    'can'  => 'guru',
+    'submenu' => [
+        [
+            'text' => 'Tahsin',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-tahsin',
+            'can'  => 'guru', 
+        ],
+        [
+            'text' => 'Doa Harian',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-doa-harian', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Tahfidz Al-Quran',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-tahfidz-alquran', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Hadits',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-hadits', 
+            'can'  => 'guru',
+        ],
+        [
+            'text' => 'Meniru Gerakan Wudhu',
+            'icon' => 'far fa-fw fa-circle',
+            'url'  => 'guru/materi-wudhu', 
+            'can'  => 'guru',
+        ],
+    ],
+],
+
+    [
     'header' => 'Penilaian',
     'can'    => 'guru',
     ],
