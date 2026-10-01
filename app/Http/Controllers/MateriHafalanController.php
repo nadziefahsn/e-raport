@@ -7,7 +7,6 @@ use App\Models\Materi;
 use App\Models\Kelas;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class MateriHafalanController extends Controller
 {

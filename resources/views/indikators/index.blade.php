@@ -29,7 +29,7 @@
             <form action="{{ route('indikator.duplicate') }}" method="POST" class="m-2" onsubmit="return confirm('Apakah Anda yakin ingin menyalin kelas dari semester sebelumnya?')">
                 @csrf
                 <button type="submit" class="btn btn-outline-secondary rounded-pill">
-                    <i class="fas fa-copy"></i> Salin Kelas Semester Lalu
+                    <i class="fas fa-copy"></i> Salin Indikator Semester Lalu
                 </button>
             </form>
             <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">

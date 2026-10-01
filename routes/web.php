@@ -71,7 +71,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::post('/indikator/duplicate', [IndikatorController::class, 'duplicateFromPreviousSemester'])->name('indikator.duplicate');
         Route::resource('indikator', IndikatorController::class);
         Route::resource('capaian-hafalan', HafalanController::class);
+        Route::post('/materi/duplicate', [MateriController::class, 'duplicateFromPreviousSemester'])->name('materi.duplicate');
         Route::resource('materi', MateriController::class);
+        Route::post('/materi/import', [MateriController::class, 'import'])->name('materi.import');
 
 
     });
