@@ -28,14 +28,12 @@ use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
-<<<<<<< HEAD
-use Sabberworm\CSS\Property\Import;
-=======
 use App\Http\Controllers\HafalanController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\NilaiHafalanController;
 use App\Http\Controllers\MateriHafalanController;
->>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
+use Sabberworm\CSS\Property\Import;
+
 
 Route::get('/', function () {
     if (Auth::check()) {

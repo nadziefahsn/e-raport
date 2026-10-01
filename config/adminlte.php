@@ -381,24 +381,12 @@ return [
         
         ],
     ],
-<<<<<<< HEAD
     [
         'text' => 'Anggota Kelas',
         'url'  => 'guru/anggota-kelas',
         'icon' => 'fas fa-users',
         'can'  => 'guru',
     ],
-    [
-        'text' => 'Penilaian',
-        'icon' => 'fas fa-clipboard-list',
-        'can'  => 'admin',
-        'submenu' => [
-            [
-                'text' => 'Kriteria Penilaian',
-                'icon' => 'fas fa-list-ul',
-                'url' => 'admin/kriteria',
-                'can'  => 'admin',
-=======
 [
     'text' => 'Penilaian',
     'icon' => 'fas fa-clipboard-list',
@@ -433,7 +421,6 @@ return [
                     'url'  => 'admin/indikator',
                     'can'  => 'admin',
                 ],
->>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
             ],
         ],
         [
@@ -607,18 +594,6 @@ return [
             ],
         ],
     ],
-            [
-                'text' => 'Rekap Kehadiran', 
-                'url' => 'guru/kehadiran',
-                'icon' => 'fas fa-calendar-check',
-                'can'    => 'guru',
-            ],
-            [
-                'text' => 'Nilai Karakter', 
-                'url' => 'guru/nilai-karakter',
-                'icon' => 'fas fa-star',
-                'can'    => 'guru',
-            ],
     [
     'text' => 'Input Nilai Capaian',
     'icon' => 'fas fa-chart-line',
@@ -711,6 +686,19 @@ return [
         ],
     ],
 ],
+    [
+        'text' => 'Nilai Karakter', 
+        'url'  => 'guru/nilai-karakter',
+        'icon' => 'fas fa-star',
+        'can'  => 'guru',
+    ],
+    [
+        'text' => 'Rekap Kehadiran', 
+        'url'  => 'guru/kehadiran',
+        'icon' => 'fas fa-calendar-check',
+        'can'  => 'guru',
+    ],
+
         [
         'text' => 'Catatan Wali Kelas',
         'icon' => 'fas fa-fw fa-sticky-note',
@@ -718,6 +706,8 @@ return [
         'can'  => 'guru',
     ],  
 ],
+    
+    
 
     /*
     |--------------------------------------------------------------------------

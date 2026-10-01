@@ -12,6 +12,7 @@ use App\Models\Sekolah;
 use App\Models\AnggotaKelas;
 use App\Models\TahunAjaran;
 use App\Models\CapaianPerkembangan;
+use App\Models\Hafalan;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 
@@ -60,6 +61,7 @@ class PdfController extends Controller
             'kelas.tahunAjaran',
             'nilaiKarakter',
             'hasilCapaian',
+            'nilaiHafalan', 
             'kehadiran',
             'kebersihanSiswa',
             'kesehatanMata',
@@ -91,8 +93,6 @@ class PdfController extends Controller
 
         $kelasId = $anggotaKelas->kelas_id;
         
-        $tahunAjaranId = $anggotaKelas->kelas->tahun_ajaran_id ?? null;
-
         $capaianPerkembangan = CapaianPerkembangan::with(['indikators' => function ($query) use ($jenjangTujuan, $tahunAjaranId) {
             $query->when($jenjangTujuan, function ($q) use ($jenjangTujuan) {
                 $q->where('jenjang', $jenjangTujuan);
@@ -114,6 +114,24 @@ class PdfController extends Controller
             $daftarCapaian[$keyJudul] = $kategori->indikators;
         }
 
+        $hafalans = Hafalan::with(['materis' => function ($query) use ($jenjangTujuan, $tahunAjaranId) {
+            $query->when($jenjangTujuan, function ($q) use ($jenjangTujuan) {
+                $q->where('jenjang', $jenjangTujuan);
+            })
+            ->when($tahunAjaranId, function ($q) use ($tahunAjaranId) {
+                $q->where('tahun_ajaran_id', $tahunAjaranId);
+            });
+        }])->get();
+
+        $daftarHafalan = [];
+        foreach ($hafalans as $index => $hafalan) {
+            $prefix = isset($abjad[$index]) ? $abjad[$index] . '. ' : '';
+            $namaJudul = $hafalan->capaian_hafalan ?? 'KATEGORI HAFALAN';
+            $keyJudul = $prefix . strtoupper($namaJudul);
+
+            $daftarHafalan[$keyJudul] = $hafalan->materis;
+        }
+
         $tahunAjaranAktif = TahunAjaran::latest()->first();
 
         $pdf = Pdf::loadView('pdf.rapot', compact(
@@ -126,6 +144,7 @@ class PdfController extends Controller
             'jenjangTujuan',
             'usia', 
             'daftarCapaian',
+            'daftarHafalan', 
             'tahunAjaranAktif'
         ))->setPaper('A4', 'portrait')
         ->setOption($pdfOptions);

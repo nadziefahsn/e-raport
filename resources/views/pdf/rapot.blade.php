@@ -18,42 +18,42 @@
     </style>
 </head>
 <body>
-    <div style="font-family: Tahoma; text-align: center; padding: 0;">
-        <div style="margin-top: 35px; margin-bottom: 45px;">
-            <img src="{{ public_path('asset/logo_tk.png') }}" alt="Logo Sekolah" style="width: 210px; height: auto;">
-        </div>
-
-        <div style="margin-bottom: 230px;">
-            <h2 style="font-size: 16pt; font-weight: bold; margin: 0; line-height: 1.3; text-transform: uppercase;">
-                LAPORAN PERKEMBANGAN SISWA
-            </h2>
-            <h2 style="font-size: 16pt; font-weight: bold; margin: 6px 0 0 0; line-height: 1.3; text-transform: uppercase;">
-                TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '2025-2026') }}
-            </h2>
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
-                Nama Peserta Didik
-            </p>
-            <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
-                {{ $anggotaKelas->siswa->nama_siswa ?? '-' }}
-            </h3>
-        </div>
-
-        <div style="margin-bottom: 45px;">
-            <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
-                Nomor Induk
-            </p>
-            <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
-                {{ $anggotaKelas->siswa->nis ?? '-' }}
-            </h3>
-        </div>
-        
-        <div>
-            <img src="{{ public_path('asset/footer.png') }}" alt="Footer Sekolah" style="width: 320px; height: auto;">
-        </div>
+<div style="font-family: Tahoma; text-align: center; padding: 0;">
+    <div style="margin-top: 35px; margin-bottom: 45px;">
+        <img src="{{ public_path('asset/logo_tk.png') }}" alt="Logo Sekolah" style="width: 210px; height: auto;">
     </div>
+
+    <div style="margin-bottom: 230px;">
+        <h2 style="font-size: 16pt; font-weight: bold; margin: 0; line-height: 1.3; text-transform: uppercase;">
+            LAPORAN PERKEMBANGAN SISWA
+        </h2>
+        <h2 style="font-size: 16pt; font-weight: bold; margin: 6px 0 0 0; line-height: 1.3; text-transform: uppercase;">
+            TAHUN AJARAN {{ str_replace('/', '-', $tahunAjaranAktif->tahun_ajaran ?? '2025-2026') }}
+        </h2>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
+            Nama Peserta Didik
+        </p>
+        <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
+            {{ $anggotaKelas->siswa->nama_siswa ?? '-' }}
+        </h3>
+    </div>
+
+    <div style="margin-bottom: 45px;">
+        <p style="font-size: 12pt; margin: 0 0 3px 0; font-weight: normal;">
+            Nomor Induk
+        </p>
+        <h3 style="font-size: 14pt; font-weight: bold; margin: 0; line-height: 1.2;">
+            {{ $anggotaKelas->siswa->nis ?? '-' }}
+        </h3>
+    </div>
+    
+    <div>
+        <img src="{{ public_path('asset/footer.png') }}" alt="Footer Sekolah" style="width: 320px; height: auto;">
+    </div>
+</div>
 
     <div class="page-break"></div>
     {{-- cover --}}
@@ -342,6 +342,101 @@
     </table>
     @endforeach
 
+    <div class="page-break"></div>
+    <div class="title" style="margin-bottom: 15px;">
+        <h3>LAPORAN PERKEMBANGAN HAFALAN</h3>
+    </div>
+
+    <table class="table-biodata" style="margin-bottom: 15px;" align="center ">
+        <tr>
+            <td width="15%"><strong>Nama Siswa</td>
+            <td width="2%">:</td>
+            <td width="38%">{{ $anggotaKelas->siswa->nama_siswa ?? $anggotaKelas->siswa->nama_siswa ?? '-' }}</td>
+            <td width="20%"><strong> Kelompok Usia</td>
+            <td width="2%">:</td>
+            <td width="28%">{{ $usia }} Tahun</td>
+        </tr>
+        <tr>
+            <td><strong>NIS</td>
+            <td>:</td>
+            <td>{{ $anggotaKelas->siswa->nis ?? '-' }}</td>
+            <td><strong> Tahun Ajaran</td>
+            <td>:</td>
+            <td>{{ $tahunAjaranAktif->tahun_ajaran ?? '2023/2024' }}</td>
+        </tr>
+        <tr>
+            <td><strong>NISN</td>
+            <td>:</td>
+            <td>{{ $anggotaKelas->siswa->nisn ?? '-' }}</td>
+            <td><strong>Semester</td>
+            <td>:</td>
+            <td>{{ $tahunAjaranAktif->semester ?? 'ganjil' }}</td>
+        </tr>
+    </table>
+
+    <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 10px;">
+    <thead>
+        <tr style="font-weight: bold;">
+            <th rowspan="2" style="width: 8%; vertical-align: middle;">NO.</th>
+            <th rowspan="2" style="width: 64%; vertical-align: middle;">MATERI</th>
+            <th colspan="2" style="width: 28%;">CAPAIAN PERKEMBANGAN</th>
+        </tr>
+        <tr style="font-weight: bold;">
+            <th style="width: 14%;">TAMPAK</th>
+            <th style="width: 14%;">TIDAK TAMPAK</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($daftarHafalan as $judulHafalan => $materis)
+            <tr>
+                <td style="font-weight: bold; text-align: center; vertical-align: top;">
+                    {{ $loop->iteration }}.
+                </td>
+                <td style="font-weight: bold; text-align: left; padding-left: 8px;">
+                    {{ preg_replace('/^[A-Z]\.\s*/i', '', $judulHafalan) }}
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            @forelse($materis as $subIndex => $materi)
+                @php
+                    $itemHafalan = $anggotaKelas?->nilaiHafalan?->first(function($nh) use ($materi) {
+                        return $nh->materi_id == $materi->id;
+                    });
+                    $nilaiHafalan = $itemHafalan ? strtoupper(trim($itemHafalan->nilai)) : null;
+                @endphp
+                <tr>
+                    <td></td>
+                    <td style="text-align: left; padding-left: 15px;">
+                        <table style="width: 100%; border-collapse: collapse; border: none;">
+                            <tr>
+                                <td style="width: 25px; border: none; vertical-align: top; padding: 0; text-align: left;">
+                                    {{ $subIndex + 1 }}.
+                                </td>
+                                <td style="border: none; vertical-align: top; padding: 0; text-align: left;">
+                                    {!! nl2br(e($materi->nama_materi ?? '-')) !!}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        @if($nilaiHafalan == 'T')
+                            <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>
+                        @endif
+                    </td>
+                    <td style="vertical-align: middle;">
+                        @if($nilaiHafalan == 'TT')
+                            <span style="font-family: 'DejaVu Sans', sans-serif;">&#10003;</span>
+                        @endif
+                    </td>
+                </tr>
+            @empty
+            @endforelse
+        @endforeach
+    </tbody>
+    </table>
+    
     <div class="page-break"></div>
 
     <div class="content">
