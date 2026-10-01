@@ -652,7 +652,7 @@ return [
 ],
     [
     'text' => 'Nilai Hafalan',
-    'icon' => 'fas fa-check-circle',
+    'icon' => 'fas fa-quran',
     'can'  => 'guru',
     'submenu' => [
         [

@@ -32,11 +32,11 @@
                     <i class="fas fa-copy"></i> Salin Indikator Semester Lalu
                 </button>
             </form>
-            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
-                <i class="fas fa-plus mr-1"></i>
-            </button>
             <button type="button" class="btn btn-sm mr-1" data-toggle="modal" data-target="#modalImportIndikator">
                 <i class="fas fa-upload mr-1"></i>
+            </button>
+            <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
+                <i class="fas fa-plus mr-1"></i>
             </button>
         </div>
     </div>
