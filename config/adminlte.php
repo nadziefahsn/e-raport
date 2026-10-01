@@ -387,6 +387,7 @@ return [
         'icon' => 'fas fa-users',
         'can'  => 'guru',
     ],
+
 [
     'text' => 'Penilaian',
     'icon' => 'fas fa-clipboard-list',

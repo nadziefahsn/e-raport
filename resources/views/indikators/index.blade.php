@@ -35,6 +35,9 @@
             <button type="button" class="btn rounded-4 fw-bold" data-toggle="modal" data-target="#modalTambahIndikator">
                 <i class="fas fa-plus mr-1"></i>
             </button>
+            <button type="button" class="btn btn-sm mr-1" data-toggle="modal" data-target="#modalImportIndikator">
+                <i class="fas fa-upload mr-1"></i>
+            </button>
         </div>
     </div>
     
@@ -106,6 +109,7 @@
 
 @include('indikators.create')
 @include('indikators.edit')
+@include('indikators.import')
 
 @stop
 
@@ -124,6 +128,23 @@
 @stop
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init();
+
+        @if ($errors->any())
+            @if(session('edit_id'))
+                $('#editModal{{ session('edit_id') }}').modal('show');
+            @elseif($errors->has('file'))
+                $('#modalImportIndikator').modal('show');
+            @else
+                $('#modalTambahIndikator').modal('show');
+            @endif
+        @endif
+    });
+</script>
 <script>
     @if ($errors->any())
         @if(old('_method') == 'PUT' && old('old_id'))
