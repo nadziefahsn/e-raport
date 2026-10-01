@@ -69,11 +69,7 @@
                 </div>
 
                 <div class="modal-footer border-0 pb-4 px-4">
-<<<<<<< HEAD
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-=======
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
->>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
