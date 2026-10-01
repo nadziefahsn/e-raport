@@ -6,11 +6,34 @@ use App\Models\Indikator;
 use App\Models\CapaianPerkembangan;
 use App\Models\TahunAjaran;
 use App\Http\Requests\IndikatorUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\IndikatorImport;
 
 
 class IndikatorController extends Controller
 {
+        public function importForm()
+    {
+        return view('indikators.import');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ], [
+            'file.required' => 'File Excel wajib diunggah!',
+            'file.mimes'    => 'Format file harus .xlsx, .xls, atau .csv!',
+            'file.max'      => 'Ukuran file maksimal 2MB!',
+        ]);
+
+        Excel::import(new IndikatorImport, $request->file('file'));
+
+        return redirect()->route('indikator.index')->with('success', 'Data indikator berhasil di-import!');
+    }
+
     public function index()
     {
     $tahunAjaranAktif = TahunAjaran::latest()->first();

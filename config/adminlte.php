@@ -381,24 +381,6 @@ return [
         
         ],
     ],
-<<<<<<< HEAD
-    [
-        'text' => 'Anggota Kelas',
-        'url'  => 'guru/anggota-kelas',
-        'icon' => 'fas fa-users',
-        'can'  => 'guru',
-    ],
-    [
-        'text' => 'Penilaian',
-        'icon' => 'fas fa-clipboard-list',
-        'can'  => 'admin',
-        'submenu' => [
-            [
-                'text' => 'Kriteria Penilaian',
-                'icon' => 'fas fa-list-ul',
-                'url' => 'admin/kriteria',
-                'can'  => 'admin',
-=======
 [
     'text' => 'Penilaian',
     'icon' => 'fas fa-clipboard-list',
@@ -433,7 +415,6 @@ return [
                     'url'  => 'admin/indikator',
                     'can'  => 'admin',
                 ],
->>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
             ],
         ],
         [

@@ -28,14 +28,10 @@ use App\Http\Controllers\NilaiKarakterController;
 use App\Http\Controllers\KesehatanTelingaController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\CatatanController;
-<<<<<<< HEAD
-use Sabberworm\CSS\Property\Import;
-=======
 use App\Http\Controllers\HafalanController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\NilaiHafalanController;
 use App\Http\Controllers\MateriHafalanController;
->>>>>>> 0e508e9d92c8a29950cbf2643a6f271e7cefeb76
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -76,6 +72,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::resource('capaian-perkembangan', CapaianPerkembanganController::class);
         Route::post('/indikator/duplicate', [IndikatorController::class, 'duplicateFromPreviousSemester'])->name('indikator.duplicate');
         Route::resource('indikator', IndikatorController::class);
+        Route::post('/indikator/import', [IndikatorController::class, 'import'])->name('indikator.import');
         Route::resource('capaian-hafalan', HafalanController::class);
         Route::resource('materi', MateriController::class);
 
