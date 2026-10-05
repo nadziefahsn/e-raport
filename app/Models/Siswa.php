@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Kelas;
+use Carbon\Carbon;
 
 class Siswa extends Model
 {
@@ -30,6 +31,15 @@ class Siswa extends Model
         'kelas_id',
     ];
 
+    protected $casts = [
+        'tanggal_lahir' => 'date:Y-m-d',
+    ];
+
+    public function getTanggalLahirAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
+    }
+
     public function getRouteKeyName()
     {
         return 'nis';
@@ -47,14 +57,14 @@ class Siswa extends Model
         }
 
         $angka = [
-        1 => 'Satu', 2 => 'Dua', 3 => 'Tiga', 4 => 'Empat', 5 => 'Lima',
-        6 => 'Enam', 7 => 'Tujuh', 8 => 'Delapan', 9 => 'Sembilan', 10 => 'Sepuluh',
-    ];
+            1 => 'Satu', 2 => 'Dua', 3 => 'Tiga', 4 => 'Empat', 5 => 'Lima',
+            6 => 'Enam', 7 => 'Tujuh', 8 => 'Delapan', 9 => 'Sembilan', 10 => 'Sepuluh',
+        ];
 
-    $terbilang = $angka[$this->anak_ke] ?? null;
+        $terbilang = $angka[$this->anak_ke] ?? null;
 
-    return $terbilang 
-        ? "{$this->anak_ke} ({$terbilang})" 
-        : $this->anak_ke;
+        return $terbilang 
+            ? "{$this->anak_ke} ({$terbilang})" 
+            : $this->anak_ke;
     }
 }
