@@ -5,6 +5,7 @@ namespace App\Imports;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use App\Models\Siswa;
+use App\Models\AnggotaKelas;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
@@ -84,24 +85,28 @@ class SiswaImport implements ToCollection
 
             $tanggal_lahir = $this->parseTanggal($row[$tanggal_idx] ?? null);
 
-            Siswa::updateOrCreate(
+            $siswa = Siswa::updateOrCreate(
                 ['nis' => $nis],
                 [
-                    'nisn'           => $nisn,
-                    'nama_siswa'     => $nama_siswa,
-                    'jenis_kelamin'  => $jenis_kelamin,
-                    'tempat_lahir'   => !empty($row[$tempat_idx]) ? trim((string)$row[$tempat_idx]) : '-',
-                    'tanggal_lahir'  => $tanggal_lahir,
-                    'agama'          => !empty($row[$agama_idx]) ? trim((string)$row[$agama_idx]) : 'Islam',
-                    'anak_ke'        => is_numeric($row[$anak_idx] ?? null) ? $row[$anak_idx] : 1,
-                    'nama_ayah'      => !empty($row[$ayah_idx]) ? trim((string)$row[$ayah_idx]) : '-',
-                    'pekerjaan_ayah' => !empty($row[$p_ayah_idx]) ? trim((string)$row[$p_ayah_idx]) : '-',
-                    'nama_ibu'       => !empty($row[$ibu_idx]) ? trim((string)$row[$ibu_idx]) : '-',
-                    'pekerjaan_ibu'  => !empty($row[$p_ibu_idx]) ? trim((string)$row[$p_ibu_idx]) : '-',
-                    'alamat'         => !empty($row[$alamat_idx]) ? trim((string)$row[$alamat_idx]) : '-',
-                    'telepon'        => !empty($row[$telepon_idx]) ? trim((string)$row[$telepon_idx]) : '-',
+                    'nisn'          => $nisn,
+                    'nama_siswa'    => $nama_siswa,
+                    'jenis_kelamin' => $jenis_kelamin,
+                    'tempat_lahir'  => !empty($row[$tempat_idx]) ? trim((string)$row[$tempat_idx]) : '-',
+                    'tanggal_lahir' => $tanggal_lahir,
+                    'agama'         => !empty($row[$agama_idx]) ? trim((string)$row[$agama_idx]) : 'Islam',
+                    'anak_ke'       => is_numeric($row[$anak_idx] ?? null) ? $row[$anak_idx] : 1,
+                    'nama_ayah'     => !empty($row[$ayah_idx]) ? trim((string)$row[$ayah_idx]) : '-',
+                    'pekerjaan_ayah'=> !empty($row[$p_ayah_idx]) ? trim((string)$row[$p_ayah_idx]) : '-',
+                    'nama_ibu'      => !empty($row[$ibu_idx]) ? trim((string)$row[$ibu_idx]) : '-',
+                    'pekerjaan_ibu' => !empty($row[$p_ibu_idx]) ? trim((string)$row[$p_ibu_idx]) : '-',
+                    'alamat'        => !empty($row[$alamat_idx]) ? trim((string)$row[$alamat_idx]) : '-',
+                    'telepon'       => !empty($row[$telepon_idx]) ? trim((string)$row[$telepon_idx]) : '-',
                 ]
             );
+
+            AnggotaKelas::create([
+                'nis_id' => $siswa->nis,
+            ]);
         }
     }
 
