@@ -78,7 +78,7 @@ class AnggotaKelasController extends Controller
             return redirect()->back()->with('error', 'Akses ditolak. Hanya Admin yang dapat menambah data.');
         }
 
-        AnggotaKelas::create($request->validated());
+        AnggotaKelas::firstOrCreate($request->validated());
         return redirect()
             ->route('anggota-kelas.index')
             ->with('success', 'Data siswa berhasil disimpan.');
