@@ -14,17 +14,15 @@ use Maatwebsite\Excel\Facades\Excel;
 class SiswaController extends Controller
 {
     public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
-        ]);
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv',
+    ]);
 
-        Excel::import(new SiswaImport, $request->file('file'));
+    Excel::import(new SiswaImport($request->kelas_id), $request->file('file'));
 
-        return redirect()
-            ->back()
-            ->with('success', 'Data siswa berhasil diimport');
-    }
+    return redirect()->back()->with('success', 'Data siswa berhasil diimport!');
+}
 
     public function index()
     {
