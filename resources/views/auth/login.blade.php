@@ -48,3 +48,21 @@
     }
 </style>
 @endpush
+
+@push('js')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let emailInput = document.querySelector('input[name="email"]');
+        if (emailInput) {
+            emailInput.setAttribute('type', 'text');
+            emailInput.setAttribute('placeholder', 'NIPY / Username');
+        }
+
+        let icon = document.querySelector('.fa-envelope');
+        if (icon) {
+            icon.classList.remove('fa-envelope');
+            icon.classList.add('fa-user');
+        }
+    });
+</script>
+@endpush
