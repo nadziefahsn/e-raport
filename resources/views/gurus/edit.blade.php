@@ -26,22 +26,22 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Email</label>
-                            <input type="email" name="email" class="form-control rounded-3" value="{{ old('email', $item->user->email ?? '') }}" required>
+                            <label class="form-label fw-bold">NIPY</label>
+                            <input type="text" name="nip" class="form-control rounded-3" value="{{ old('nip', $item->nip) }}" 
+                                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                                placeholder="NIPY" >
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Nama Guru</label>
-                            <input type="text" name="nama_guru" class="form-control rounded-3" value="{{ old('nama_guru', $item->nama_guru) }}" required>
+                            <input type="text" name="nama_guru" class="form-control rounded-3" value="{{ old('nama_guru', $item->nama_guru) }}" placeholder="Gunakan NIPY" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Akun</label>
+                            <input type="text" name="email" class="form-control rounded-3" value="{{ old('email', $item->user->email ?? '') }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">Jabatan</label>
-                            <input type="text" name="jabatan" class="form-control rounded-3" value="{{ old('jabatan', $item->jabatan) }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">NIP</label>
-                            <input type="text" name="nip" class="form-control rounded-3" value="{{ old('nip', $item->nip) }}" 
-                                inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
-                                placeholder="Masukkan NIP (angka saja)...">
+                            <input type="text" name="jabatan" class="form-control rounded-3" value="{{ old('jabatan', $item->jabatan) }}">
                         </div>
                     </div>
                 </div>

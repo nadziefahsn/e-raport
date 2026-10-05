@@ -19,6 +19,9 @@ class NilaiKarakterController extends Controller
         $kelas = null;
         $anggotaKelas = collect();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
 
         $karakters = Karakter::where('tahun_ajaran_id', $tahunAjaranAktif?->id)->get(); 
         $nilaiExisting = [];

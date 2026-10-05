@@ -19,6 +19,9 @@ class KesehatanMulutController extends Controller
         $kelas = null;
         $kesehatanMuluts = collect();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;

@@ -20,7 +20,7 @@
                 PG-TK PRIMA INSANI
             </h4>
             <p class="tahun-pelajaran mb-0">
-                Tahun Pelajaran {{ $tahunAjaranAktif->tahun_ajaran ?? 'yow' }} Semester {{ $tahunAjaranAktif->semester ?? 'yuhu' }}
+                Tahun Pelajaran {{ $tahunAjaranAktif->tahun_ajaran ?? '-' }} Semester {{ $tahunAjaranAktif->semester ?? '-' }}
             </p>
         </div>
     </div>

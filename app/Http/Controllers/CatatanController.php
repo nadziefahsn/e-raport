@@ -15,6 +15,10 @@ class CatatanController extends Controller
     {
         $user = auth()->user();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
+
         $catatans = collect();
         $kelas = null;
 

@@ -19,7 +19,7 @@ class GuruUpdateRequest extends FormRequest
 
         return [
             'nama_guru'     => 'required|string|max:255',
-            'jabatan'       => 'required|string|max:255',
+            'jabatan'       => 'string|max:255',
             'nip'           => [
                 'required',
                 'string',

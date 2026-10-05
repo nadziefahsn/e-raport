@@ -6,7 +6,6 @@ use App\Models\Guru;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -14,32 +13,32 @@ class GuruImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        if (empty($row['nama_guru'])) {
+        if (empty($row['nama'])) {
             return null;
         }
 
-        if (!empty($row['nip'])) {
-            $guruAda = Guru::where('nip', $row['nip'])->first();
+        $nipy = !empty($row['nipy']) ? $row['nipy'] : (!empty($row['nuptk']) ? $row['nuptk'] : '-');
+
+        if ($nipy !== '-') {
+            $guruAda = Guru::where('nip', $nipy)->first();
             if ($guruAda) {
                 $guruAda->update([
-                    'nama_guru' => $row['nama_guru'],
+                    'nama_guru' => $row['nama'],
                     'jabatan'   => $row['jabatan'] ?? $guruAda->jabatan,
                 ]);
                 return null;
             }
         }
 
-        return DB::transaction(function () use ($row) {
-            $email = !empty($row['email']) 
-                ? $row['email'] 
-                : strtolower(Str::slug($row['nama_guru'], '')) . '_' . Str::random(5) . '@mail.com';
+        return DB::transaction(function () use ($row, $nipy) {
+            $username = $nipy;
 
-            $user = User::where('email', $email)->first();
+            $user = User::where('email', $username)->first();
 
             if (!$user) {
                 $user = User::create([
-                    'name'     => $row['nama_guru'],
-                    'email'    => $email,
+                    'name'     => $row['nama'],
+                    'email'    => $username,
                     'password' => Hash::make('password123'),
                 ]);
 
@@ -50,9 +49,9 @@ class GuruImport implements ToModel, WithHeadingRow
 
             return new Guru([
                 'user_id'   => $user->id,
-                'nama_guru' => $row['nama_guru'],
+                'nama_guru' => $row['nama'],
                 'jabatan'   => $row['jabatan'] ?? '-',
-                'nip'       => $row['nip'] ?? null,
+                'nip'       => $nipy,
             ]);
         });
     }

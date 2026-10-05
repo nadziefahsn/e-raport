@@ -63,7 +63,7 @@ class GuruController extends Controller
     {
         
         $request->validate([
-            'email'     => 'required|email|unique:users,email',
+            'email'     => 'required|string|unique:users,email',
             'nama_guru' => 'required',
             'jabatan'   => 'required',
             'nip'       => 'nullable|unique:gurus,nip',
@@ -117,7 +117,7 @@ class GuruController extends Controller
 
       
         $request->validate([
-            'email'     => 'required|email|unique:users,email,' . ($guru->user_id ?? 0),
+            'email'     => 'required|string|unique:users,email,' . ($guru->user_id ?? 0),
             'nama_guru' => 'required',
             'jabatan'   => 'required',
             'nip'       => 'nullable|unique:gurus,nip,' . $guru->id,

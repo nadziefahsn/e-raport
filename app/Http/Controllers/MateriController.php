@@ -14,14 +14,17 @@ class MateriController extends Controller
     public function index()
     {
         $tahunAjaranAktif = TahunAjaran::latest()->first();
-        $tahunAjarans = TahunAjaran::all();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
+
         $hafalans = Hafalan::all();
 
         $materi = $tahunAjaranAktif 
             ? Materi::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get() 
             : Materi::all();
 
-        return view('materis.index', compact('hafalans', 'materi', 'tahunAjaranAktif', 'tahunAjarans'));
+        return view('materis.index', compact('hafalans', 'materi', 'tahunAjaranAktif'));
 
     }
 

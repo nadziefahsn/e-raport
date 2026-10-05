@@ -13,7 +13,9 @@ class DataKarakterController extends Controller
     public function index()
     {
         $tahunAjaranAktif = TahunAjaran::latest()->first();
-
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
         $karakters = $tahunAjaranAktif 
             ? Karakter::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get() 
             : collect();

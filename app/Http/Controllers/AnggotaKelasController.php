@@ -30,6 +30,9 @@ class AnggotaKelasController extends Controller
     {
         $user = auth()->user();
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;

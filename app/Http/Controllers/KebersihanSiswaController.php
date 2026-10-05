@@ -15,6 +15,10 @@ class KebersihanSiswaController extends Controller
 {
     $user = auth()->user();
     $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
+
     $kebersihanSiswa = collect();
     $kelas = null;
 

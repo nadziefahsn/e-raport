@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="d-flex justify-content-between align-items-center">
-    <h1 class="m-0 font-weight-bold">Data Guru</h1>
+    <h1 class="m-0">Data Guru</h1>
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         <li class="breadcrumb-item active">Guru</li>
@@ -38,10 +38,12 @@
         @php
         $heads = [
             ['label' => 'No', 'width' => 5],
-            'Email',
             'Nama Guru',
+            'NIPY',
+            // 'Email',
             'Jabatan',
-            'NIP',
+            
+
             ['label' => 'Aksi', 'no-export' => true, 'width' => 15, 'className' => 'text-center'],
         ];
 
@@ -50,7 +52,7 @@
             'searching' => true,    
             'lengthChange' => true, 
             'columns' => [ 
-                null, null, null, null, null,
+                null, null, null, null,
                 ['orderable' => false] 
             ],
         ];
@@ -60,10 +62,10 @@
             @forelse($gurus as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->user->email ?? '-' }}</td>
                     <td>{{ $item->nama_guru }}</td>
-                    <td>{{ $item->jabatan }}</td>
                     <td>{{ $item->nip ?? '-' }}</td>
+                    {{-- <td>{{ $item->user->email ?? '-' }}</td> --}}
+                    <td>{{ $item->jabatan }}</td>
                     <td class="text-center">
                         <nobr>
                             <a href="{{ route('guru.edit-password', $item->id) }}" 

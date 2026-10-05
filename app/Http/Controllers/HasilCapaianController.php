@@ -52,6 +52,10 @@ class HasilCapaianController extends Controller
     public function index(Request $request, $slug = null)
     {
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
+        
         $user = auth()->user();
         
         $catInfo = $this->getCategoryDetails($slug);

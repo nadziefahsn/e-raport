@@ -17,6 +17,9 @@ class KesehatanTelingaController extends Controller
     $user = auth()->user();
     $kesehatanTelingas = collect();
     $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
     $kelas = null;
 
     if ($user->hasRole('guru')) {

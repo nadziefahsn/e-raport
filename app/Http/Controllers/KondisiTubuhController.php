@@ -18,6 +18,9 @@ class KondisiTubuhController extends Controller
         $kondisiTubuhs = collect();
         $kelas = null;
         $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
 
         if ($user->hasRole('guru')) {
             $guruId = $user->guru?->id;

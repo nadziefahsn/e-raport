@@ -17,6 +17,10 @@ class KesehatanMataController extends Controller
     $user = auth()->user();
     $kesehatanMatas = collect();
     $tahunAjaranAktif = TahunAjaran::latest()->first();
+        if (!$tahunAjaranAktif) {
+            return redirect()->route('dashboard');
+        }
+        
     $kelas = null;
 
     if ($user->hasRole('guru')) {

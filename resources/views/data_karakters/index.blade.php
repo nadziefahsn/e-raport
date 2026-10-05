@@ -42,7 +42,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="6" class="text-center py-4 text-muted">
-                                            Data indikator belum tersedia. 
+                                            Data karakter belum tersedia. 
                                         </td>
                                     </tr>
                                 @endforelse
