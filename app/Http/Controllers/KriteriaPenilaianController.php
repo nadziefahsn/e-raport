@@ -25,7 +25,7 @@ class KriteriaPenilaianController extends Controller
 
     public function store(KriteriaPenilaianUpdateRequest $request)
     {
-        KriteriaPenilaian::create($request->validated());
+        KriteriaPenilaian::firstOrCreate($request->validated());
 
         return redirect()->back()->with('success', 'Kriteria berhasil ditambahkan!');
         }

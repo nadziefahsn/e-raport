@@ -23,7 +23,7 @@ class HafalanController extends Controller
 
     public function store(HafalanRequest $request)
     {
-        Hafalan::create($request->validated());
+        Hafalan::firstOrCreate($request->validated());
 
         return redirect()->back()->with('success', 'Data hafalan berhasil ditambahkan!');
     }
