@@ -7,9 +7,31 @@ use App\Models\Hafalan;
 use App\Models\TahunAjaran;
 use App\Http\Requests\MateriRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\MateriImport;
 
 class MateriController extends Controller
 {
+    public function importForm()
+    {
+        return view('materis.import');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ], [
+            'file.required' => 'File Excel wajib diunggah!',
+            'file.mimes'    => 'Format file harus .xlsx, .xls, atau .csv!',
+            'file.max'      => 'Ukuran file maksimal 2MB!',
+        ]);
+
+        Excel::import(new MateriImport, $request->file('file'));
+
+        return redirect()->route('materi.index')->with('success', 'Data materi berhasil di-import!');
+    }
 
     public function index()
     {
@@ -69,5 +91,55 @@ class MateriController extends Controller
         return redirect()
             ->route('materi.index')
             ->with('success', 'Data materi Berhasil Dihapus!');
+    }
+
+        public function duplicateFromPreviousSemester()
+    {
+        $semesters = TahunAjaran::latest()->take(2)->get();
+
+        if ($semesters->count() < 2) {
+            return redirect()->route('materi.index')
+                ->with('error', 'Minimal harus ada 2 data semester (Tahun Ajaran) di sistem untuk melakukan penyalinan.');
+        }
+
+        $semesterBaru = $semesters[0];
+        $semesterLama = $semesters[1];
+
+        $materiLama = Materi::where('tahun_ajaran_id', $semesterLama->id)->get();
+
+        if ($materiLama->isEmpty()) {
+            return redirect()->route('materi.index')
+                ->with('warning', 'Tidak ada data materi di semester sebelumnya untuk disalin.');
+        }
+
+        DB::transaction(function () use ($materiLama, $semesterBaru) {
+            $dataInsert = [];
+            $now = now();
+
+            foreach ($materiLama as $item) {
+                $dataInsert[] = [
+                    'tahun_ajaran_id' => $semesterBaru->id,
+                    'capaian_hafalan_id' => $item->capaian_hafalan_id,
+                    'kode'                    => $item->kode,
+                    'nama_materi'          => $item->nama_materi,
+                    'jenjang'                 => $item->jenjang,
+                    'created_at'      => $now,
+                    'updated_at'      => $now,
+                ];
+            }
+
+            Materi::insert($dataInsert);
+        });
+
+        return redirect()->route('materi.index')
+            ->with('success', 'Data materi berhasil disalin dari semester sebelumnya.');
+    }
+
+    public function importPrevious(MateriService $service)
+    {
+        $result = $service->duplicateFromPreviousSemester();
+
+        return redirect()->route('materi.index')
+        ->with($result['status'], $result['message']);
     }
 }
