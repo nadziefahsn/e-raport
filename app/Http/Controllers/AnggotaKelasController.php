@@ -44,12 +44,12 @@ class AnggotaKelasController extends Controller
                 })
                 ->pluck('id');
 
-            $anggotaKelasQuery = AnggotaKelas::whereIn('kelas_id', $kelasIds);
+            $anggotaKelasQuery = AnggotaKelas::whereIn('kelas_id', $kelasIds)->with(['siswa', 'kelas']);
             $kelas = Kelas::whereIn('id', $kelasIds)->orderBy('rombel', 'asc')->get();
         } else {
             $kelas = Kelas::whereTahunAjaranId($tahunAjaranAktif->id)->orderBy('rombel', 'asc')->get();
             
-            $anggotaKelasQuery = AnggotaKelas::where(function ($query) use ($tahunAjaranAktif) {
+            $anggotaKelasQuery = AnggotaKelas::with(['siswa', 'kelas'])->where(function ($query) use ($tahunAjaranAktif) {
                 $query->whereNull('kelas_id')
                     ->orWhereHas('kelas', function ($q) use ($tahunAjaranAktif) {
                         $q->where('tahun_ajaran_id', $tahunAjaranAktif->id);

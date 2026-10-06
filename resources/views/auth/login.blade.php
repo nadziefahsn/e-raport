@@ -55,7 +55,7 @@
         let emailInput = document.querySelector('input[name="email"]');
         if (emailInput) {
             emailInput.setAttribute('type', 'text');
-            emailInput.setAttribute('placeholder', 'NIPY / Username');
+            emailInput.setAttribute('placeholder', 'NIPY');
         }
 
         let icon = document.querySelector('.fa-envelope');
