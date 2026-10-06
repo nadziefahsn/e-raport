@@ -23,10 +23,9 @@ class PengumumanController extends Controller
         return view('pengumumans.create');
     }
 
-
     public function store(PengumumanUpdateRequest $request)
     {
-        Pengumuman::create([
+        Pengumuman::firstOrCreate([
             'user_id' => auth()->id(),
             'judul' => $request->judul,
             'isi' => $request->isi,
